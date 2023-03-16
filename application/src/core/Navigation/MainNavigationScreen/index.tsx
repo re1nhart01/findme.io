@@ -1,6 +1,6 @@
-import React, {PropsWithChildren, useEffect, useState} from 'react';
-import {View, Text, AppState} from 'react-native';
-import {mainNavigationPresenterProps, MainNavigationPresenter } from "./view";
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { AppState, Text, View } from 'react-native';
+import { MainNavigationPresenter, mainNavigationPresenterProps } from './view';
 
 type mainNavigationContainerProps = PropsWithChildren<{
 
@@ -10,38 +10,40 @@ type mainNavigationContainerState = {
 
 };
 const MainNavigationContainer: React.FC<mainNavigationContainerProps> = ({}) => {
-    const [getState, setState] = useState<mainNavigationContainerState>({});
+  const [getState, setState] = useState<mainNavigationContainerState>({});
 
-    const ApplicationState = () => {
-        const subscription = AppState.addEventListener('change', (state) => {
-            switch (state) {
-                case 'active':
-                    console.log('app active');
-                    break;
-                case 'background':
-                    console.log('app background');
-                    break;
-                case 'inactive':
-                    console.log('app inactive');
-                    break;
-                case 'unknown':
-                    console.log('app unknown');
-                    break;
-                case 'extension':
-                    console.log('app extension');
-                    break;
-            }
-        });
-        return () => {
-            subscription.remove();
-        };
+  const ApplicationState = () => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      switch (state) {
+        case 'active':
+          console.log('app active');
+          break;
+        case 'background':
+          console.log('app background');
+          break;
+        case 'inactive':
+          console.log('app inactive');
+          break;
+        case 'unknown':
+          console.log('app unknown');
+          break;
+        case 'extension':
+          console.log('app extension');
+          break;
+        default:
+          console.log('default');
+      }
+    });
+    return () => {
+      subscription.remove();
     };
+  };
 
-    useEffect(ApplicationState, [AppState]);
+  useEffect(ApplicationState, [AppState]);
 
-    const ViewProps: mainNavigationPresenterProps = {};
+  const ViewProps: mainNavigationPresenterProps = {};
 
-    return <MainNavigationPresenter {...ViewProps} />
-}
+  return <MainNavigationPresenter {...ViewProps} />;
+};
 
-export { MainNavigationContainer }
+export { MainNavigationContainer };

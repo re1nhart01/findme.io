@@ -1,17 +1,18 @@
-import React, {PropsWithChildren, useState} from "react";
-import {View} from "react-native";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import React, { PropsWithChildren, useState } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
 
-export type mainNavigationPresenterProps = PropsWithChildren<{
+export type mainNavigationPresenterProps = PropsWithChildren<{}>;
 
-}>;
+const MainNavigationPresenter: React.FC<
+  mainNavigationPresenterProps
+> = ({}) => {
+  const Tab = createBottomTabNavigator();
+  return (
+    <ScreenLayoutView backgroundColor="white">
 
-const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => {
-    const Tab = createBottomTabNavigator();
-    return (
-        <View>
-        </View>
-    )
-}
+    </ScreenLayoutView>
+  );
+};
 
-export { MainNavigationPresenter }
+export { MainNavigationPresenter };

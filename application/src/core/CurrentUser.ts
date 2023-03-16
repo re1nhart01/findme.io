@@ -1,5 +1,5 @@
 
 
-class CurrentUser {
+export class CurrentUser {
 
 }
