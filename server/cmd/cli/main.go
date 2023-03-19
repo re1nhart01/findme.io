@@ -3,17 +3,18 @@ package main
 import (
 	"fmt"
 	"internal/api"
-	"internal/database"
 	"internal/env"
+	"internal/pg_database"
 )
 
 func main() {
-	database.GetDB()
 	env.Init()
+	if err := pg_database.SpawnDb(); err != nil {
+		panic(fmt.Sprintf("%s%s", "Database error", err.Error()))
+	}
 	port := env.ReadEnv("PORT")
 	app := api.NewApp(true)
-	err := app.Run(port)
-	if err != nil {
+	if err := app.Run(port); err != nil {
 		panic(fmt.Sprintf("%s%s", "Server can not run", err.Error()))
 	}
 }

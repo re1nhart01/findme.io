@@ -3,6 +3,8 @@ module api
 go 1.20
 
 require (
+	app/controllers v0.0.0-00010101000000-000000000000
+	app/routes v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/gin v1.9.0
 )
 
@@ -32,3 +34,6 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
+replace app/controllers => ./controllers
+
+replace app/routes => ./routes
