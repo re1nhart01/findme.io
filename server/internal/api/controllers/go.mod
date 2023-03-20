@@ -3,7 +3,6 @@ module controllers
 go 1.20
 
 require (
-	app/services v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/gin v1.9.0
 )
 
@@ -35,4 +34,3 @@ require (
 
 replace internal/pg_database => ../../pkg/pg_database
 
-replace app/services => ./../services
