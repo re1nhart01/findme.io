@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"app/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,8 +13,10 @@ func (user *UserController) GetName() string { return user.Name }
 func (user *UserController) GetPath() string { return user.Path }
 
 func (user *UserController) CreateUser(ctx *gin.Context) {
-	ctx.JSON(200, map[string]string{
+	data := services.UserServiceInstance().GetUsers()
+	ctx.JSON(200, map[string]any{
 		"status": "zaebis",
+		"data":   data,
 	})
 }
 
