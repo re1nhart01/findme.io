@@ -8,3 +8,7 @@ type UserPostModel struct {
 	Description string    `json:"description,omitempty"`
 	Active      bool      `json:"active,omitempty"`
 }
+
+func (UserPostModel) TableName() string {
+	return USER_POSTS
+}

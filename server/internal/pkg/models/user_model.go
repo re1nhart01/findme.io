@@ -22,3 +22,7 @@ type UserModel struct {
 	City       string    `json:"city,omitempty"`
 	Country    string    `json:"country,omitempty"`
 }
+
+func (UserModel) TableName() string {
+	return USERS
+}

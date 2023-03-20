@@ -8,3 +8,7 @@ type NotificationsModel struct {
 	NotificationLabel string    `json:"notification_label,omitempty"`
 	Importance        int8      `json:"importance,omitempty"`
 }
+
+func (NotificationsModel) TableName() string {
+	return NOTIFICATIONS
+}

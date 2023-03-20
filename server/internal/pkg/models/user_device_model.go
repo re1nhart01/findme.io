@@ -8,3 +8,7 @@ type UserDeviceModel struct {
 	RetryCount int32     `json:"retry_count,omitempty"`
 	RetryTime  int32     `json:"retry_time,omitempty"`
 }
+
+func (UserDeviceModel) TableName() string {
+	return USER_DEVICE
+}

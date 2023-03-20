@@ -12,9 +12,12 @@ func main() {
 	if err := pg_database.SpawnDb(); err != nil {
 		panic(fmt.Sprintf("%s%s", "Database error", err.Error()))
 	}
+	pg_database.InitTables()
 	port := env.ReadEnv("PORT")
-	app := api.NewApp(true)
-	if err := app.Run(port); err != nil {
-		panic(fmt.Sprintf("%s%s", "Server can not run", err.Error()))
-	}
+	defer func() {
+		app := api.NewApp(true)
+		if err := app.Run(port); err != nil {
+			panic(fmt.Sprintf("%s%s", "Server can not run", err.Error()))
+		}
+	}()
 }

@@ -11,3 +11,7 @@ type MatchesModel struct {
 	Op              string    // LIKE OR DISLIKE
 	TimeToLive      time.Time
 }
+
+func (MatchesModel) TableName() string {
+	return MATCHES
+}

@@ -10,3 +10,7 @@ type UserPreferenceModel struct {
 	MegaNotification bool               `json:"mega_notification,omitempty"`
 	Coords           map[string]float64 `gorm:"type:point" json:"coords,omitempty"`
 }
+
+func (UserPreferenceModel) TableName() string {
+	return USER_PREFERENCES
+}

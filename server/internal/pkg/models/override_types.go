@@ -11,3 +11,15 @@ type BaseTypeModel struct {
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
+
+const (
+	INTERESTS        = "interests"
+	MATCHES          = "matches"
+	MOOD             = "mood"
+	NOTIFICATIONS    = "notifications"
+	TAGS             = "tags"
+	USERS            = "users"
+	USER_DEVICE      = "user_devices"
+	USER_POSTS       = "user_posts"
+	USER_PREFERENCES = "user_preferences"
+)
