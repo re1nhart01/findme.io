@@ -61,4 +61,4 @@ replace app/routes => ./internal/api/routes
 
 replace app/services => ./internal/api/services
 
-replace pkg/middlewares => ./pkg/middlewares
+replace app/middlewares => ./internal/api/middlewares
