@@ -10,10 +10,12 @@ require (
 
 require (
 	app/controllers v0.0.0-00010101000000-000000000000 // indirect
+	app/middlewares v0.0.0-00010101000000-000000000000 // indirect
 	app/routes v0.0.0-00010101000000-000000000000 // indirect
 	app/services v0.0.0-00010101000000-000000000000 // indirect
 	github.com/bytedance/sonic v1.8.5 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -45,6 +47,7 @@ require (
 	gorm.io/driver/postgres v1.5.0 // indirect
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
+	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace internal/pg_database => ./internal/pkg/pg_database
@@ -62,3 +65,5 @@ replace app/routes => ./internal/api/routes
 replace app/services => ./internal/api/services
 
 replace app/middlewares => ./internal/api/middlewares
+
+replace pkg/jwts => ./pkg/jwts

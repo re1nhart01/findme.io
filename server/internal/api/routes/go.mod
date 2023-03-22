@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	app/services v0.0.0-00010101000000-000000000000 // indirect
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -34,3 +35,5 @@ require (
 )
 
 replace app/controllers => ./../controllers
+
+replace app/services => ./../services
