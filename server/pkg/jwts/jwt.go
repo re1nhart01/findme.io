@@ -5,6 +5,7 @@ import (
 	"github.com/dgrijalva/jwt-go/v4"
 	"internal/env"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -43,10 +44,27 @@ func ValidateToken(token string) (string, string, int, error) {
 		return []byte(serverKey), nil
 	})
 	if err != nil {
-		return "", "", 0, &jwt.MalformedTokenError{}
+		return "", "", 0, err
 	}
 	if claims, ok := parsedToken.Claims.(*UserClaim); ok && parsedToken.Valid {
+		if claims.ExpiresAt == nil {
+			return claims.UserHash, strconv.Itoa(claims.Id), 0, nil
+		}
 		return claims.UserHash, strconv.Itoa(claims.Id), claims.ExpiresAt.Second(), nil
 	}
-	return "", "", 0, &jwt.MalformedTokenError{}
+	return "", "", 0, &jwt.TokenExpiredError{}
+}
+
+func IsTokenExpired(token string) bool {
+	serverKey := env.ReadEnv("SERVER_HASH")
+	_, err := jwt.ParseWithClaims(token, &UserClaim{}, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, errors.New("unexpected signing method")
+		}
+		return []byte(serverKey), nil
+	})
+	if err == nil {
+		return false
+	}
+	return strings.Contains(err.Error(), "token is expired")
 }

@@ -45,7 +45,7 @@ func (app *FindMeIoApplication) Run(port string) error {
 	user, auth := app.getControllers()
 
 	routes.AuthRoute(app.Instance, auth)
-	app.Instance.Use(middlewares.AuthMiddleware)
+	app.Instance.Use(middlewares.AuthMiddleware())
 	routes.UserRouter(app.Instance, user)
 
 	httpServer := &http.Server{

@@ -14,6 +14,7 @@ require (
 	app/services v0.0.0-00010101000000-000000000000 // indirect
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -45,6 +46,8 @@ require (
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 	internal/env v0.0.0-00010101000000-000000000000 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
+	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
+	pkg/utils v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace app/controllers => ./controllers
@@ -60,3 +63,7 @@ replace internal/pg_database => ./../pkg/pg_database
 replace internal/env => ./../pkg/env
 
 replace internal/models => ./../pkg/models
+
+replace pkg/jwts => ./../../pkg/jwts
+
+replace pkg/utils => ./../../pkg/utils

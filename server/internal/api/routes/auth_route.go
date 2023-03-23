@@ -17,7 +17,7 @@ func AuthRoute(engine *gin.Engine, controller IAuthController) {
 	router := engine.Group(controller.GetPath())
 	{
 		// http://localhost:8080/auth/login
-		router.POST("/login", controller.Login)
+		router.GET("/login", controller.Login)
 		router.POST("/register", controller.Register)
 		router.POST("/verifyCode", controller.VerifyCode)
 		router.DELETE("/delete", controller.Delete)

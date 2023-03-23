@@ -67,3 +67,5 @@ replace app/services => ./internal/api/services
 replace app/middlewares => ./internal/api/middlewares
 
 replace pkg/jwts => ./pkg/jwts
+
+replace pkg/utils => ./pkg/utils
