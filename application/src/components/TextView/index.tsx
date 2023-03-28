@@ -5,7 +5,7 @@ import i18next from "@src/locale/i18next";
 type textViewProps = PropsWithChildren<{
   text: string;
   styles?: {};
-  numberOfLines: number;
+  numberOfLines?: number;
 }>;
 const TextView: React.FC<textViewProps> = ({
   text,

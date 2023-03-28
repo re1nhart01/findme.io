@@ -37,3 +37,7 @@ require (
 replace app/controllers => ./../controllers
 
 replace app/services => ./../services
+
+replace internal/env => ./../../pkg/env
+
+replace pkg/jwts => ./../../../pkg/jwts

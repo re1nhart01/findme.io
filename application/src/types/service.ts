@@ -1,4 +1,4 @@
-import {BottomTabNavigationOptions} from "@react-navigation/bottom-tabs";
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 
 export interface IStackScreen {
     name: string;
@@ -9,4 +9,9 @@ export interface IStackScreen {
 export interface INavigateOptions {
     path: string;
     props: any;
+}
+
+export interface IFlatListRender<T> {
+    item: T;
+    index: number;
 }
