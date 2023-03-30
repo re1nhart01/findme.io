@@ -1,17 +1,29 @@
 import React, { PropsWithChildren, useRef } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
-import { MOCK_CAROUSEL_IMAGES } from '@utils/__remove__/mocks/images';
-import { TransitionCarouselView } from '@components/TransitionCarouselView';
+import { UserRouter } from '@core/Navigation/UserRouter';
+import { Navigator } from '@core/Navigator';
+import { StackNavigationOptions, createStackNavigator } from '@react-navigation/stack';
 
 export type mainNavigationPresenterProps = PropsWithChildren<{}>;
-const MainNavigationPresenter: React.FC<
-  mainNavigationPresenterProps
-> = ({}) => {
-  const Tab = createBottomTabNavigator();
+
+const MainStack = createStackNavigator();
+const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => {
   return (
     <ScreenLayoutView backgroundColor="white">
-      <TransitionCarouselView autoscroll firstIndexActive={0} photoList={MOCK_CAROUSEL_IMAGES} />
+      <MainStack.Navigator>
+        {
+          Navigator.StackScreens.auth.length < 0 ? (
+            <MainStack.Group>
+              {Navigator.StackScreens.auth.map(({ component, name, options }) => {
+                return <MainStack.Screen name={name} component={component} options={options as StackNavigationOptions} key={name} />;
+              })}
+            </MainStack.Group>
+          )
+            : (
+              <MainStack.Screen name="UserRouter" component={UserRouter} options={{ headerShown: false }} />
+            )
+}
+      </MainStack.Navigator>
     </ScreenLayoutView>
   );
 };

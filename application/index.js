@@ -22,9 +22,10 @@ const RootApp = () => {
 
 AppRegistry.registerRunnable(appName, async (initialState) => {
   try {
-    await __app__.onCreate(initialState);
-    AppRegistry.registerComponent(appName, () => RootApp);
-    AppRegistry.runApplication(appName, initialState);
+    await __app__.onCreate(initialState).then(() => {
+      AppRegistry.registerComponent(appName, () => RootApp);
+      AppRegistry.runApplication(appName, initialState);
+    });
   } catch (e) {
     await __app__.onFallbackCreate(initialState);
     AppRegistry.registerComponent(appName, () => RootApp);

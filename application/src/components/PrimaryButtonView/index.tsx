@@ -1,9 +1,12 @@
 import React, { useCallback } from 'react';
-import { GestureResponderEvent, Insets, TouchableOpacity } from 'react-native';
+import { GestureResponderEvent, Image, ImageSourcePropType, Insets, TouchableOpacity } from 'react-native';
 import { TextView } from '@components/TextView';
+import { SVGImageSourcePropTypes } from '@type/service';
 
 type primaryButtonViewProps = {
-    text: string;
+    text?: string;
+    leftIcon?: SVGImageSourcePropTypes;
+    rightIcon?: SVGImageSourcePropTypes;
     styles?: {
         outline?: {};
         text?: {};
@@ -24,8 +27,9 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
   activeOpacity,
   styles,
   text,
-  numberOfLines }) => {
-
+  numberOfLines,
+  leftIcon,
+  rightIcon }) => {
   const handleOnPress = useCallback((event: GestureResponderEvent) => {
     onPress && onPress(event);
   }, [onPress]);
@@ -43,7 +47,9 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
       delayLongPress={delayLongPress}
       style={styles?.outline}
     >
-      <TextView text={text} styles={styles?.text} numberOfLines={numberOfLines} />
+      {leftIcon || null}
+      {text && <TextView text={text} styles={styles?.text} numberOfLines={numberOfLines} />}
+      {rightIcon || null}
     </TouchableOpacity>
   );
 };

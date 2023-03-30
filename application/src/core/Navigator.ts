@@ -1,8 +1,72 @@
 import { createNavigationContainerRef } from '@react-navigation/native';
-import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
-import { INavigateOptions, IStackScreen } from '@type/service';
+import { INavigateOptions, IStackScreen, MultipleStackScreen } from '@type/service';
+import { SignupScreenContainer } from '@screens/SignupScreen';
+import { WelcomeScreenContainer } from '@screens/WelcomeScreen';
+import { MatchesScreenContainer } from '@screens/MatchesScreen';
+import { DiscoverScreenContainer } from '@screens/DiscoverScreen';
+import { ChatsScreenContainer } from '@screens/ChatsScreen';
+import { AllUsersScreenContainer } from '@screens/AllUsersScreen';
+import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
 
 export class Navigator {
+  public static readonly StackScreens: MultipleStackScreen = {
+    auth: [
+      {
+        name: 'SignupScreen',
+        component: SignupScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+      {
+        name: 'WelcomeScreen',
+        component: WelcomeScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+    ],
+
+    // USER NAVIGATION (ALREADY AUTHORIZED)
+    user: [
+      {
+        name: 'AllUsersScreen',
+        component: AllUsersScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+      {
+        name: 'MatchesScreen',
+        component: MatchesScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+      {
+        name: 'DiscoverScreen',
+        component: DiscoverScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+      {
+        name: 'ChatsScreen',
+        component: ChatsScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+      {
+        name: 'UserProfileScreen',
+        component: UserProfileScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
+    ],
+  };
+
   private readonly _stackScreens: Array<IStackScreen>;
 
   private _navigationStack: Array<INavigateOptions> = [];
@@ -30,7 +94,7 @@ export class Navigator {
     return this._navigation;
   }
 
-  public get stackScreens(): Array<{ name: string; component: JSX.Element; options: BottomTabNavigationOptions }> {
+  public get stackScreens(): Array<IStackScreen> {
     return this._stackScreens;
   }
 
