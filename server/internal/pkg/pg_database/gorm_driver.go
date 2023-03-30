@@ -16,6 +16,7 @@ func InitTables() {
 	inst.CreateDatabaseTable(models.USER_DEVICE, models.UserDeviceModel{})
 	inst.CreateDatabaseTable(models.USER_POSTS, models.UserPostModel{})
 	inst.CreateDatabaseTable(models.USER_PREFERENCES, models.UserPreferenceModel{})
+	inst.CreateDatabaseTable(models.USER_PHOTOS, models.UserPhotosModel{})
 }
 
 func (db *postgresInstance) CreateDatabaseTable(tableName string, model any) {

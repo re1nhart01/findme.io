@@ -22,4 +22,5 @@ const (
 	USER_DEVICE      = "user_devices"
 	USER_POSTS       = "user_posts"
 	USER_PREFERENCES = "user_preferences"
+	USER_PHOTOS      = "user_photos"
 )
