@@ -21,6 +21,7 @@ rules:
     "memberSyntaxSortOrder": ["single", "multiple", "all", "none"],
     "allowSeparatedGroups": true,
   }]
+  no-with: off
   no-unused-vars: off
   no-empty-pattern: off
   no-multiple-empty-lines: [2, { 'max': 1, 'maxBOF': 0, 'maxEOF': 0 }]
