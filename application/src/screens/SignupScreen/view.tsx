@@ -12,7 +12,7 @@ import { ImageButtonView } from '@components/ImageButtonView';
 
 import Facebook from '@assets/svg/facebook.svg';
 import Google from '@assets/svg/google.svg';
-import { PressableTextView } from "@components/PressableTextView";
+import { PressableTextView } from '@components/PressableTextView';
 
 export type signupScreenPresenterProps = {};
 
