@@ -12,7 +12,7 @@ const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => 
     <ScreenLayoutView backgroundColor="white">
       <MainStack.Navigator>
         {
-          Navigator.StackScreens.auth.length < 0 ? (
+          Navigator.StackScreens.auth.length > 0 ? (
             <MainStack.Group>
               {Navigator.StackScreens.auth.map(({ component, name, options }) => {
                 return <MainStack.Screen name={name} component={component} options={options as StackNavigationOptions} key={name} />;

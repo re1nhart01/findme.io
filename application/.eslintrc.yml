@@ -27,8 +27,9 @@ rules:
   no-multiple-empty-lines: [2, { 'max': 1, 'maxBOF': 0, 'maxEOF': 0 }]
   prefer-const: [2, { 'destructuring': all }]
   no-path-concat: 2
-  global-require: 2
+  global-require: 0
   no-class-assign: 0
+  import/no-dynamic-require: 0
   no-await-in-loop: 0
   react/require-default-props: off
   prefer-destructuring: off

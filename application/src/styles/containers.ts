@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  flex1: {
-    flex: 1,
+  line: {
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    width: '100%',
   },
 });

@@ -17,6 +17,7 @@ type primaryButtonViewProps = {
     delayLongPress?: number;
     hitSlop?: Insets;
     numberOfLines?: number;
+    vars?: {[key: string]: string};
 };
 
 const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
@@ -29,6 +30,7 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
   text,
   numberOfLines,
   leftIcon,
+  vars,
   rightIcon }) => {
   const handleOnPress = useCallback((event: GestureResponderEvent) => {
     onPress && onPress(event);
@@ -48,7 +50,7 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
       style={styles?.outline}
     >
       {leftIcon || null}
-      {text && <TextView text={text} styles={styles?.text} numberOfLines={numberOfLines} />}
+      {text && <TextView vars={vars} text={text} styles={styles?.text} numberOfLines={numberOfLines} />}
       {rightIcon || null}
     </TouchableOpacity>
   );

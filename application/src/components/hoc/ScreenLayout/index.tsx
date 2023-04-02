@@ -5,10 +5,11 @@ import { Styles } from '@styles/load';
 type screenLayoutViewProps = PropsWithChildren<{
     backgroundColor?: string;
     hasKeyboardAvoiding?: boolean;
+    styles?: {};
 }>
-const ScreenLayoutView: React.FC<screenLayoutViewProps> = ({ children, backgroundColor, hasKeyboardAvoiding }) => {
+const ScreenLayoutView: React.FC<screenLayoutViewProps> = ({ children, backgroundColor, hasKeyboardAvoiding, styles }) => {
   return (
-    <SafeAreaView style={[Styles.Layout.flex1, { backgroundColor }]}>
+    <SafeAreaView style={[Styles.Layout.flex1, { backgroundColor }, styles]}>
       {
         hasKeyboardAvoiding ?
           children : children

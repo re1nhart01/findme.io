@@ -7,6 +7,8 @@ import {
 } from 'react-native';
 import { IFlatListRender } from '@type/service';
 import { TransitionCarouselItemView } from '@components/TransitionItemView';
+import { useBlur, useFocus } from '@reacts/hooks/useNavigations';
+import { TimeoutId } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/types';
 
 type transitionCarouselViewProps = PropsWithChildren<{
     autoscroll: boolean;
@@ -19,9 +21,18 @@ type transitionCarouselViewProps = PropsWithChildren<{
     }
 }>;
 
+const transitionTimeout = 4000;
 const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscroll, firstIndexActive, photoList, styles }) => {
   const [get, set] = useState(firstIndexActive);
   const listRef = useRef(null);
+  const timeout = useRef<TimeoutId | null>(null);
+  const backing = useRef(false);
+
+  const getItemLayout = (data: any, index: number) => ({
+    length: photoList.length,
+    offset: 145 * index,
+    index,
+  });
 
   const _renderList = useCallback(({ item, index }: IFlatListRender<string>) => {
     return (
@@ -29,27 +40,80 @@ const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscr
     );
   }, [get, set]);
 
+  const _callAutoscroll = useCallback((index: number) => {
+    timeout.current = setTimeout(() => {
+      handleAutoscroll(transitionTimeout, index);
+    }, transitionTimeout);
+  }, [timeout]);
+
+  const handleAutoscroll = useCallback((timer: number, nextIndex: number) => {
+    if (listRef.current) {
+      (listRef.current as FlatList).scrollToIndex({
+        index: nextIndex,
+        animated: true,
+      });
+      if (backing.current) {
+        if (nextIndex === 0) {
+          backing.current = false;
+          _callAutoscroll(nextIndex + 1);
+          return;
+        }
+        _callAutoscroll(nextIndex - 1);
+      } else {
+        if (nextIndex >= photoList.length - 1) {
+          backing.current = true;
+          _callAutoscroll(nextIndex - 1);
+          return;
+        }
+        _callAutoscroll(nextIndex + 1);
+      }
+    }
+  }, [listRef]);
+
+  const onTouchStart = useCallback(() => {
+    clearTimeout(timeout.current as TimeoutId);
+    timeout.current = setTimeout(() => {
+      handleAutoscroll(transitionTimeout, get + 1);
+    }, transitionTimeout + 1);
+  }, [listRef]);
+
   const handleOnScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const viewSize = event.nativeEvent.layoutMeasurement.width - 30;
+    const viewSize = event.nativeEvent.layoutMeasurement.width;
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const currentIndex = Math.round(contentOffset / viewSize);
+    // make sure that is this index is convenient and right (rewrite this stuff)
+    const currentIndex = Math.round(contentOffset / 185);
     if (get !== currentIndex) {
       set(currentIndex);
     }
   }, [set, get]);
 
+  useFocus(() => {
+    if (photoList.length > 0 && autoscroll) {
+      handleAutoscroll(transitionTimeout, get + 1);
+    }
+  }, []);
+
+  useBlur(() => {
+    if (timeout.current !== null) {
+      clearTimeout(timeout.current);
+    }
+  }, []);
+
   return (
     <FlatList
-      contentContainerStyle={{ backgroundColor: 'green' }}
       horizontal
       pagingEnabled
       decelerationRate={0}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      onTouchStart={() => { autoscroll && onTouchStart(); }}
       snapToAlignment="center"
       onScroll={handleOnScroll}
       ref={listRef}
       keyExtractor={(item) => item}
       data={photoList}
       renderItem={_renderList as unknown as ListRenderItem<string>}
+      getItemLayout={getItemLayout}
     />
   );
 };

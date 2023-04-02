@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, Image } from 'react-native';
+import { Animated, Easing, Image, ImageSourcePropType } from "react-native";
 
 type transitionCarouselItemViewProps = {
     styles?: {};
@@ -19,21 +19,21 @@ const TransitionCarouselItemView: React.FC<transitionCarouselItemViewProps> = ({
         duration: 500,
         easing: Easing.ease,
         useNativeDriver: true,
-        toValue: 0,
+        toValue: 1,
       }).start();
     } else {
       Animated.timing(transitionY, {
         duration: 500,
         easing: Easing.ease,
         useNativeDriver: true,
-        toValue: 75,
+        toValue: 0.8,
       }).start();
     }
   }, [currentIndex, activeIndex]);
 
   return (
-    <Animated.View style={{ width: 322, height: 400, backgroundColor: 'red', transform: [{ translateY: transitionY }], marginHorizontal: 10 }}>
-      <Image source={{ uri }} style={[styles, { width: '100%', height: '100%' }]} />
+    <Animated.View style={{ width: 235, height: 360, backgroundColor: 'red', transform: [{ scale: transitionY }], borderRadius: 15 }}>
+      <Image source={uri as ImageSourcePropType} style={[styles, { width: '100%', height: '100%', borderRadius: 15}]} />
     </Animated.View>
   );
 };

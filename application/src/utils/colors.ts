@@ -5,4 +5,5 @@ export const colors = {
   redE9: '#E94057',
   grayE8: '#E8E6EA',
   grayAD: '#ADAFBB',
+  blue32: '#323755',
 };

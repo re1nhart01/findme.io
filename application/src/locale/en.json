@@ -1,3 +1,14 @@
 {
-  "aboba": "aboba",
+  "welcome": "Welcome",
+  "algorithm": "Algorithm",
+  "users_going_through": "We match you with people that have a\nlarge array of similar interests.",
+  "create_an_account": "Create an account",
+  "already_have_acc": "Already have an account?",
+  "sign_in": "Sign in",
+  "sign_up_continue": "Sign up to continue",
+  "continue_as": "Continue as {{ mongus }}",
+  "use_phone": "Use phone number",
+  "or_sign_up": "or sign up with",
+  "terms": "Terms of use",
+  "privacy": "Privacy Policy"
 }
