@@ -63,8 +63,8 @@ func (app *FindMeIoApplication) Run(port string) error {
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, os.Interrupt)
-	<-quit
-
+	v := <-quit
+	fmt.Println(v.String())
 	fmt.Println("Server closing...")
 
 	pg, _ := pg_database.GetDatabaseInstance().Instance.DB()

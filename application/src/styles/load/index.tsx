@@ -3,6 +3,7 @@ import MarginPadding from '@styles/gaps';
 import Button from '@styles/buttons';
 import Text from '@styles/text';
 import Container from '@styles/containers';
+import Input from '@styles/input';
 
 export const Styles = {
   Layout,
@@ -10,4 +11,5 @@ export const Styles = {
   Button,
   Text,
   Container,
+  Input,
 };

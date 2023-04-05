@@ -52,4 +52,15 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Regular',
     fontSize: fontSizeDP(14),
   },
+  bigBoldBlack34: {
+    fontSize: fontSizeDP(34),
+    fontFamily: 'Sk-Modernist-Bold',
+    color: colors.black00,
+  },
+  placeholderText: {
+    fontSize: fontSizeDP(12),
+    fontFamily: 'Sk-Modernist-Regular',
+    color: colors.black00,
+    opacity: 0.4,
+  },
 });

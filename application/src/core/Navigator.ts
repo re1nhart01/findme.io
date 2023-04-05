@@ -7,10 +7,18 @@ import { DiscoverScreenContainer } from '@screens/DiscoverScreen';
 import { ChatsScreenContainer } from '@screens/ChatsScreen';
 import { AllUsersScreenContainer } from '@screens/AllUsersScreen';
 import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
+import { SignInScreenContainer } from "@screens/SignInScreen";
 
 export class Navigator {
   public static readonly StackScreens: MultipleStackScreen = {
     auth: [
+      {
+        name: 'SignInScreen',
+        component: SignInScreenContainer,
+        options: {
+          headerShown: false,
+        },
+      },
       {
         name: 'SignupScreen',
         component: SignupScreenContainer,

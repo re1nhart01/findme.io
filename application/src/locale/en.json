@@ -10,5 +10,9 @@
   "use_phone": "Use phone number",
   "or_sign_up": "or sign up with",
   "terms": "Terms of use",
-  "privacy": "Privacy Policy"
+  "privacy": "Privacy Policy",
+  "sign_in_msg": "Please enter your valid phone number, login or email. And make sure you wrote correct password. ",
+  "login": "Login",
+  "password": "Password",
+  "log_in": "Log In"
 }

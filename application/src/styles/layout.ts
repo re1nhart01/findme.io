@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { wDP } from "@utils/scaling";
+import { wDP } from '@utils/scaling';
 
 export default StyleSheet.create({
   w100: {
@@ -27,5 +27,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  absolute: {
+    position: 'absolute',
+  },
+  grow1: {
+    flexGrow: 1,
   },
 });

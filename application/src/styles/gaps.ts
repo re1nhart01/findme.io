@@ -23,6 +23,9 @@ export default StyleSheet.create({
   pt20pc: {
     paddingTop: '20.7%',
   },
+  mt10: {
+    marginTop: hDP(10),
+  },
   mt15pc: {
     marginTop: '15.7%',
   },

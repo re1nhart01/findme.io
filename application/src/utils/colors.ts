@@ -6,4 +6,5 @@ export const colors = {
   grayE8: '#E8E6EA',
   grayAD: '#ADAFBB',
   blue32: '#323755',
+  black00_40: 'rgba(0,0,0,0.4)',
 };
