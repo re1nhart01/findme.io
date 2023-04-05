@@ -11,11 +11,13 @@ type imageButtonViewProps = {
   hitSlop?: Insets;
   onPress?: (event: GestureResponderEvent) => void;
   onLongPress?: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
 }
 
 const ImageButtonView: React.FC<imageButtonViewProps> = ({
   height,
   onLongPress,
+  disabled,
   width,
   color,
   activeOpacity,
@@ -25,6 +27,7 @@ const ImageButtonView: React.FC<imageButtonViewProps> = ({
   styles }) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={activeOpacity}
       onPress={onPress}
       onLongPress={onLongPress}

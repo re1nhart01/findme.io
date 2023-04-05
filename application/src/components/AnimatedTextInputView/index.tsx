@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Animated, Easing, ImageSourcePropType, Keyboard, TextInput, View } from "react-native";
+import { Animated, Easing, ImageSourcePropType, Keyboard, LayoutAnimation, TextInput, View } from 'react-native';
 import { Styles } from '@styles/load';
 import { TextView } from '@components/TextView';
 import I18next from '@src/locale/i18next';
@@ -68,14 +68,14 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
   const handleOnPressInput = useCallback(() => {
     Animated.parallel([Animated.timing(translationValueX.current, {
       toValue: 20,
-      duration: 400,
-      easing: Easing.linear,
+      duration: 800,
+      easing: Easing.bezier(0.51, 0.92, 0.24, 1.15),
       useNativeDriver: true,
     }),
     Animated.timing(translationValueY.current, {
       toValue: -30,
-      duration: 400,
-      easing: Easing.linear,
+      duration: 800,
+      easing: Easing.bezier(0.51, 0.92, 0.24, 1.15),
       useNativeDriver: true,
     })]).start();
     set({ ...get, active: true });

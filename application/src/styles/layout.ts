@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { wDP } from '@utils/scaling';
+import { DEVICE_HEIGHT, DEVICE_WIDTH, wDP } from '@utils/scaling';
 
 export default StyleSheet.create({
   w100: {
@@ -11,6 +11,12 @@ export default StyleSheet.create({
   flex1: {
     flex: 1,
   },
+  w20pc: {
+    width: '20%',
+  },
+  w60pc: {
+    width: '60%',
+  },
   flexRow: {
     flexDirection: 'row',
   },
@@ -19,6 +25,9 @@ export default StyleSheet.create({
   },
   jc_c: {
     justifyContent: 'center',
+  },
+  jc_sb: {
+    justifyContent: 'space-between',
   },
   ai_c: {
     alignItems: 'center',
@@ -33,5 +42,11 @@ export default StyleSheet.create({
   },
   grow1: {
     flexGrow: 1,
+  },
+  w_device: {
+    width: DEVICE_WIDTH,
+  },
+  h_device: {
+    height: DEVICE_HEIGHT,
   },
 });

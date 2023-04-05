@@ -10,6 +10,9 @@ export default StyleSheet.create({
   screenLayout: {
     paddingHorizontal: wDP(40),
   },
+  serviceScreenLayoutHeader: {
+    paddingTop: hDP(40),
+  },
   serviceScreenLayout: {
     paddingTop: hDP(80),
   },
@@ -26,5 +29,6 @@ export default StyleSheet.create({
     backgroundColor: colors.whiteFF,
     zIndex: 10,
     paddingHorizontal: wDP(6),
+    marginLeft: wDP(10),
   },
 });

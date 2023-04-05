@@ -31,4 +31,12 @@ export default StyleSheet.create({
     width: wDP(64),
     height: wDP(64),
   },
+  smallImageButton: {
+    backgroundColor: colors.whiteFF,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: colors.whiteF3,
+    width: wDP(52),
+    height: wDP(52),
+  },
 });

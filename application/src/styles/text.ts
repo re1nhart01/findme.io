@@ -11,6 +11,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Bold',
     fontSize: fontSizeDP(24),
   },
+  mediumText24Black: {
+    color: colors.black00,
+    fontFamily: 'Sk-Modernist-Bold',
+    fontSize: fontSizeDP(24),
+  },
   redSubHeader: {
     color: colors.blue32,
     fontFamily: 'Sk-Modernist-Regular',
@@ -26,6 +31,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Regular',
     fontSize: fontSizeDP(16),
   },
+  smallText13Black: {
+    color: colors.black00,
+    fontFamily: 'Sk-Modernist-Regular',
+    fontSize: fontSizeDP(14),
+  },
   smallText16Red: {
     color: colors.redE9,
     fontFamily: 'Sk-Modernist-Regular',
@@ -39,6 +49,11 @@ export default StyleSheet.create({
   },
   smallText12Black: {
     color: colors.black00,
+    fontFamily: 'Sk-Modernist-Regular',
+    fontSize: fontSizeDP(12),
+  },
+  smallText12_40Black: {
+    color: colors.black00_40,
     fontFamily: 'Sk-Modernist-Regular',
     fontSize: fontSizeDP(12),
   },
@@ -63,4 +78,5 @@ export default StyleSheet.create({
     color: colors.black00,
     opacity: 0.4,
   },
+
 });
