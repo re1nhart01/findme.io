@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+const API_BASE = "/api/v2"
+
 type FindMeIoApplication struct {
 	Ver      string
 	Instance *gin.Engine
@@ -36,14 +38,14 @@ func NewApp(withLogger bool) *FindMeIoApplication {
 }
 
 func (app *FindMeIoApplication) getControllers() (*controllers.UserController, *controllers.AuthController) {
-	user := controllers.CreateUserController()
-	auth := controllers.CreateAuthController()
+	user := controllers.CreateUserController(API_BASE)
+	auth := controllers.CreateAuthController(API_BASE)
 	return user, auth
 }
 
 func (app *FindMeIoApplication) Run(port string) error {
 	user, auth := app.getControllers()
-
+	app.Instance.Use(middlewares.ParseJSONBodyMiddleware())
 	routes.AuthRoute(app.Instance, auth)
 	app.Instance.Use(middlewares.AuthMiddleware())
 	routes.UserRouter(app.Instance, user)

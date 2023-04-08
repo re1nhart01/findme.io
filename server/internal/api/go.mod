@@ -67,3 +67,5 @@ replace internal/models => ./../pkg/models
 replace pkg/jwts => ./../../pkg/jwts
 
 replace pkg/utils => ./../../pkg/utils
+
+replace pkg/dto => ./../../pkg/service_dto

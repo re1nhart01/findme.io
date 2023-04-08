@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"app/services"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,11 +21,11 @@ func (user *UserController) CreateUser(ctx *gin.Context) {
 	})
 }
 
-func CreateUserController() *UserController {
+func CreateUserController(basePath string) *UserController {
 	return &UserController{
 		&BaseController{
 			"UserController",
-			"/users",
+			fmt.Sprintf("%s/users", basePath),
 		},
 	}
 }
