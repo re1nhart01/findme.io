@@ -4,6 +4,9 @@ import (
 	"time"
 )
 
+// username, password, email, fullName, birth, details, gender, avatar
+// userhash, active, popularity,
+
 type UserModel struct {
 	BaseTypeModel
 	Username   string    `json:"username,omitempty"`

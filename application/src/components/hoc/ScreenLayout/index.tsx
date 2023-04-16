@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Styles } from '@styles/load';
 import { KeyboardAvoidingComponent } from '@components/hoc/KeyboardAvoidingView';
+import { colors } from "@utils/colors";
 
 type screenLayoutViewProps = PropsWithChildren<{
     backgroundColor?: string;
@@ -21,6 +22,10 @@ const ScreenLayoutView: React.FC<screenLayoutViewProps> = ({ children, backgroun
       </KeyboardAvoidingComponent>
     </SafeAreaView>
   );
+};
+
+ScreenLayoutView.defaultProps = {
+  backgroundColor: colors.whiteFF,
 };
 
 export { ScreenLayoutView };

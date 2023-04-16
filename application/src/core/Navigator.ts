@@ -1,6 +1,7 @@
 import { NavigationContainerRefWithCurrent, createNavigationContainerRef } from '@react-navigation/native';
 import { INavigateOptions, IStackScreen, MultipleStackScreen } from '@type/service';
 import { RootStackParamList, StackScreens } from '@core/NavigatorScreens';
+import { BackHandler } from 'react-native';
 
 export class Navigator {
   public static readonly StackScreens: MultipleStackScreen = StackScreens;
@@ -37,6 +38,7 @@ export class Navigator {
   }
 
   public navigate = <T extends keyof RootStackParamList>(path: T, props: RootStackParamList[T]) => {
+    console.log(this._currentScreen, this._navigationStack);
     if (!this.navigation || this._currentScreen.path === path) {
       return;
     }
@@ -54,10 +56,23 @@ export class Navigator {
     }
   };
 
+  public onBackPress = () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      console.log('zxczxczxcxzcxz');
+      this.goBack();
+      return true;
+    });
+  };
+
   public goBack = () => {
     try {
       const l = this.navigationStack.length;
       if (!this.navigation || l < 2) {
+        if (l !== 0) {
+          this._navigationStack.pop();
+          this._currentScreen = { path: '', props: {} };
+          this.navigation.goBack();
+        }
         return;
       }
       const { props, path } = this._navigationStack[l - 2];

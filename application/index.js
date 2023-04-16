@@ -1,7 +1,4 @@
-/**
- * @format
- */
-
+import React from 'react';
 import { AppRegistry } from 'react-native';
 import { __app__ } from '@core/MainActivity';
 import { Provider } from 'react-redux';

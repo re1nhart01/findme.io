@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import { colors } from "@utils/colors";
+import { colors } from '@utils/colors';
 
 type findStatusBarProps = {};
 const FindStatusBar: React.FC<findStatusBarProps> = ({}) => {

@@ -1,3 +1,4 @@
+import { forceNavigator } from '@core/Navigator';
 import { Activity } from './base/Activity';
 import { NativeModules } from './NativeModules';
 import { GeolocationService } from './Geolocation';
@@ -17,8 +18,16 @@ class MainActivity extends Activity {
     this._geo = new GeolocationService();
   }
 
-  public onCreate(initialProps: any): Promise<void> {
-    return Promise.resolve(undefined);
+  public async onCreate(initialProps: any): Promise<void> {
+    await forceNavigator.onBackPress();
+    await this._user.restoreUser();
+    await this._geo.updateGeo();
+    const isAuth = this._user.isAuth;
+    if (!isAuth) {
+      forceNavigator.navigate('MatchesScreen', {});
+    } else {
+      forceNavigator.navigate('WelcomeScreen', {});
+    }
   }
 
   public onUpdate(): Promise<void> {

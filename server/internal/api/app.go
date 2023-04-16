@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-const API_BASE = "/api/v2"
+const API_BASE string = "/api/v2"
 
 type FindMeIoApplication struct {
 	Ver      string
@@ -37,18 +37,24 @@ func NewApp(withLogger bool) *FindMeIoApplication {
 	return inst
 }
 
-func (app *FindMeIoApplication) getControllers() (*controllers.UserController, *controllers.AuthController) {
+func (app *FindMeIoApplication) getControllers() (*controllers.FileController,
+	*controllers.UserController,
+	*controllers.AuthController) {
 	user := controllers.CreateUserController(API_BASE)
 	auth := controllers.CreateAuthController(API_BASE)
-	return user, auth
+	file := controllers.CreateFileController(API_BASE)
+	return file, user, auth
 }
 
 func (app *FindMeIoApplication) Run(port string) error {
-	user, auth := app.getControllers()
+	file, user, auth := app.getControllers()
+
 	app.Instance.Use(middlewares.ParseJSONBodyMiddleware())
 	routes.AuthRoute(app.Instance, auth)
+
 	app.Instance.Use(middlewares.AuthMiddleware())
 	routes.UserRouter(app.Instance, user)
+	routes.FileRoute(app.Instance, file)
 
 	httpServer := &http.Server{
 		Addr:           port,

@@ -11,4 +11,8 @@ export class GeolocationService {
 
     return HaversineCalculation(dLat, dLon, x1, x2);
   }
+
+  public async updateGeo() {
+
+  }
 }

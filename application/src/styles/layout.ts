@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { DEVICE_HEIGHT, DEVICE_WIDTH, wDP } from '@utils/scaling';
+import { colors } from "@utils/colors";
 
 export default StyleSheet.create({
   w100: {
@@ -48,5 +49,9 @@ export default StyleSheet.create({
   },
   h_device: {
     height: DEVICE_HEIGHT,
+  },
+  // bg
+  whiteFF_bg: {
+    backgroundColor: colors.whiteFF,
   },
 });

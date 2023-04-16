@@ -97,7 +97,7 @@ func addError(errs *ErrorList, key string, errorStringList ...string) {
 }
 func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *ErrorList) (map[string]any, *ErrorList) {
 	for k, v := range typeModel {
-		
+
 		fieldFromBody := body[k]
 		if fieldFromBody == nil && v.Required {
 			addError(errors, k, fmt.Sprintf("Field %s is required.", k))
@@ -108,6 +108,7 @@ func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *
 
 		if MapTypes[v.Type] != typeOfField {
 			addError(errors, k, fmt.Sprintf("Type mismatch, expects %s but got %s", MapTypes[v.Type], typeOfField))
+			continue
 		}
 		if v.Type == "STRING" && typeEqual {
 			l := len(fieldFromBody.(string))

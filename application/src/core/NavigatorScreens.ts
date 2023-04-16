@@ -7,11 +7,15 @@ import { MatchesScreenContainer } from '@screens/MatchesScreen';
 import { DiscoverScreenContainer } from '@screens/DiscoverScreen';
 import { ChatsScreenContainer } from '@screens/ChatsScreen';
 import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
+import { PhoneScreenContainer } from '@screens/PhoneScreen';
+import { VerifyScreenContainer } from "@screens/VerifyPhoneScreen";
 
 export type RootStackParamList = {
   '': {};
-  SignInScreen: {a: string};
-  SignupScreen: {b: number};
+  SignInScreen: {};
+  SignupScreen: {};
+  PhoneScreen: {};
+  VerifyPhoneScreen: {};
   WelcomeScreen: {};
   AllUsersScreen: {};
   MatchesScreen: {};
@@ -21,6 +25,13 @@ export type RootStackParamList = {
 };
 export const StackScreens: MultipleStackScreen = {
   auth: [
+    {
+      name: 'WelcomeScreen',
+      component: WelcomeScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
     {
       name: 'SignInScreen',
       component: SignInScreenContainer,
@@ -36,8 +47,15 @@ export const StackScreens: MultipleStackScreen = {
       },
     },
     {
-      name: 'WelcomeScreen',
-      component: WelcomeScreenContainer,
+      name: 'PhoneScreen',
+      component: PhoneScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'VerifyPhoneScreen',
+      component: VerifyScreenContainer,
       options: {
         headerShown: false,
       },

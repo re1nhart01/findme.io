@@ -14,7 +14,7 @@ export type signInScreenPresenterProps = {};
 const SignInScreenPresenter: React.FC<signInScreenPresenterProps> = ({}) => {
   return (
     <ScreenLayoutView backgroundColor={colors.whiteFF} styles={[Styles.Container.screenLayout, Styles.Container.serviceScreenLayoutHeader]}>
-      <MainHeaderView headerText="login" subHeaderText="password" />
+      <MainHeaderView />
       <View style={[Styles.MarginPadding.mt32]}>
         <TextView text="sign_in" styles={Styles.Text.bigBoldBlack34} />
         <TextView text="sign_in_msg" styles={Styles.Text.smallText14Black} />

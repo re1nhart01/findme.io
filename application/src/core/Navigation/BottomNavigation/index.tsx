@@ -9,6 +9,7 @@ import ChatsIcon from '@assets/svg/bottom/message.svg';
 import ProfileIcon from '@assets/svg/bottom/profile.svg';
 import { forceNavigator } from '@core/Navigator';
 import { colors } from '@utils/colors';
+import { RootStackParamList } from '@core/NavigatorScreens';
 import styles from './styles';
 
 type bottomNavigationProps = {
@@ -17,7 +18,7 @@ type bottomNavigationProps = {
 const BottomNavigation: React.FC<bottomNavigationProps> = ({ navigation, insets, state, descriptors }) => {
   const [getSelectedRoute, setSelectedRoute] = useState(1);
 
-  const onPressSelectRoute = useCallback((currentRoute: string, index: number) => () => {
+  const onPressSelectRoute = useCallback((currentRoute: keyof RootStackParamList, index: number) => () => {
     forceNavigator.navigate(currentRoute, {});
     setSelectedRoute(index);
   }, [getSelectedRoute]);
