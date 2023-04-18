@@ -44,7 +44,6 @@ const TimerTextView = forwardRef<{ runTimer:() => void }, timerTextViewProps>(({
   }, [getTextNum, onEnd, timeoutId]);
 
   const runTimer = useCallback(() => {
-    console.warn('aboba');
     setTextNum(CONSTANTS.numberOfSeconds);
     countRef.current = CONSTANTS.numberOfSeconds;
     queueMicrotask(tickTimer).then();
