@@ -61,6 +61,10 @@ export default StyleSheet.create({
   fullRad: {
     borderRadius: 999,
   },
+  wh45_px: {
+    width: wDP(45),
+    height: wDP(45),
+  },
   wh65_px: {
     width: wDP(65),
     height: wDP(65),

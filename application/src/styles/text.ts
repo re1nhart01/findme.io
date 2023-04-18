@@ -77,6 +77,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Bold',
     color: colors.black00,
   },
+  bigBoldRed34: {
+    fontSize: fontSizeDP(34),
+    fontFamily: 'Sk-Modernist-Bold',
+    color: colors.redE9,
+  },
   placeholderText: {
     fontSize: fontSizeDP(12),
     fontFamily: 'Sk-Modernist-Regular',

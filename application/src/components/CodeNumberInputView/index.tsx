@@ -23,12 +23,11 @@ const CodeNumberInputView: React.FC<codeNumberInputViewProps> = ({ countOfDigits
     <View style={[Styles.Layout.w100, Styles.MarginPadding.g7, Styles.Layout.flexRow]}>
       <TextInput
         onChangeText={onChange}
-        autoFocus
         ref={hiddenInputRef}
         value={overValue}
         style={[Styles.Layout.w0, Styles.Layout.h0, Styles.Layout.absolute]}
       />
-      {new Array(+CONSTANTS.countOfNums).fill('num_field').map((el, index) => {
+      {new Array(+countOfDigits!).fill('num_field').map((el, index) => {
         return (
           <View
             onTouchStart={onPressInField}

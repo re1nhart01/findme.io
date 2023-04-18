@@ -38,6 +38,12 @@ const VerifyScreenContainer: React.FC<verifyScreenContainerProps> = ({}) => {
     }
   }, [getState]);
 
+  const onResendPress = useCallback(() => {
+    if (timerRef && timerRef.current) {
+      timerRef.current.runTimer();
+    }
+  }, [timerRef, timerRef.current]);
+
   useEffect(() => {
     if (timerRef && timerRef.current) {
       timerRef.current.runTimer();
@@ -54,6 +60,7 @@ const VerifyScreenContainer: React.FC<verifyScreenContainerProps> = ({}) => {
     onPressNumber,
     onEraseInput,
     timerRef,
+    onResendPress,
   };
 
   return (
