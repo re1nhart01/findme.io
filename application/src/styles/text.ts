@@ -62,6 +62,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Bold',
     fontSize: fontSizeDP(18),
   },
+  smallTextRegular18: {
+    color: colors.black00,
+    fontFamily: 'Sk-Modernist-Regular',
+    fontSize: fontSizeDP(18),
+  },
   smallTextRed14: {
     color: colors.redE9,
     fontFamily: 'Sk-Modernist-Regular',

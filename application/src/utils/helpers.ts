@@ -16,3 +16,7 @@ export const HaversineCalculation = (dLat: number, dLon: number, lat1: number, l
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return +(CONSTANTS.earthRadius * c).toFixed(3);
 };
+
+export const queueMicrotask = (cb: () => void) => Promise.resolve()
+  .then(cb)
+  .catch((err) => setTimeout(() => { throw err; }, 0));

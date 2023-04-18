@@ -76,6 +76,7 @@ export class Navigator {
         return;
       }
       const { props, path } = this._navigationStack[l - 2];
+      this._currentScreen = { path, props };
       this._navigationStack.pop();
       this._navigation.navigate(path as never, props as never);
     } catch (e) {

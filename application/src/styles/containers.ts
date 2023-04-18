@@ -31,4 +31,8 @@ export default StyleSheet.create({
     paddingHorizontal: wDP(6),
     marginLeft: wDP(10),
   },
+  blackBorder1: {
+    borderColor: 'black',
+    borderWidth: 1,
+  },
 });

@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SVGImageSourcePropTypes } from '@type/service';
-import { DEVICE_WIDTH } from '@utils/scaling';
 import { Styles } from '@styles/load';
 
 type buttonMatrixViewProps = {
@@ -24,9 +23,17 @@ const StatelessButtonMatrixView: React.FC<buttonMatrixViewProps> = ({ onNumberBu
 
   const onRenderNumberView = useCallback((n: number) => {
     return (
-      <View style={[{ width: '33.3%', height: 60, backgroundColor: 'gray' }, Styles.Layout.flexCenter]}>
-        <TouchableOpacity style={[{ width: 70, height: 60, backgroundColor: 'red' }, Styles.Layout.flexCenter]} onPress={() => handleNumberButtonPress(n)}>
-          <Text style={[Styles.Text.mediumText24Black, { backgroundColor: 'yellow', textAlign: 'center' }]}>{n}</Text>
+      <View style={[Styles.Layout.w33_3pc, Styles.Layout.h60, Styles.Layout.flexCenter]}>
+        <TouchableOpacity
+          style={[
+            Styles.Container.blackBorder1,
+            Styles.Layout.flexCenter,
+            Styles.Layout.wh70_px,
+            Styles.Layout.fullRad,
+          ]}
+          onPress={() => handleNumberButtonPress(n)}
+        >
+          <Text style={[Styles.Text.mediumText24Black, Styles.Text.textCenter]}>{n}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -34,15 +41,14 @@ const StatelessButtonMatrixView: React.FC<buttonMatrixViewProps> = ({ onNumberBu
 
   return (
     <View
-      style={{
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        width: '100%',
-        rowGap: 30,
-        backgroundColor: 'blue',
-      }}
+      style={[
+        Styles.Layout.flexRow,
+        Styles.Layout.wrap,
+        Styles.Layout.jc_sb,
+        Styles.Layout.ai_fs,
+        Styles.Layout.w100,
+        Styles.MarginPadding.r_g30,
+      ]}
     >
       {onRenderNumberView(7)}
       {onRenderNumberView(8)}
@@ -53,11 +59,13 @@ const StatelessButtonMatrixView: React.FC<buttonMatrixViewProps> = ({ onNumberBu
       {onRenderNumberView(3)}
       {onRenderNumberView(2)}
       {onRenderNumberView(1)}
-      <View style={{ width: '33.3%', height: 100 }} />
+      <View style={[Styles.Layout.h100_px, Styles.Layout.w33_3pc]} />
       {onRenderNumberView(0)}
-      <TouchableOpacity style={{ width: '33.3%', height: 100, marginBottom: 24 }} onPress={handleEraseButtonPress}>
-        {icon}
-      </TouchableOpacity>
+      <View style={[Styles.Layout.h60, Styles.Layout.w33_3pc, Styles.Layout.flexCenter]}>
+        <TouchableOpacity style={[Styles.Layout.wh70_px, Styles.Layout.flexCenter]} onPress={handleEraseButtonPress}>
+          {icon}
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

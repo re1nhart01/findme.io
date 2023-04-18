@@ -47,6 +47,9 @@ export default StyleSheet.create({
   mb32: {
     marginBottom: hDP(32),
   },
+  mb64: {
+    marginBottom: hDP(64),
+  },
   ph40: {
     paddingHorizontal: wDP(40),
   },
@@ -58,5 +61,14 @@ export default StyleSheet.create({
   },
   g32: {
     gap: wDP(32),
+  },
+  g30: {
+    gap: wDP(30),
+  },
+  g7: {
+    gap: wDP(7),
+  },
+  r_g30: {
+    rowGap: wDP(30),
   },
 });

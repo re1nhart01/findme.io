@@ -17,5 +17,6 @@
   "log_in": "Log In",
   "my_phone": "My mobile",
   "my_phone_msg": "Please enter your valid phone number. We will send you a 4-digit code to verify your account. ",
-  "continue": "Continue"
+  "continue": "Continue",
+  "text_timer": "Type the verification code \nwe’ve sent you",
 }

@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
-import { DEVICE_HEIGHT, DEVICE_WIDTH, wDP } from '@utils/scaling';
+import { DEVICE_HEIGHT, DEVICE_WIDTH, hDP, wDP } from "@utils/scaling";
 import { colors } from "@utils/colors";
 
 export default StyleSheet.create({
   w100: {
     width: '100%',
   },
+
   h100: {
     height: '100%',
   },
@@ -33,6 +34,9 @@ export default StyleSheet.create({
   ai_c: {
     alignItems: 'center',
   },
+  ai_fs: {
+    alignItems: 'flex-start',
+  },
   flexCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -53,5 +57,40 @@ export default StyleSheet.create({
   // bg
   whiteFF_bg: {
     backgroundColor: colors.whiteFF,
+  },
+  fullRad: {
+    borderRadius: 999,
+  },
+  wh65_px: {
+    width: wDP(65),
+    height: wDP(65),
+  },
+  wh70_px: {
+    width: wDP(70),
+    height: wDP(70),
+  },
+  w33_3pc: {
+    width: '33.3%',
+  },
+  h60: {
+    height: hDP(60),
+  },
+  wrap: {
+    flexWrap: 'wrap',
+  },
+  none: {
+    display: 'none',
+  },
+  w0: {
+    width: 0,
+  },
+  h0: {
+    height: 0,
+  },
+  h100_px: {
+    height: 100,
+  },
+  w100_px: {
+    width: 100,
   },
 });
