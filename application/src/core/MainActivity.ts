@@ -1,4 +1,5 @@
 import { forceNavigator } from '@core/Navigator';
+import { PushNotifications } from './PushNotifications';
 import { Activity } from './base/Activity';
 import { NativeModules } from './NativeModules';
 import { GeolocationService } from './Geolocation';
@@ -11,17 +12,21 @@ class MainActivity extends Activity {
 
   private readonly _geo: GeolocationService;
 
+  private readonly _notify: PushNotifications;
+
   public constructor() {
     super();
     this._user = new CurrentUser();
     this._native = new NativeModules();
     this._geo = new GeolocationService();
+    this._notify = new PushNotifications();
   }
 
   public async onCreate(initialProps: any): Promise<void> {
     await forceNavigator.onBackPress();
     await this._user.restoreUser();
     await this._geo.updateGeo();
+    await this._notify.onCreate(initialProps);
     const isAuth = this._user.isAuth;
     if (!isAuth) {
       forceNavigator.navigate('MatchesScreen', {});

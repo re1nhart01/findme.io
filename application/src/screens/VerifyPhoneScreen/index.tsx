@@ -32,7 +32,7 @@ const VerifyScreenContainer: React.FC<verifyScreenContainerProps> = ({}) => {
     }
     const newInputVal = v + n;
     setState({ ...getState, codeInputValue: newInputVal });
-    if (newInputVal.length === 4) {
+    if (newInputVal.length === CONSTANTS.countOfNums) {
       // here it should be checking code;
       console.warn('bebra', newInputVal);
     }
