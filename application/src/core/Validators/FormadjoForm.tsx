@@ -14,7 +14,7 @@ type formadjoFormProps<T> = {
   onFinishSubmit(values: { [key: string]: formValuesType }): void;
   children?: (data: formadjoFormFuncValue<T>) => JSX.Element;
   initialProps: { [key in keyof T]: formValuesType };
-  customErrorMessages?: { [key in keyof T]:string }
+  customErrorMessages?: Partial<{ [key in keyof T]:string }>;
 };
 
 type formadjoAction = {
@@ -46,8 +46,15 @@ function formadjoReducer(state: reducerBody, action: Action) {
 
 const FormadjoForm = <T extends object>({ children, initialProps, customErrorMessages, form, onFinishSubmit }: formadjoFormProps<T>) => {
   const initialErrorList = useMemo(() => Object.keys({ ...initialProps }).reduce((acc, curr) => ({
-    ...acc, [curr]: { isError: false, errorMessage: '' },
+    ...acc, [curr as keyof T]: { isError: false, errorMessage: '' },
   }), {}), [initialProps]);
+
+  function getCustomErrorByName(key: string, defaultValue: string = '') {
+    if (customErrorMessages) {
+      return (customErrorMessages as {[key: string]: string})[key] || defaultValue;
+    }
+    return defaultValue;
+  }
 
   const initialReducerProps: reducerBody = useMemo(() => ({
     errorNumberFields: { ...initialErrorList },
@@ -57,11 +64,15 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
   const [state, dispatch] = useReducer(formadjoReducer, initialReducerProps, void 0);
 
   const onSubmit = useCallback(() => {
-    dispatch({ type: 'CLEAR_ERRORS', payload: initialErrorList });
+    dispatch({ type: 'CLEAR_ERRORS', payload: { ...initialErrorList } });
     const errorList = new Formadjo(form);
     const res = errorList.validateForm(state.formValues);
-    if (Object.values(res).some((el) => el.isError)) {
-      for (const [key, value] of Object.entries(res)) {
+    const filteredEntries = Object.entries(res).filter((el) => {
+      const [_, value] = el;
+      return value.isError;
+    });
+    if (filteredEntries.length > 0) {
+      for (const [key, value] of filteredEntries) {
         setErrorField(key, value);
       }
     } else {
@@ -70,8 +81,12 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
   }, [state, form, initialErrorList]);
 
   const setErrorField = useCallback((k: string, v: errorPart) => {
+    const customError = getCustomErrorByName(k);
+    if (customError) {
+      v.errorMessage = customError;
+    }
     dispatch({ type: 'UPDATE_ERROR_VALUE', payload: { [k]: v } });
-  }, []);
+  }, [getCustomErrorByName]);
 
   const updateFormState = useCallback((k: keyof T, v: formValuesType) => {
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { [k]: v } });
