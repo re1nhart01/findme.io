@@ -3,7 +3,7 @@ import { Formadjo, FormadjoValidator, errorPart, formValuesType } from './MainFo
 
 type formadjoFormFuncValue = {
   onSubmit(values: any): void;
-  errorFieldNumb: { [key: string]: errorPart };
+  errorsList: { [key: string]: errorPart };
   values: { [key: string]: formValuesType };
   updateFormState(k: string, v: formValuesType): void;
   updateManyFormState(properties: { [key: string]: formValuesType }): void;
@@ -86,7 +86,7 @@ const FormadjoForm: React.FC<formadjoFormProps> = ({ children, initialProps, cus
       {
         children ? children({
           onSubmit,
-          errorFieldNumb: state.errorNumberFields,
+          errorsList: state.errorNumberFields,
           values: state.formValues,
           updateFormState,
           updateManyFormState,
