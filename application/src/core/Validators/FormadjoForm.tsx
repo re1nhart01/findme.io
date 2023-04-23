@@ -5,8 +5,8 @@ type formadjoFormFuncValue<T> = {
   onSubmit(values: any): void;
   errorsList: { [key in keyof T]: errorPart };
   values: { [key in keyof T]: T[key] };
-  updateFormState(k: string, v: formValuesType): void;
-  updateManyFormState(properties: { [key: string]: formValuesType }): void;
+  updateFormState(k: keyof T, v: formValuesType): void;
+  updateManyFormState(properties: { [key in keyof T]: formValuesType }): void;
 };
 
 type formadjoFormProps<T> = {
@@ -56,11 +56,11 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
 
   const [state, dispatch] = useReducer(formadjoReducer, initialReducerProps, void 0);
 
-  const onSubmit = useCallback((value: { [key: string]: formValuesType }) => {
+  const onSubmit = useCallback(() => {
     dispatch({ type: 'CLEAR_ERRORS', payload: initialErrorList });
     const errorList = new Formadjo(form);
     const res = errorList.validateForm(state.formValues);
-    if (Object.values(res).some((el) => el.isError === true)) {
+    if (Object.values(res).some((el) => el.isError)) {
       for (const [key, value] of Object.entries(res)) {
         setErrorField(key, value);
       }
@@ -73,11 +73,11 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
     dispatch({ type: 'UPDATE_ERROR_VALUE', payload: { [k]: v } });
   }, []);
 
-  const updateFormState = useCallback((k: string, v: formValuesType) => {
+  const updateFormState = useCallback((k: keyof T, v: formValuesType) => {
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { [k]: v } });
   }, [state, dispatch]);
 
-  const updateManyFormState = useCallback((properties: { [key: string]: formValuesType }) => {
+  const updateManyFormState = useCallback((properties: { [key in keyof T]: formValuesType }) => {
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { ...properties } });
   }, [state, dispatch]);
 
