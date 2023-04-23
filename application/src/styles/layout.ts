@@ -31,6 +31,9 @@ export default StyleSheet.create({
   jc_sb: {
     justifyContent: 'space-between',
   },
+  jc_fe: {
+    justifyContent: 'flex-end',
+  },
   ai_c: {
     alignItems: 'center',
   },
@@ -96,5 +99,8 @@ export default StyleSheet.create({
   },
   w100_px: {
     width: 100,
+  },
+  min52_h: {
+    minHeight: hDP(52),
   },
 });

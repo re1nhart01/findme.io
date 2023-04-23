@@ -24,7 +24,7 @@ const MainHeaderView: React.FC<mainHeaderViewProps> = ({ headerText, subHeaderTe
   }, [goBack]);
 
   return (
-    <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_sb]}>
+    <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_sb, Styles.Layout.min52_h]}>
       <View style={[Styles.Layout.w20pc]}>
         {!LeftButton?.hide && <ImageButtonView onPress={handleGoBack} disabled={LeftButton?.disabled} styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]} width={18} height={18} Icon={LeftArrow} />}
       </View>

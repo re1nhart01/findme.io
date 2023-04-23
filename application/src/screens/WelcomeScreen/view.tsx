@@ -19,7 +19,7 @@ const WelcomeScreenPresenter: React.FC<welcomeScreenPresenterProps> = ({ onCreat
         <TransitionCarouselView
           photoList={CarouselPhotos}
           firstIndexActive={0}
-          autoscroll={false}
+          autoscroll
         />
       </View>
       <View style={[Styles.MarginPadding.mt40]}>

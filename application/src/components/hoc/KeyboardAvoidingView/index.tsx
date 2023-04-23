@@ -10,7 +10,7 @@ function KeyboardAvoidingComponent<T extends keyboardAvoidingComponentProps>({ c
     return (
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={Styles.Layout.flex1}
+        contentContainerStyle={[Styles.Layout.grow1]}
         style={Styles.Layout.grow1}
       >
         {children}

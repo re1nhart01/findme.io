@@ -8,7 +8,8 @@ import { DiscoverScreenContainer } from '@screens/DiscoverScreen';
 import { ChatsScreenContainer } from '@screens/ChatsScreen';
 import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
 import { PhoneScreenContainer } from '@screens/PhoneScreen';
-import { VerifyScreenContainer } from "@screens/VerifyPhoneScreen";
+import { VerifyScreenContainer } from '@screens/VerifyPhoneScreen';
+import { SetupProfileScreenContainer } from '@screens/SetupProfileScreen';
 
 export type RootStackParamList = {
   '': {};
@@ -16,6 +17,7 @@ export type RootStackParamList = {
   SignupScreen: {};
   PhoneScreen: {};
   VerifyPhoneScreen: {};
+  SetupProfileScreen: {};
   WelcomeScreen: {};
   AllUsersScreen: {};
   MatchesScreen: {};
@@ -56,6 +58,13 @@ export const StackScreens: MultipleStackScreen = {
     {
       name: 'VerifyPhoneScreen',
       component: VerifyScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'SetupProfileScreen',
+      component: SetupProfileScreenContainer,
       options: {
         headerShown: false,
       },

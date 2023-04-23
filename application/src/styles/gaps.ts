@@ -17,6 +17,9 @@ export default StyleSheet.create({
   mb15pc: {
     marginBottom: '15.7%',
   },
+  ml5: {
+    marginLeft: wDP(5),
+  },
   mt18pc: {
     marginTop: '18.2%',
   },
@@ -37,6 +40,9 @@ export default StyleSheet.create({
   },
   mt50: {
     marginTop: hDP(50),
+  },
+  ml8: {
+    marginLeft: wDP(8),
   },
   mb10: {
     marginBottom: hDP(10),

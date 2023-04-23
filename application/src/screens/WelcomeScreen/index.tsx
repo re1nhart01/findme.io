@@ -7,7 +7,8 @@ const WelcomeScreenContainer = ({}) => {
 
   const onGoToAuthPress = useCallback(() => {
     // forceNavigator.navigate('SignInScreen', {});
-    forceNavigator.navigate('PhoneScreen', {});
+    // forceNavigator.navigate('PhoneScreen', {});
+    forceNavigator.navigate('SetupProfileScreen', {});
   }, [forceNavigator]);
 
   const onCreateAccountPress = useCallback(() => {

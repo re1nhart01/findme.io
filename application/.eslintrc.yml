@@ -33,7 +33,9 @@ rules:
   no-await-in-loop: 0
   no-return-assign: 0
   react/default-props-match-prop-types: 0
+  valid-typeof: 0
   react/no-array-index-key: 0
+  no-restricted-syntax: 0
   react/prop-types: 0
   react/require-default-props: off
   prefer-destructuring: off
