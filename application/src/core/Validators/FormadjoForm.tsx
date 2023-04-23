@@ -60,12 +60,12 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
     dispatch({ type: 'CLEAR_ERRORS', payload: initialErrorList });
     const errorList = new Formadjo(form);
     const res = errorList.validateForm(state.formValues);
-    if (Object.keys(res).length > 0) {
+    if (Object.values(res).some((el) => el.isError === true)) {
       for (const [key, value] of Object.entries(res)) {
         setErrorField(key, value);
       }
     } else {
-      onFinishSubmit && onFinishSubmit(value);
+      onFinishSubmit && onFinishSubmit(state.formValues);
     }
   }, [state, form, initialErrorList]);
 
