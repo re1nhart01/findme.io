@@ -1,20 +1,20 @@
 import React, { useCallback, useMemo, useReducer } from 'react';
 import { Formadjo, FormadjoValidator, errorPart, formValuesType } from './MainFormadjo';
 
-type formadjoFormFuncValue = {
+type formadjoFormFuncValue<T> = {
   onSubmit(values: any): void;
-  errorsList: { [key: string]: errorPart };
-  values: { [key: string]: formValuesType };
+  errorsList: { [key in keyof T]: errorPart };
+  values: { [key in keyof T]: T[key] };
   updateFormState(k: string, v: formValuesType): void;
   updateManyFormState(properties: { [key: string]: formValuesType }): void;
 };
 
-type formadjoFormProps = {
+type formadjoFormProps<T> = {
   form: FormadjoValidator;
   onFinishSubmit(values: { [key: string]: formValuesType }): void;
-  children?: (data: formadjoFormFuncValue) => JSX.Element;
-  initialProps: { [key: keyof formadjoFormProps['form']]: formValuesType };
-  customErrorMessages?: { [key: keyof formadjoFormProps['initialProps'] ]:string }
+  children?: (data: formadjoFormFuncValue<T>) => JSX.Element;
+  initialProps: { [key in keyof T]: formValuesType };
+  customErrorMessages?: { [key in keyof T]:string }
 };
 
 type formadjoAction = {
@@ -44,7 +44,7 @@ function formadjoReducer(state: reducerBody, action: Action) {
   }
 }
 
-const FormadjoForm: React.FC<formadjoFormProps> = ({ children, initialProps, customErrorMessages, form, onFinishSubmit }) => {
+const FormadjoForm = <T extends object>({ children, initialProps, customErrorMessages, form, onFinishSubmit }: formadjoFormProps<T>) => {
   const initialErrorList = useMemo(() => Object.keys({ ...initialProps }).reduce((acc, curr) => ({
     ...acc, [curr]: { isError: false, errorMessage: '' },
   }), {}), [initialProps]);
@@ -86,8 +86,8 @@ const FormadjoForm: React.FC<formadjoFormProps> = ({ children, initialProps, cus
       {
         children ? children({
           onSubmit,
-          errorsList: state.errorNumberFields,
-          values: state.formValues,
+          errorsList: state.errorNumberFields as { [key in keyof T]: errorPart; },
+          values: state.formValues as { [key in keyof T]: T[key]; },
           updateFormState,
           updateManyFormState,
         }) : null
