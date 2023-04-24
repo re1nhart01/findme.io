@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useReducer } from 'react';
+import { FormadjoFormer } from '@core/Validators/FormadjoFormer';
 import { Formadjo, FormadjoValidator, errorPart, formValuesType } from './MainFormadjo';
 
 type formadjoFormFuncValue<T> = {
@@ -9,12 +10,15 @@ type formadjoFormFuncValue<T> = {
   updateManyFormState(properties: { [key in keyof T]: formValuesType }): void;
 };
 
-type formadjoFormProps<T> = {
-  form: FormadjoValidator;
+type formadjoFormProps<T extends object> = {
+  form: FormadjoFormer<T>;
   onFinishSubmit(values: { [key: string]: formValuesType }): void;
   children?: (data: formadjoFormFuncValue<T>) => JSX.Element;
   initialProps: { [key in keyof T]: formValuesType };
   customErrorMessages?: Partial<{ [key in keyof T]:string }>;
+  reduxStore?: {
+    storeKey: string;
+  };
 };
 
 type formadjoAction = {
@@ -23,7 +27,7 @@ type formadjoAction = {
 }
 
 type reducerBody = {
-  errorNumberFields: { [key: keyof reducerBody['formValues']]: errorPart };
+  errorNumberFields: { [key in keyof reducerBody['formValues']]: errorPart };
   formValues: { [key: string]: formValuesType };
 }
 
@@ -65,7 +69,7 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
 
   const onSubmit = useCallback(() => {
     dispatch({ type: 'CLEAR_ERRORS', payload: { ...initialErrorList } });
-    const errorList = new Formadjo(form);
+    const errorList = new Formadjo(form.get);
     const res = errorList.validateForm(state.formValues);
     const filteredEntries = Object.entries(res).filter((el) => {
       const [_, value] = el;

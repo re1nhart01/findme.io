@@ -5,6 +5,12 @@ export default StyleSheet.create({
   mt32: {
     marginTop: hDP(32),
   },
+  pv20: {
+    paddingVertical: hDP(20),
+  },
+  ph20: {
+    paddingHorizontal: hDP(20),
+  },
   mt40: {
     marginTop: hDP(40),
   },
@@ -22,6 +28,21 @@ export default StyleSheet.create({
   },
   mt18pc: {
     marginTop: '18.2%',
+  },
+  mt30pc: {
+    marginTop: '30%',
+  },
+  mt60pc: {
+    marginTop: '60%',
+  },
+  mt75pc: {
+    marginTop: '75%',
+  },
+  mt85pc: {
+    marginTop: '85%',
+  },
+  mt93pc: {
+    marginTop: '93%',
   },
   pt20pc: {
     paddingTop: '20.7%',

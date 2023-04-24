@@ -32,7 +32,14 @@ export default StyleSheet.create({
     marginLeft: wDP(10),
   },
   blackBorder1: {
-    borderColor: 'black',
+    borderColor: colors.black00,
     borderWidth: 1,
+  },
+  redBorder3: {
+    borderColor: colors.redE9,
+    borderWidth: 3,
+  },
+  redBackgroundColor: {
+    backgroundColor: colors.redE9_10,
   },
 });

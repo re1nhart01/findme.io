@@ -32,7 +32,7 @@ const TransitionCarouselItemView: React.FC<transitionCarouselItemViewProps> = ({
   }, [currentIndex, activeIndex]);
 
   return (
-    <Animated.View style={{ width: 235, height: 360, backgroundColor: 'red', transform: [{ scale: transitionY }], borderRadius: 15 }}>
+    <Animated.View style={{ width: 235, height: 360, transform: [{ scale: transitionY }], borderRadius: 15 }}>
       <Image source={uri as ImageSourcePropType} style={[styles, { width: '100%', height: '100%', borderRadius: 15}]} />
     </Animated.View>
   );

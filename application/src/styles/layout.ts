@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { DEVICE_HEIGHT, DEVICE_WIDTH, hDP, wDP } from "@utils/scaling";
-import { colors } from "@utils/colors";
+import { DEVICE_HEIGHT, DEVICE_WIDTH, hDP, wDP } from '@utils/scaling';
+import { colors } from '@utils/colors';
 
 export default StyleSheet.create({
   w100: {
@@ -63,6 +63,9 @@ export default StyleSheet.create({
   },
   fullRad: {
     borderRadius: 999,
+  },
+  rad15: {
+    borderRadius: 15,
   },
   wh45_px: {
     width: wDP(45),
