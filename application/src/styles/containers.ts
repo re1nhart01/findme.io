@@ -39,6 +39,10 @@ export default StyleSheet.create({
     borderColor: colors.redE9,
     borderWidth: 3,
   },
+  redBorder1: {
+    borderColor: colors.redE9,
+    borderWidth: 1,
+  },
   redBackgroundColor: {
     backgroundColor: colors.redE9_10,
   },

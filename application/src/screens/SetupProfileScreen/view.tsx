@@ -1,13 +1,11 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import { TextView } from '@components/TextView';
 import { AnimatedTextInputView } from '@components/AnimatedTextInputView';
-import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import { SelectBirthdayView } from '@components/SelectBirthdayView';
 import { FormadjoForm } from '@core/Validators/FormadjoForm';
 import {
@@ -17,7 +15,6 @@ import {
 } from '@utils/forms';
 import { wDP } from '@utils/scaling';
 import { ImageButtonView } from '@components/ImageButtonView';
-
 import RightArrowIcon from '@assets/svg/rightArrow.svg';
 
 export type setupProfileScreenPresenterProps = {};
@@ -41,6 +38,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
       >
         {/* BASIC INFORMATION */}
         <FormadjoForm<IBasicInformationFormTemplate>
+          removeErrorOnChange
           initialProps={{ email: '', password: '', rePassword: '', username: '' }}
           onFinishSubmit={(v) => { console.log(v); }}
           form={basicInformationFormTemplate}
@@ -49,7 +47,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
             updateFormState,
             updateManyFormState,
             onSubmit,
-            errorsList,
+            errorsList: { email, username, rePassword, password },
           }) => {
             return (
               <View style={[Styles.Container.screenLayout, Styles.MarginPadding.mt50, Styles.Layout.w_device]}>
@@ -57,31 +55,53 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   <TextView text="basic_info" styles={Styles.Text.smallTextBold18} />
                 </View>
                 <AnimatedTextInputView
+                  autoComplete="email"
+                  isError={email.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Email"
-                  onChange={() => {}}
-                  styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                  onChange={(v) => updateFormState('email', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
+                {email.isError && <Text>{email.errorMessage}</Text>}
                 <AnimatedTextInputView
+                  isError={username.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Username"
-                  onChange={() => {}}
-                  styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                  onChange={(v) => updateFormState('username', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
+                {username.isError && <Text>{username.errorMessage}</Text>}
                 <AnimatedTextInputView
+                  isError={password.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Password"
-                  onChange={() => {}}
-                  styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                  onChange={(v) => updateFormState('password', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
+                {password.isError && <Text>{password.errorMessage}</Text>}
                 <AnimatedTextInputView
+                  isError={rePassword.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Re-Password"
-                  onChange={() => {}}
-                  styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                  onChange={(v) => updateFormState('rePassword', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
+                {rePassword.isError && <Text>{rePassword.errorMessage}</Text>}
                 <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt75pc]}>
                   <ImageButtonView
+                    onPress={onSubmit}
                     styles={[
                       Styles.Container.redBorder3,
                       Styles.Layout.wh65_px,
@@ -108,7 +128,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
             updateFormState,
             updateManyFormState,
             onSubmit,
-            errorsList,
+            errorsList: {details, birthday, lastName, firstName},
           }) => {
             return (
               <View style={[Styles.Container.screenLayout, Styles.Layout.w_device]}>
@@ -119,28 +139,44 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   <AnimatedTextInputView
                     placeholderColor={colors.black00_40}
                     placeholder="First Name"
-                    onChange={() => {}}
-                    styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                    isError={firstName.isError}
+                    onChange={(v) => updateFormState('firstName', v)}
+                    styles={{
+                      error: [Styles.Container.redBorder1],
+                      outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                      input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
                   <AnimatedTextInputView
                     placeholderColor={colors.black00_40}
                     placeholder="Last Name"
-                    onChange={() => {}}
-                    styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                    isError={lastName.isError}
+                    onChange={(v) => updateFormState('lastName', v)}
+                    styles={{
+                      error: [Styles.Container.redBorder1],
+                      outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                      input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
                   <AnimatedTextInputView
                     multiline
                     placeholderColor={colors.black00_40}
                     placeholder="Provide some details about you"
-                    onChange={() => {}}
-                    styles={{ outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10], input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                    isError={details.isError}
+                    onChange={(v) => updateFormState('details', v)}
+                    styles={{
+                      error: [Styles.Container.redBorder1],
+                      outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                      input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
                 </View>
                 <View style={[Styles.MarginPadding.mt10]}>
-                  <SelectBirthdayView />
+                  <SelectBirthdayView
+                    value={values.birthday}
+                    setSelectedDate={(v) => updateFormState('birthday', v)}
+                  />
                 </View>
                 <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt75pc]}>
                   <ImageButtonView
+                    onPress={onSubmit}
                     styles={[
                       Styles.Container.redBorder3,
                       Styles.Layout.wh65_px,

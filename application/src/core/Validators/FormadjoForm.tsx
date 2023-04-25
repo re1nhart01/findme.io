@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useReducer } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { FormadjoFormer } from '@core/Validators/FormadjoFormer';
 import { Formadjo, FormadjoValidator, errorPart, formValuesType } from './MainFormadjo';
 
@@ -19,6 +19,7 @@ type formadjoFormProps<T extends object> = {
   reduxStore?: {
     storeKey: string;
   };
+  removeErrorOnChange?: boolean;
 };
 
 type formadjoAction = {
@@ -48,7 +49,7 @@ function formadjoReducer(state: reducerBody, action: Action) {
   }
 }
 
-const FormadjoForm = <T extends object>({ children, initialProps, customErrorMessages, form, onFinishSubmit }: formadjoFormProps<T>) => {
+const FormadjoForm = <T extends object>({ children, initialProps, customErrorMessages, form, onFinishSubmit, removeErrorOnChange }: formadjoFormProps<T>) => {
   const initialErrorList = useMemo(() => Object.keys({ ...initialProps }).reduce((acc, curr) => ({
     ...acc, [curr as keyof T]: { isError: false, errorMessage: '' },
   }), {}), [initialProps]);
@@ -93,8 +94,15 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
   }, [getCustomErrorByName]);
 
   const updateFormState = useCallback((k: keyof T, v: formValuesType) => {
+    if (removeErrorOnChange && state.errorNumberFields[k as string].isError) {
+      setErrorField(k as string, { isError: false, errorMessage: '' });
+    }
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { [k]: v } });
   }, [state, dispatch]);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   const updateManyFormState = useCallback((properties: { [key in keyof T]: formValuesType }) => {
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { ...properties } });

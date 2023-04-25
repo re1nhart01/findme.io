@@ -3,8 +3,11 @@ import { Animated, Easing, ImageSourcePropType, Keyboard, LayoutAnimation, TextI
 import { Styles } from '@styles/load';
 import { TextView } from '@components/TextView';
 import I18next from '@src/locale/i18next';
+import { TextInputAndroidProps } from 'react-native/Libraries/Components/TextInput/TextInput';
 
 type textInputViewProps = {
+  autoComplete?: TextInputAndroidProps['autoComplete'];
+  isError?: boolean;
   leftIcon?: any;
   rightIcon?: any;
   placeholder?: string;
@@ -13,6 +16,7 @@ type textInputViewProps = {
   styles?: {
     outline?: {};
     input?: {};
+    error?: {},
   };
   autoCapitalize?: 'none' | 'sentences' | 'words';
   editable?: boolean;
@@ -30,6 +34,8 @@ type textInputViewState = Required<{
   active: boolean;
 }>;
 const AnimatedTextInputView: React.FC<textInputViewProps> = ({
+  autoComplete,
+  isError,
   autoCapitalize,
   debounced,
   editable,
@@ -93,7 +99,7 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
   }, [get, onBlur]);
 
   return (
-    <View style={[Styles.Layout.flexRow, Styles.Layout.ai_c, styles?.outline]}>
+    <View style={[Styles.Layout.flexRow, Styles.Layout.ai_c, styles?.outline, isError && styles?.error]}>
       {
         placeholder && get.active && (
         <Animated.View
@@ -112,6 +118,7 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
         )
 }
       <TextInput
+        autoComplete={autoComplete}
         numberOfLines={1}
         style={[Styles.Layout.w100, styles?.input]}
         onChangeText={handleOnChange}

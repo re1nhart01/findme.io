@@ -15,6 +15,8 @@ export class FormadjoField {
 
   private __isRequired: boolean;
 
+  private __dependOn: string;
+
   private __minLength: number;
 
   private __maxLength: number;
@@ -36,10 +38,23 @@ export class FormadjoField {
     this.__regexpValidation = void 0;
     this.__customErrors = {};
     this.__body = null;
+    this.__dependOn = '';
   }
 
   public get isRequired(): boolean {
     return this.__isRequired;
+  }
+
+  public get dependOn(): string {
+    return this.__dependOn;
+  }
+
+  public setDependingField(val: string, customError: string | null = null) {
+    this.__dependOn = val;
+    if (typeof customError === 'string') {
+      this.__customErrors.__dependOn_error = customError;
+    }
+    return this;
   }
 
   public setBody(val: { [key: string]: FormadjoField }) {
