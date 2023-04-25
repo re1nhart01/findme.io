@@ -101,8 +101,8 @@ func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *
 		fieldFromBody := body[k]
 		if fieldFromBody == nil && v.Required {
 			addError(errors, k, fmt.Sprintf("Field %s is required.", k))
+			break
 		}
-
 		typeOfField := reflect.TypeOf(fieldFromBody).String()
 		typeEqual := MapTypes[v.Type] == typeOfField
 

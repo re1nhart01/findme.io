@@ -38,8 +38,10 @@ export class Navigator {
   }
 
   public navigate = <T extends keyof RootStackParamList>(path: T, props: RootStackParamList[T]) => {
-    console.log(this._currentScreen, this._navigationStack);
     if (!this.navigation || this._currentScreen.path === path) {
+      if (this._navigationStack.length === 1 && this._currentScreen.path === path) {
+        this._navigation.navigate(path as never, props as never);
+      }
       return;
     }
     if (this._navigation.isReady()) {
@@ -58,7 +60,6 @@ export class Navigator {
 
   public onBackPress = () => {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      console.log('zxczxczxcxzcxz');
       this.goBack();
       return true;
     });

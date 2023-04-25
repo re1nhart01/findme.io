@@ -1,14 +1,18 @@
 package controllers
 
 import (
+	ApplicationDto "app/dtos"
+	"app/services"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"pkg/dto"
 	"pkg/utils"
 )
 
 type AuthController struct {
 	*BaseController
+	AuthService *services.AuthService
 }
 
 func (auth *AuthController) GetName() string { return auth.Name }
@@ -21,6 +25,26 @@ func (auth *AuthController) Register(ctx *gin.Context) {
 		return
 	}
 
+}
+
+func (auth *AuthController) HasEmail(ctx *gin.Context) {
+	data, ok := ctx.Get("body")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
+		return
+	}
+	validatedData, errors := dto.ValidateModelWithDto(data.(map[string]any), ApplicationDto.AuthCheckEmailDto, &dto.ErrorList{})
+	if len(*errors) == 0 {
+		isExistsEmail := auth.AuthService.CheckEmailExists(validatedData["email"].(string))
+		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
+			"exists": isExistsEmail,
+		}))
+		return
+	} else {
+		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
+			"errors": errors,
+		}))
+	}
 }
 
 func (auth *AuthController) Login(ctx *gin.Context) {
@@ -41,5 +65,6 @@ func CreateAuthController(basePath string) *AuthController {
 			"AuthController",
 			fmt.Sprintf("%s/auth", basePath),
 		},
+		&services.AuthService{},
 	}
 }

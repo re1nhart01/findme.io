@@ -13,6 +13,7 @@ type mainHeaderViewProps = Partial<{
   subHeaderText: string;
   onTouchCenter: (event: GestureResponderEvent) => void;
   LeftButton: Partial<{
+    onOverrideGoBack?(): void;
     hide: boolean;
     disabled: boolean;
   }>;
@@ -20,8 +21,12 @@ type mainHeaderViewProps = Partial<{
 const MainHeaderView: React.FC<mainHeaderViewProps> = ({ headerText, subHeaderText, LeftButton, rightButton, onTouchCenter }) => {
   const { goBack } = forceNavigator;
   const handleGoBack = useCallback(() => {
+    if (LeftButton?.onOverrideGoBack) {
+      LeftButton.onOverrideGoBack && LeftButton.onOverrideGoBack();
+      return;
+    }
     goBack && goBack();
-  }, [goBack]);
+  }, [LeftButton, goBack]);
 
   return (
     <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_sb, Styles.Layout.min52_h]}>

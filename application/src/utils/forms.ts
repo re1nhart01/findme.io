@@ -4,7 +4,6 @@ import { FormadjoField } from '@core/Validators/Formadjo';
 
 export type IBasicInformationFormTemplate = {
   email: string;
-  username: string;
   password: string;
   rePassword: string;
 }
@@ -14,10 +13,6 @@ export const basicInformationFormTemplate = new FormadjoFormer<IBasicInformation
     .setRegexpValidation(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
     .setMinLength(7)
     .setIsRequired(true),
-  username: new FormadjoField('username', 'string')
-    .setIsRequired(true)
-    .setMinLength(5)
-    .setMaxLength(100),
   password: new FormadjoField('password', 'string')
     .setIsRequired(true)
     .setMinLength(5)
@@ -53,3 +48,21 @@ export const personalInformationFormTemplate = new FormadjoFormer<IPersonalInfor
     .setMinLength(1005)
     .setMaxLength(Date.now()),
 });
+
+export type ILocationFormTemplate = {
+  country: string;
+  city: string;
+};
+
+export const locationFormTemplate = new FormadjoFormer<ILocationFormTemplate>({
+  country: new FormadjoField('Country', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(100)
+    .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
+  city: new FormadjoField('City', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(100)
+    .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
+})

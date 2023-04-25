@@ -26,5 +26,7 @@
   "next": "Next",
   "configure": "Configure",
   "account": "account",
-  "choose_birthday": "Choose birthday date"
+  "choose_birthday": "Choose birthday date",
+  "your_location": "Your Location",
+  "finish": "Finish"
 }

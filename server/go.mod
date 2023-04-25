@@ -6,11 +6,11 @@ require (
 	internal/api v0.0.0-00010101000000-000000000000
 	internal/env v0.0.0-00010101000000-000000000000
 	internal/pg_database v0.0.0-00010101000000-000000000000
-	pkg/dto v0.0.0-00010101000000-000000000000
 )
 
 require (
 	app/controllers v0.0.0-00010101000000-000000000000 // indirect
+	app/dtos v0.0.0-00010101000000-000000000000 // indirect
 	app/middlewares v0.0.0-00010101000000-000000000000 // indirect
 	app/routes v0.0.0-00010101000000-000000000000 // indirect
 	app/services v0.0.0-00010101000000-000000000000 // indirect
@@ -50,6 +50,7 @@ require (
 	gorm.io/driver/postgres v1.5.0 // indirect
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
+	pkg/dto v0.0.0-00010101000000-000000000000 // indirect
 	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
 	pkg/utils v0.0.0-00010101000000-000000000000 // indirect
 )
@@ -68,10 +69,12 @@ replace app/routes => ./internal/api/routes
 
 replace app/services => ./internal/api/services
 
+replace app/dtos => ./internal/api/dtos
+
 replace app/middlewares => ./internal/api/middlewares
 
 replace pkg/jwts => ./pkg/jwts
 
 replace pkg/utils => ./pkg/utils
 
-replace pkg/dto => ./pkg/service_dto
+replace pkg/dto => ./pkg/dto

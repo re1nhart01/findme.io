@@ -58,6 +58,8 @@ replace app/middlewares => ./middlewares
 
 replace app/services => ./services
 
+replace app/dtos => ./dtos
+
 replace internal/pg_database => ./../pkg/pg_database
 
 replace internal/env => ./../pkg/env
@@ -68,4 +70,6 @@ replace pkg/jwts => ./../../pkg/jwts
 
 replace pkg/utils => ./../../pkg/utils
 
-replace pkg/dto => ./../../pkg/service_dto
+replace pkg/dto => ./../../pkg/dto
+
+replace internal/pg_database => ./../pkg/pg_database

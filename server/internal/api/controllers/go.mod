@@ -3,8 +3,10 @@ module controllers
 go 1.20
 
 require (
+	app/dtos v0.0.0-00010101000000-000000000000
 	app/services v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/gin v1.9.0
+	pkg/dto v0.0.0-00010101000000-000000000000
 	pkg/utils v0.0.0-00010101000000-000000000000
 )
 
@@ -38,8 +40,12 @@ replace internal/pg_database => ../../pkg/pg_database
 
 replace app/services => ../services
 
+replace app/dtos => ../dtos
+
 replace pkg/jwts => ./../../../pkg/jwts
 
 replace internal/env => ./../../pkg/env
 
 replace pkg/utils => ./../../../pkg/utils
+
+replace pkg/dto => ./../../../pkg/dto

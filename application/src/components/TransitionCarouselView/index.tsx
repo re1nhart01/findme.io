@@ -48,10 +48,12 @@ const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscr
 
   const handleAutoscroll = useCallback((timer: number, nextIndex: number) => {
     if (listRef.current) {
-      (listRef.current as FlatList).scrollToIndex({
-        index: nextIndex,
-        animated: true,
-      });
+      if (nextIndex < photoList.length) {
+        (listRef.current as FlatList).scrollToIndex({
+          index: nextIndex,
+          animated: true,
+        });
+      }
       if (backing.current) {
         if (nextIndex === 0) {
           backing.current = false;
@@ -97,6 +99,7 @@ const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscr
     if (timeout.current !== null) {
       clearTimeout(timeout.current);
     }
+    set(1);
   }, []);
 
   return (

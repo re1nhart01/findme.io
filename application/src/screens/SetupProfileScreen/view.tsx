@@ -10,16 +10,31 @@ import { SelectBirthdayView } from '@components/SelectBirthdayView';
 import { FormadjoForm } from '@core/Validators/FormadjoForm';
 import {
   IBasicInformationFormTemplate,
-  IPersonalInformationFormTemplate,
-  basicInformationFormTemplate, personalInformationFormTemplate,
+  ILocationFormTemplate,
+  IPersonalInformationFormTemplate, basicInformationFormTemplate, locationFormTemplate, personalInformationFormTemplate,
 } from '@utils/forms';
 import { wDP } from '@utils/scaling';
 import { ImageButtonView } from '@components/ImageButtonView';
 import RightArrowIcon from '@assets/svg/rightArrow.svg';
+import { PrimaryButtonView } from '@components/PrimaryButtonView';
+import {
+  IAdditionalUserRegisterInfo,
+  IBasicUserRegisterInfo,
+  ILocationUserRegisterInfo,
+  IUserRegisterSlice
+} from "@type/models/user";
 
-export type setupProfileScreenPresenterProps = {};
+export type setupProfileScreenPresenterProps = {
+  onInitialSetupPress(values: IBasicUserRegisterInfo): void;
+  onUserSetupPress(values: IAdditionalUserRegisterInfo): void;
+  onFinish(values: ILocationUserRegisterInfo): void;
+  scrollRef: React.RefObject<ScrollView>;
+  onGoBack(): void;
+  state: IUserRegisterSlice;
+};
 
-const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = ({}) => {
+const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = ({ onInitialSetupPress, onFinish, onUserSetupPress, scrollRef, onGoBack,
+}) => {
   return (
     <ScreenLayoutView
       backgroundColor={colors.whiteFF}
@@ -29,25 +44,26 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
         <MainHeaderView
           headerText="configure"
           subHeaderText="account"
-          LeftButton={{ hide: true }}
+          LeftButton={{ onOverrideGoBack: onGoBack }}
         />
       </View>
       <ScrollView
+        ref={scrollRef}
         horizontal
         pagingEnabled
       >
         {/* BASIC INFORMATION */}
         <FormadjoForm<IBasicInformationFormTemplate>
           removeErrorOnChange
-          initialProps={{ email: '', password: '', rePassword: '', username: '' }}
-          onFinishSubmit={(v) => { console.log(v); }}
+          initialProps={{ email: '', password: '', rePassword: '' }}
+          onFinishSubmit={onInitialSetupPress}
           form={basicInformationFormTemplate}
         >
           {({ values,
             updateFormState,
             updateManyFormState,
             onSubmit,
-            errorsList: { email, username, rePassword, password },
+            errorsList: { email, rePassword, password },
           }) => {
             return (
               <View style={[Styles.Container.screenLayout, Styles.MarginPadding.mt50, Styles.Layout.w_device]}>
@@ -55,6 +71,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   <TextView text="basic_info" styles={Styles.Text.smallTextBold18} />
                 </View>
                 <AnimatedTextInputView
+                  defaultValue={values.email}
                   autoComplete="email"
                   isError={email.isError}
                   placeholderColor={colors.black00_40}
@@ -65,18 +82,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                     input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
-                {email.isError && <Text>{email.errorMessage}</Text>}
-                <AnimatedTextInputView
-                  isError={username.isError}
-                  placeholderColor={colors.black00_40}
-                  placeholder="Username"
-                  onChange={(v) => updateFormState('username', v)}
-                  styles={{
-                    error: [Styles.Container.redBorder1],
-                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
-                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
-                />
-                {username.isError && <Text>{username.errorMessage}</Text>}
+                {email.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{email.errorMessage}</Text>}
                 <AnimatedTextInputView
                   isError={password.isError}
                   placeholderColor={colors.black00_40}
@@ -87,7 +93,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                     input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
-                {password.isError && <Text>{password.errorMessage}</Text>}
+                {password.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{password.errorMessage}</Text>}
                 <AnimatedTextInputView
                   isError={rePassword.isError}
                   placeholderColor={colors.black00_40}
@@ -98,8 +104,8 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                     input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
-                {rePassword.isError && <Text>{rePassword.errorMessage}</Text>}
-                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt75pc]}>
+                {rePassword.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{rePassword.errorMessage}</Text>}
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt30pc]}>
                   <ImageButtonView
                     onPress={onSubmit}
                     styles={[
@@ -121,14 +127,14 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
         {/* ADVANCED INFORMATION */}
         <FormadjoForm<IPersonalInformationFormTemplate>
           initialProps={{ firstName: '', lastName: '', birthday: Date.now(), details: '' }}
-          onFinishSubmit={(v) => { console.log(v); }}
+          onFinishSubmit={onUserSetupPress}
           form={personalInformationFormTemplate}
         >
           {({ values,
             updateFormState,
             updateManyFormState,
             onSubmit,
-            errorsList: {details, birthday, lastName, firstName},
+            errorsList: { details, birthday, lastName, firstName },
           }) => {
             return (
               <View style={[Styles.Container.screenLayout, Styles.Layout.w_device]}>
@@ -146,6 +152,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                       input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
+                  {firstName.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{firstName.errorMessage}</Text>}
                   <AnimatedTextInputView
                     placeholderColor={colors.black00_40}
                     placeholder="Last Name"
@@ -156,6 +163,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                       input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
+                  {lastName.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{lastName.errorMessage}</Text>}
                   <AnimatedTextInputView
                     multiline
                     placeholderColor={colors.black00_40}
@@ -167,6 +175,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
                       input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                   />
+                  {details.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{details.errorMessage}</Text>}
                 </View>
                 <View style={[Styles.MarginPadding.mt10]}>
                   <SelectBirthdayView
@@ -174,7 +183,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     setSelectedDate={(v) => updateFormState('birthday', v)}
                   />
                 </View>
-                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt75pc]}>
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt30pc]}>
                   <ImageButtonView
                     onPress={onSubmit}
                     styles={[
@@ -186,6 +195,59 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     width={wDP(25)}
                     height={wDP(25)}
                     Icon={RightArrowIcon}
+                  />
+                </View>
+              </View>
+            );
+          }}
+        </FormadjoForm>
+        <FormadjoForm<ILocationFormTemplate>
+          initialProps={{ city: '', country: '' }}
+          onFinishSubmit={onFinish}
+          form={locationFormTemplate}
+        >
+          {({ values,
+            updateFormState,
+            updateManyFormState,
+            onSubmit,
+            errorsList: { city, country },
+          }) => {
+            return (
+              <View style={[Styles.Container.screenLayout, Styles.Layout.w_device]}>
+                <View style={Styles.MarginPadding.mt50}>
+                  <View style={[Styles.MarginPadding.ml8]}>
+                    <TextView text="your_location" styles={Styles.Text.smallTextBold18} />
+                  </View>
+                </View>
+                <AnimatedTextInputView
+                  defaultValue={values.country}
+                  autoComplete="postal-address-country"
+                  isError={country.isError}
+                  placeholderColor={colors.black00_40}
+                  placeholder="Country"
+                  onChange={(v) => updateFormState('country', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                />
+                {country.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{country.errorMessage}</Text>}
+                <AnimatedTextInputView
+                  isError={city.isError}
+                  placeholderColor={colors.black00_40}
+                  placeholder="City"
+                  onChange={(v) => updateFormState('city', v)}
+                  styles={{
+                    error: [Styles.Container.redBorder1],
+                    outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
+                    input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
+                />
+                {city.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{city.errorMessage}</Text>}
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt30pc]}>
+                  <PrimaryButtonView
+                    onPress={onSubmit}
+                    styles={{ outline: Styles.Button.primaryButton, text: Styles.Text.primaryButtonText }}
+                    text="finish"
                   />
                 </View>
               </View>

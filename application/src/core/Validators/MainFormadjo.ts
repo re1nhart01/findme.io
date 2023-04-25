@@ -29,7 +29,6 @@ export class Formadjo {
         result[label] = { errorMessage: `Form field ${label} is not appear in form values`, isError: true };
       } else {
         result[label] = value.validateField(formValues[label]);
-        console.log(label, formValues[label], formValues[value.dependOn]);
         if (value.dependOn && formValues[label] !== formValues[value.dependOn]) {
           result[label] = { errorMessage: `${value.dependOn}s are not equal!`, isError: true };
         }

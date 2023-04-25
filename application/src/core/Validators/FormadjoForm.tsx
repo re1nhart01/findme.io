@@ -101,7 +101,6 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
   }, [state, dispatch]);
 
   useEffect(() => {
-    console.log(state);
   }, [state]);
 
   const updateManyFormState = useCallback((properties: { [key in keyof T]: formValuesType }) => {

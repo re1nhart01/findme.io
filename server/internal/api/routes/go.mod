@@ -44,3 +44,5 @@ replace internal/env => ./../../pkg/env
 replace pkg/jwts => ./../../../pkg/jwts
 
 replace pkg/utils => ./../../../pkg/utils
+
+replace pkg/dto => ./../../../pkg/dto

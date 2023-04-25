@@ -6,6 +6,7 @@ import I18next from '@src/locale/i18next';
 import { TextInputAndroidProps } from 'react-native/Libraries/Components/TextInput/TextInput';
 
 type textInputViewProps = {
+  defaultValue?: string;
   autoComplete?: TextInputAndroidProps['autoComplete'];
   isError?: boolean;
   leftIcon?: any;
@@ -34,6 +35,7 @@ type textInputViewState = Required<{
   active: boolean;
 }>;
 const AnimatedTextInputView: React.FC<textInputViewProps> = ({
+  defaultValue,
   autoComplete,
   isError,
   autoCapitalize,
@@ -49,7 +51,7 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
   multiline,
   returnKeyLabel }) => {
   const [get, set] = useState<textInputViewState>({
-    searchValue: '',
+    searchValue: defaultValue || '',
     active: false,
   });
   let timer: null | any = null;
