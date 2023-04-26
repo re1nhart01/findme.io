@@ -15,5 +15,22 @@ func (auth *AuthService) GetService() any {
 
 func (auth *AuthService) CheckEmailExists(email string) bool {
 	var existedModel models.UserModel
-	return pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Where("email = ?", email).Find(&existedModel).RowsAffected > 0
+	return pg_database.
+		GetDatabaseInstance().
+		Instance.
+		Table(models.USERS).
+		Where("email = ?", email).
+		Find(&existedModel).
+		RowsAffected > 0
+}
+
+func (auth *AuthService) CheckPhoneExists(email string) bool {
+	var existedModel models.UserModel
+	return pg_database.
+		GetDatabaseInstance().
+		Instance.
+		Table(models.USERS).
+		Where("phone = ?", email).
+		Find(&existedModel).
+		RowsAffected > 0
 }

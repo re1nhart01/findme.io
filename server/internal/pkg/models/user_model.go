@@ -22,6 +22,7 @@ type UserModel struct {
 	Active     bool      `json:"active,omitempty"`
 	Popularity float64   `json:"popularity,omitempty"`
 	City       string    `json:"city,omitempty"`
+	Phone      string    `json:"phone,omitempty"`
 	Country    string    `json:"country,omitempty"`
 }
 

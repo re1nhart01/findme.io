@@ -21,8 +21,8 @@ import {
   IAdditionalUserRegisterInfo,
   IBasicUserRegisterInfo,
   ILocationUserRegisterInfo,
-  IUserRegisterSlice
-} from "@type/models/user";
+  IUserRegisterSlice,
+} from '@type/models/user';
 
 export type setupProfileScreenPresenterProps = {
   onInitialSetupPress(values: IBasicUserRegisterInfo): void;
