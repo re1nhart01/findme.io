@@ -1,4 +1,4 @@
-package com.findmeio.sendSMSFirebase;
+package com.findmeio.SendSMSFirebase;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;

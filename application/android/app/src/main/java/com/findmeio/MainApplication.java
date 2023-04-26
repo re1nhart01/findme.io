@@ -12,7 +12,7 @@ import java.util.List;
 
 
 //own imports
-import com.findmeio.sendSMSFirebase.SendSMSFirebasePackage;
+import com.findmeio.SendSMSFirebase.SendSMSFirebasePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
