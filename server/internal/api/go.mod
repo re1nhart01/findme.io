@@ -73,3 +73,6 @@ replace pkg/utils => ./../../pkg/utils
 replace pkg/dto => ./../../pkg/dto
 
 replace internal/pg_database => ./../pkg/pg_database
+
+replace pkg/cryptography => ./../../pkg/cryptography
+

@@ -1,6 +1,10 @@
 package utils
 
-import "net/http"
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+)
 
 func GiveResponse(statusCode int, statusMessage string) map[string]any {
 	return map[string]any{
@@ -30,4 +34,20 @@ func GiveOKResponse() map[string]any {
 		"statusCode":    http.StatusOK,
 		"statusMessage": "Accepted",
 	}
+}
+
+func HandleDefaultError(err error, ctx *gin.Context) bool {
+	if err != nil {
+		log.Print("|HandlerDefaultError| ->", err)
+		ctx.JSON(http.StatusBadRequest, GiveResponse(http.StatusConflict, "Bad Request while processing user!"))
+		return true
+	}
+	return false
+}
+
+func HandleNilValues(val any, defaultVal any) any {
+	if val == nil {
+		return defaultVal
+	}
+	return val
 }

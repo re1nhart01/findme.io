@@ -9,6 +9,7 @@ import {
 const initialState: IUserRegisterSlice = {
   email: '',
   password: '',
+  phone: '',
   rePassword: '',
   firstName: '',
   lastName: '',
@@ -19,6 +20,7 @@ const initialState: IUserRegisterSlice = {
   hasInterest: false,
   gender: 'It doesn\'t matter',
   hasTags: false,
+  hasSelectedMood: false,
 };
 
 const UserRegisterSlice = createSlice({

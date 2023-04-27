@@ -3,6 +3,7 @@ package dto
 import (
 	"fmt"
 	"reflect"
+	"regexp"
 	"sync"
 )
 
@@ -25,9 +26,8 @@ defaultValue: "",
 // dto_map_flat: "true" || "false"
 
 type ErrorDto struct {
-	FieldName      string
-	ErrorMsg       []string
-	IsNotImportant bool
+	FieldName string
+	ErrorMsg  []string
 }
 
 // ErrorList STRING | INTEGER | BOOL | NULL | OBJECT
@@ -37,15 +37,16 @@ type FieldsMapping map[string]*FieldDto
 var dtoWg *sync.WaitGroup
 
 type FieldDto struct {
-	Type         string
-	Required     bool
-	Min          any
-	Max          any
-	DefaultValue any
-	AnyType      bool
-	Name         string
-	Remove       bool
-	Body         FieldsMapping
+	Type             string
+	Required         bool
+	Min              any
+	Max              any
+	DefaultValue     any
+	RegexpValidation *regexp.Regexp
+	AnyType          bool
+	Name             string
+	Remove           bool
+	Body             FieldsMapping
 }
 
 var MapTypes = map[string]string{
@@ -55,7 +56,7 @@ var MapTypes = map[string]string{
 	"NULL":    "null",
 }
 
-var TestBody = map[string]any{
+var __TestBody__ = map[string]any{
 	"name":     "abobobob",
 	"password": 4,
 	"amongus": map[string]any{
@@ -63,7 +64,7 @@ var TestBody = map[string]any{
 	},
 }
 
-var UserDto = FieldsMapping{
+var __TestDto__ = FieldsMapping{
 	"name": {
 		Type:     "STRING",
 		Required: true,
@@ -90,9 +91,8 @@ var UserDto = FieldsMapping{
 
 func addError(errs *ErrorList, key string, errorStringList ...string) {
 	*errs = append(*errs, ErrorDto{
-		FieldName:      key,
-		ErrorMsg:       errorStringList,
-		IsNotImportant: false,
+		FieldName: key,
+		ErrorMsg:  errorStringList,
 	})
 }
 func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *ErrorList) (map[string]any, *ErrorList) {
@@ -101,7 +101,10 @@ func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *
 		fieldFromBody := body[k]
 		if fieldFromBody == nil && v.Required {
 			addError(errors, k, fmt.Sprintf("Field %s is required.", k))
-			break
+			continue
+		}
+		if fieldFromBody == nil {
+			continue
 		}
 		typeOfField := reflect.TypeOf(fieldFromBody).String()
 		typeEqual := MapTypes[v.Type] == typeOfField
@@ -111,7 +114,13 @@ func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *
 			continue
 		}
 		if v.Type == "STRING" && typeEqual {
-			l := len(fieldFromBody.(string))
+			fieldAsString := fieldFromBody.(string)
+			l := len(fieldAsString)
+			if v.RegexpValidation != nil {
+				if !v.RegexpValidation.MatchString(fieldAsString) {
+					addError(errors, k, fmt.Sprintf("String '%s' is not valid", fieldAsString))
+				}
+			}
 			if v.Min != nil && l < v.Min.(int) {
 				addError(errors, k, fmt.Sprintf("String should expect min length %d but got less %d", v.Min.(int), l))
 			}

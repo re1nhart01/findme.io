@@ -7,15 +7,15 @@ import (
 
 func InitTables() {
 	inst := GetDatabaseInstance()
-	inst.CreateDatabaseTable(models.MOOD, models.MoodModel{})
-	inst.CreateDatabaseTable(models.USERS, models.UserModel{})
+	//inst.CreateDatabaseTable(models.USERS, models.UserModel{})
+	inst.CreateManualTable(models.CreateUserTable())
+	inst.CreateManualTable(models.CreateUserPreferencesTable())
 	inst.CreateDatabaseTable(models.INTERESTS, models.InterestsModel{})
 	inst.CreateDatabaseTable(models.MATCHES, models.MatchesModel{})
 	inst.CreateDatabaseTable(models.NOTIFICATIONS, models.NotificationsModel{})
 	inst.CreateDatabaseTable(models.TAGS, models.TagsModel{})
 	inst.CreateDatabaseTable(models.USER_DEVICE, models.UserDeviceModel{})
 	inst.CreateDatabaseTable(models.USER_POSTS, models.UserPostModel{})
-	inst.CreateDatabaseTable(models.USER_PREFERENCES, models.UserPreferenceModel{})
 	inst.CreateDatabaseTable(models.USER_PHOTOS, models.UserPhotosModel{})
 }
 
@@ -26,4 +26,8 @@ func (db *postgresInstance) CreateDatabaseTable(tableName string, model any) {
 			panic(fmt.Sprintf("%s%s", "Error while create database table", err.Error()))
 		}
 	}
+}
+
+func (db *postgresInstance) CreateManualTable(query string) {
+	db.Instance.Exec(query)
 }

@@ -10,7 +10,7 @@ type IAuthController interface {
 	Login(ctx *gin.Context)
 	Register(ctx *gin.Context)
 	VerifyCode(ctx *gin.Context)
-	HasEmail(ctx *gin.Context)
+	HasEmailOrPhone(ctx *gin.Context)
 	Delete(ctx *gin.Context)
 }
 
@@ -20,7 +20,7 @@ func AuthRoute(engine *gin.Engine, controller IAuthController) {
 		// http://localhost:8080/auth/login
 		router.GET("/login", controller.Login)
 		router.POST("/register", controller.Register)
-		router.POST("/checkEmail", controller.HasEmail)
+		router.POST("/checkEmailOrPhone", controller.HasEmailOrPhone)
 		router.POST("/verifyCode", controller.VerifyCode)
 		router.DELETE("/delete", controller.Delete)
 	}

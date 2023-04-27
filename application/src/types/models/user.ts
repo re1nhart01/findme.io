@@ -1,5 +1,6 @@
 export interface IUserRegisterSlice {
   email: string;
+  phone: string;
   password: string;
   rePassword: string;
   firstName: string;
@@ -11,6 +12,7 @@ export interface IUserRegisterSlice {
   hasInterest: boolean;
   gender: string;
   hasTags: boolean;
+  hasSelectedMood: boolean;
 }
 
 export type IBasicUserRegisterInfo = Omit<IUserRegisterSlice, 'firstName' | 'lastName' | 'birthday' | 'details'>;

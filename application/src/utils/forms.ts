@@ -65,4 +65,4 @@ export const locationFormTemplate = new FormadjoFormer<ILocationFormTemplate>({
     .setMinLength(5)
     .setMaxLength(100)
     .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
-})
+});

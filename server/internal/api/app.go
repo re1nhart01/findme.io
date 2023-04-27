@@ -46,6 +46,10 @@ func (app *FindMeIoApplication) getControllers() (*controllers.FileController,
 	return file, user, auth
 }
 
+func (app *FindMeIoApplication) RunDatabaseBackgroundTasks() {
+	
+}
+
 func (app *FindMeIoApplication) Run(port string) error {
 	file, user, auth := app.getControllers()
 
@@ -63,6 +67,8 @@ func (app *FindMeIoApplication) Run(port string) error {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	go app.RunDatabaseBackgroundTasks()
+
 	go func() {
 		if err := httpServer.ListenAndServe(); err != nil {
 			log.Fatalf("Failed to listen and serve: %+v", err)
