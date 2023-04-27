@@ -5,8 +5,9 @@ import {
   ILocationUserRegisterInfo,
   IUserRegisterSlice,
 } from '@type/models/user';
+import { ISliceBaseModel } from "@type/models";
 
-const initialState: IUserRegisterSlice = {
+const initialState: IUserRegisterSlice & ISliceBaseModel = {
   email: '',
   password: '',
   phone: '',
@@ -21,6 +22,11 @@ const initialState: IUserRegisterSlice = {
   gender: 'It doesn\'t matter',
   hasTags: false,
   hasSelectedMood: false,
+  loading: false,
+  error: {
+    errorMessage: '',
+    isError: false,
+  },
 };
 
 const UserRegisterSlice = createSlice({
@@ -45,6 +51,10 @@ const UserRegisterSlice = createSlice({
         state = { ...state, country, city };
       }
     },
+
+
+    // register from api:
+
   },
 });
 

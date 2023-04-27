@@ -20,3 +20,5 @@ export const HaversineCalculation = (dLat: number, dLon: number, lat1: number, l
 export const queueMicrotask = (cb: () => void) => Promise.resolve()
   .then(cb)
   .catch((err) => setTimeout(() => { throw err; }, 0));
+
+export const sleep = (ms: number) => new Promise((r: any) => setTimeout(r, ms));

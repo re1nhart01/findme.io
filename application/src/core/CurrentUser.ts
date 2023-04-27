@@ -19,6 +19,7 @@ type userData = Required<{
 type tokens = {
   refresh_token: string;
   access_token: string;
+  expiration: number;
 }
 
 export enum storageKeys {
@@ -27,6 +28,10 @@ export enum storageKeys {
 }
 
 export class CurrentUser {
+  get tokens(): tokens {
+    return this._tokens;
+  }
+
   private _userData: userData;
 
   private _tokens: tokens;
@@ -50,6 +55,7 @@ export class CurrentUser {
     this._tokens = {
       access_token: '',
       refresh_token: '',
+      expiration: 0,
     };
   }
 
@@ -110,10 +116,22 @@ export class CurrentUser {
       this._tokens = {
         refresh_token: '',
         access_token: '',
+        expiration: 0,
       };
       await this.saveUser();
     } catch (ex) {
       console.warn('log out ex', ex);
+    }
+  }
+
+  public async saveTokens(tokenData: tokens) {
+    try {
+      if (tokenData) {
+        this._tokens = tokenData;
+        await this.saveUser();
+      }
+    } catch (e) {
+      console.warn('save tokens ex', e);
     }
   }
 

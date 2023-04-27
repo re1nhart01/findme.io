@@ -4,6 +4,7 @@ import { Activity } from './base/Activity';
 import { NativeModules } from './NativeModules';
 import { GeolocationService } from './Geolocation';
 import { CurrentUser } from './CurrentUser';
+import { Settings } from './Settings';
 
 class MainActivity extends Activity {
   private readonly _user: CurrentUser;
@@ -14,12 +15,15 @@ class MainActivity extends Activity {
 
   private readonly _notify: PushNotifications;
 
+  private readonly _settings: Settings;
+
   public constructor() {
     super();
     this._user = new CurrentUser();
     this._native = new NativeModules();
     this._geo = new GeolocationService();
     this._notify = new PushNotifications();
+    this._settings = new Settings();
   }
 
   public async onCreate(initialProps: any): Promise<void> {
@@ -53,6 +57,10 @@ class MainActivity extends Activity {
 
   public get getNative(): NativeModules {
     return this._native;
+  }
+
+  public get settings(): Settings {
+    return this._settings;
   }
 }
 

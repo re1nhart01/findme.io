@@ -16,3 +16,8 @@
     "password": "545444",
     "device_id": "ab85z12ifz"
 }
+
+//refresh
+{
+    "refresh_token": "token"
+}
