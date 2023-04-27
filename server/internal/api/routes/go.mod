@@ -12,6 +12,7 @@ require (
 	app/services v0.0.0-00010101000000-000000000000 // indirect
 	github.com/bytedance/sonic v1.8.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -33,10 +34,10 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
-	golang.org/x/crypto v0.6.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/crypto v0.8.0 // indirect
+	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.0 // indirect
@@ -44,7 +45,9 @@ require (
 	internal/env v0.0.0-00010101000000-000000000000 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
 	internal/pg_database v0.0.0-00010101000000-000000000000 // indirect
+	pkg/cryptography v0.0.0-00010101000000-000000000000 // indirect
 	pkg/dto v0.0.0-00010101000000-000000000000 // indirect
+	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
 	pkg/utils v0.0.0-00010101000000-000000000000 // indirect
 )
 

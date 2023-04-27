@@ -84,22 +84,68 @@ func (auth *AuthController) HasEmailOrPhone(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&res))
 		return
 	} else {
-		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
+		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
 			"errors": errors,
 		}))
 	}
 }
 
 func (auth *AuthController) Login(ctx *gin.Context) {
+	data, ok := ctx.Get("body")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
+		return
+	}
+	validatedData, errors := dto.ValidateModelWithDto(data.(map[string]any), ApplicationDto.LoginDto, &dto.ErrorList{})
+	if len(*errors) == 0 {
+		if userHash, verificationError := auth.AuthService.VerifyUserLogin(
+			validatedData["login"].(string),
+			validatedData["password"].(string),
+			validatedData["device_id"].(string)); verificationError == nil {
 
+			if tokens, tokensError := auth.AuthService.GenerateTokens(userHash); tokensError == nil {
+				ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&tokens))
+				return
+			}
+
+		}
+
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusForbidden, "Forbidden!"))
+	} else {
+		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
+			"errors": errors,
+		}))
+	}
+}
+
+func (auth *AuthController) UpdateToken(ctx *gin.Context) {
+	data, ok := ctx.Get("body")
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
+		return
+	}
+	validatedData, errors := dto.ValidateModelWithDto(data.(map[string]any), ApplicationDto.UpdateTokenDto, &dto.ErrorList{})
+	if len(*errors) == 0 {
+		if userHash, exchangeError := auth.AuthService.ExchangeToken(validatedData["refresh_token"].(string)); exchangeError == nil {
+			if tokens, tokensError := auth.AuthService.GenerateTokens(userHash); tokensError == nil {
+				ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&tokens))
+				return
+			}
+		}
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusForbidden, "Forbidden!"))
+	} else {
+		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
+			"errors": errors,
+		}))
+	}
 }
 
 func (auth *AuthController) VerifyCode(ctx *gin.Context) {
-
+	panic("STUB!")
 }
 
 func (auth *AuthController) Delete(ctx *gin.Context) {
-
+	panic("STUB!")
 }
 
 func CreateAuthController(basePath string) *AuthController {

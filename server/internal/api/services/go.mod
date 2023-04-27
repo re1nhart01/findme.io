@@ -10,14 +10,18 @@ replace pkg/cryptography => ./../../../pkg/cryptography
 
 replace internal/models => ../../pkg/models
 
+replace pkg/jwts => ./../../../pkg/jwts
+
 require (
 	internal/env v0.0.0-00010101000000-000000000000
 	internal/models v0.0.0-00010101000000-000000000000
 	internal/pg_database v0.0.0-00010101000000-000000000000
 	pkg/cryptography v0.0.0-00010101000000-000000000000
+	pkg/jwts v0.0.0-00010101000000-000000000000
 )
 
 require (
+	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
 	github.com/jackc/pgx/v5 v5.3.0 // indirect

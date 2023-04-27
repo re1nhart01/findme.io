@@ -97,3 +97,37 @@ var RegisterDto = dto.FieldsMapping{
 		RegexpValidation: regexp.MustCompile(`^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$`),
 	},
 }
+
+var LoginDto = dto.FieldsMapping{
+	"login": &dto.FieldDto{
+		Type:     "STRING",
+		Min:      5,
+		Max:      100,
+		Required: true,
+		Name:     "login",
+	},
+	"password": &dto.FieldDto{
+		Type:     "STRING",
+		Required: true,
+		Min:      5,
+		Max:      100,
+		Name:     "password",
+	},
+	"device_id": &dto.FieldDto{
+		Type:     "STRING",
+		Required: true,
+		Min:      5,
+		Max:      100,
+		Name:     "device_id",
+	},
+}
+
+var UpdateTokenDto = dto.FieldsMapping{
+	"refresh_token": &dto.FieldDto{
+		Type:     "STRING",
+		Required: true,
+		Min:      200,
+		Max:      300,
+		Name:     "refresh_token",
+	},
+}
