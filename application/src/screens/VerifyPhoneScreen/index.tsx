@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { VerifyScreenPresenter, verifyScreenPresenterProps } from '@screens/VerifyPhoneScreen/view';
 import { CONSTANTS } from '@utils/constants/strings';
+import { useTypedDispatch } from '@reacts/hooks/useRedux';
+import { forceNavigator } from '@core/Navigator';
 
 type verifyScreenContainerProps = {};
 
 type verifyScreenContainerState = {
   codeInputValue: string;
 };
+// There is no free provider for code validation, so this stuff is currently unavailable
+const TEST_PHONE_CODE = '5427';
 
 const VerifyScreenContainer: React.FC<verifyScreenContainerProps> = ({}) => {
   // this stuff after all steps markup should be in redux;
+  const dispatch = useTypedDispatch();
   const [getState, setState] = useState<verifyScreenContainerState>({
     codeInputValue: '',
   });
@@ -32,9 +37,11 @@ const VerifyScreenContainer: React.FC<verifyScreenContainerProps> = ({}) => {
     }
     const newInputVal = v + n;
     setState({ ...getState, codeInputValue: newInputVal });
+    console.log(getState.codeInputValue);
     if (newInputVal.length === CONSTANTS.countOfNums) {
-      // here it should be checking code;
-      console.warn('bebra', newInputVal);
+      if (newInputVal === TEST_PHONE_CODE) {
+        forceNavigator.navigate('SetupProfileScreen', {});
+      }
     }
   }, [getState]);
 

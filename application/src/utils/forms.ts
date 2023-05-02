@@ -54,6 +54,9 @@ export type ILocationFormTemplate = {
   city: string;
 };
 
+
+
+
 export const locationFormTemplate = new FormadjoFormer<ILocationFormTemplate>({
   country: new FormadjoField('Country', 'string')
     .setIsRequired(true)
@@ -65,4 +68,15 @@ export const locationFormTemplate = new FormadjoFormer<ILocationFormTemplate>({
     .setMinLength(5)
     .setMaxLength(100)
     .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
+});
+
+export type IPhoneFormTemplate = {
+  phone: string;
+}
+
+export const phoneFormTemplate = new FormadjoFormer<IPhoneFormTemplate>({
+  phone: new FormadjoField('Phone', 'string')
+    .setIsRequired(true)
+    .setMinLength(10)
+    .setMaxLength(25),
 });

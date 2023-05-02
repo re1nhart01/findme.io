@@ -15,6 +15,7 @@ const NumberInputView: React.FC<numberInputViewProps> = ({ onChange, value, disa
       textInputStyle={[Styles.Text.smallText14Black, Styles.Layout.whiteFF_bg]}
       containerStyle={[Styles.Container.animatedInputContainer, { height: void 0 }, Styles.Layout.w100]}
       disabled={disabled}
+      defaultCode="UA"
       value={value}
       onChangeFormattedText={onChange}
     />

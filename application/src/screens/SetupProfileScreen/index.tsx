@@ -2,10 +2,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SetupProfileScreenPresenter, setupProfileScreenPresenterProps } from '@screens/SetupProfileScreen/view';
 import { useTypedDispatch, useTypedSelector } from '@reacts/hooks/useRedux';
 import { IAdditionalUserRegisterInfo, IBasicUserRegisterInfo, ILocationUserRegisterInfo } from '@type/models/user';
-import { actions } from '@redux/slices/user_register.slice';
+import { userRegisterActions } from '@redux/slices/auth/user-register.slice';
 import { ScrollView } from 'react-native';
 import { DEVICE_WIDTH } from '@utils/scaling';
 import { forceNavigator } from '@core/Navigator';
+import { userRegisterThunk } from '@redux/slices/auth/user-register.thunk';
 
 export type setupProfileScreenContainerProps = {};
 
@@ -43,17 +44,18 @@ const SetupProfileScreenContainer: React.FC<setupProfileScreenContainerProps> = 
   }, [currentActiveSlide, scrollRef]);
 
   const onInitialSetupPress = useCallback((values: IBasicUserRegisterInfo) => {
-    dispatch(actions.updateBasicInformationData(values));
+    dispatch(userRegisterActions.updateBasicInformationData(values));
     _onScrollView(1);
   }, [dispatch, _onScrollView]);
 
   const onUserSetupPress = useCallback((values: IAdditionalUserRegisterInfo) => {
-    dispatch(actions.updateUserInformationData(values));
+    dispatch(userRegisterActions.updateUserInformationData(values));
     _onScrollView(2);
   }, [dispatch, _onScrollView]);
 
-  const onFinish = useCallback((values: ILocationUserRegisterInfo) => {
-    dispatch(actions.updateLocationInformationData(values));
+  const onFinish = useCallback(async (values: ILocationUserRegisterInfo) => {
+    dispatch(userRegisterActions.updateLocationInformationData(values));
+    await dispatch(userRegisterThunk(state));
   }, [dispatch]);
 
   const ViewProps: setupProfileScreenPresenterProps = {

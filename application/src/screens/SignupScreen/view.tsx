@@ -14,9 +14,14 @@ import Facebook from '@assets/svg/facebook.svg';
 import Google from '@assets/svg/google.svg';
 import { PressableTextView } from '@components/PressableTextView';
 
-export type signupScreenPresenterProps = {};
-
-const SignupScreenPresenter: React.FC<signupScreenPresenterProps> = ({}) => {
+export type signupScreenPresenterProps = {
+  onUsePhoneNumberPress(): void;
+  onFacebookPress(): void;
+  onGooglePress(): void;
+};
+// TODO: make possibility to connect to account using this device
+const CURRENTLY_DISABLED = true;
+const SignupScreenPresenter: React.FC<signupScreenPresenterProps> = ({ onUsePhoneNumberPress, onFacebookPress, onGooglePress }) => {
   return (
     <ScreenLayoutView backgroundColor={colors.whiteFF} styles={[Styles.MarginPadding.ph40]}>
       <View style={[Styles.Layout.flexCol, Styles.Layout.ai_c, Styles.MarginPadding.pt20pc]}>
@@ -29,14 +34,16 @@ const SignupScreenPresenter: React.FC<signupScreenPresenterProps> = ({}) => {
       </View>
       <View>
         <PrimaryButtonView
-          styles={{ outline: Styles.Button.primaryButton, text: Styles.Text.primaryButtonText }}
+          disabled={CURRENTLY_DISABLED}
+          styles={{ outline: [Styles.Button.primaryButton, CURRENTLY_DISABLED && { backgroundColor: colors.redE9_50 }], text: Styles.Text.primaryButtonText }}
           text="continue_as"
-          vars={{ mongus: 'Name' }}
+          vars={{ mongus: '~Disabled~' }}
         />
         <View style={[Styles.MarginPadding.mt20]}>
           <PrimaryButtonView
             styles={{ outline: Styles.Button.secondaryButton, text: Styles.Text.smallText16RedBold }}
             text="use_phone"
+            onPress={onUsePhoneNumberPress}
           />
         </View>
       </View>
@@ -46,8 +53,20 @@ const SignupScreenPresenter: React.FC<signupScreenPresenterProps> = ({}) => {
         <LineView paddingTop={2} width="35%" height={0.5} />
       </View>
       <View style={[Styles.Layout.flexRow, Styles.MarginPadding.g20, Styles.Layout.flexCenter, Styles.MarginPadding.pt20]}>
-        <ImageButtonView width={32} height={32} styles={[Styles.Button.imageButton, Styles.Layout.flexCenter]} Icon={Facebook} />
-        <ImageButtonView width={32} height={32} styles={[Styles.Button.imageButton, Styles.Layout.flexCenter]} Icon={Google} />
+        <ImageButtonView
+          width={32}
+          height={32}
+          styles={[Styles.Button.imageButton, Styles.Layout.flexCenter]}
+          Icon={Facebook}
+          onPress={onFacebookPress}
+        />
+        <ImageButtonView
+          width={32}
+          height={32}
+          styles={[Styles.Button.imageButton, Styles.Layout.flexCenter]}
+          Icon={Google}
+          onPress={onGooglePress}
+        />
       </View>
       <Text style={[Styles.Text.textCenter, Styles.MarginPadding.mt20]}>
         <PressableTextView text="terms" styles={Styles.Text.smallTextRed14} />

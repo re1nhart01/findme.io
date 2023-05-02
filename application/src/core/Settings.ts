@@ -6,9 +6,9 @@ export class Settings {
   private readonly _API_V2: string;
 
   constructor() {
-    this._API_URL = '';
-    this._ENVIRONMENT = '';
-    this._API_V2 = '';
+    this._API_URL = 'http://192.168.1.92:8080/';
+    this._ENVIRONMENT = 'development';
+    this._API_V2 = 'api/v2';
   }
 
   public get API_URL(): string {
@@ -23,3 +23,5 @@ export class Settings {
     return this._API_V2;
   }
 }
+
+export const settings = new Settings();

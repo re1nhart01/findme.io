@@ -12,15 +12,9 @@ export class Navigator {
 
   private readonly _navigation = createNavigationContainerRef<RootStackParamList>();
 
-  private _currentScreen: INavigateOptions<void>;
-
   private _serviceScreens: Array<string>;
 
   public constructor() {
-    this._currentScreen = {
-      path: '',
-      props: {},
-    };
     this._serviceScreens = [];
     this._stackScreens = [];
   }
@@ -38,23 +32,23 @@ export class Navigator {
   }
 
   public navigate = <T extends keyof RootStackParamList>(path: T, props: RootStackParamList[T]) => {
-    if (!this.navigation || this._currentScreen.path === path) {
-      if (this._navigationStack.length === 1 && this._currentScreen.path === path) {
-        this._navigation.navigate(path as never, props as never);
+    if (!this.navigation) {
+      if (this._navigationStack.length === 1) {
       }
-      return;
     }
     if (this._navigation.isReady()) {
       this._navigationStack.push({ path, props });
-      this._currentScreen = { path, props } as const;
       this._navigation.navigate(path as never, props as never);
     }
   };
 
+  public get currentScreen() {
+    return this._navigationStack[this._navigationStack.length];
+  }
+
   public erase = (can: boolean = false) => {
     if (can) {
       this._navigationStack = [];
-      this._currentScreen = { path: '', props: {} };
     }
   };
 
@@ -68,16 +62,10 @@ export class Navigator {
   public goBack = () => {
     try {
       const l = this.navigationStack.length;
-      if (!this.navigation || l < 2) {
-        if (l !== 0) {
-          this._navigationStack.pop();
-          this._currentScreen = { path: '', props: {} };
-          this.navigation.goBack();
-        }
+      if (!this.navigation || l <= 0) {
         return;
       }
       const { props, path } = this._navigationStack[l - 2];
-      this._currentScreen = { path, props };
       this._navigationStack.pop();
       this._navigation.navigate(path as never, props as never);
     } catch (e) {

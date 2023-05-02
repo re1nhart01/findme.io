@@ -55,12 +55,7 @@ func (auth *AuthController) Register(ctx *gin.Context) {
 
 		ctx.JSON(http.StatusOK, utils.GiveOKResponse())
 	} else {
-		ctx.JSON(http.StatusUnauthorized, utils.GiveResponseWithData[*map[string]any](
-			http.StatusUnauthorized,
-			"Invalid register data",
-			&map[string]any{
-				"errors": errors,
-			}))
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponseWithErrors[*dto.ErrorList](errors))
 	}
 }
 
@@ -84,9 +79,7 @@ func (auth *AuthController) HasEmailOrPhone(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[*map[string]any](&res))
 		return
 	} else {
-		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
-			"errors": errors,
-		}))
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponseWithErrors[*dto.ErrorList](errors))
 	}
 }
 
@@ -112,9 +105,7 @@ func (auth *AuthController) Login(ctx *gin.Context) {
 
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusForbidden, "Forbidden!"))
 	} else {
-		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
-			"errors": errors,
-		}))
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponseWithErrors[*dto.ErrorList](errors))
 	}
 }
 
@@ -134,9 +125,7 @@ func (auth *AuthController) UpdateToken(ctx *gin.Context) {
 		}
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusForbidden, "Forbidden!"))
 	} else {
-		ctx.JSON(http.StatusBadRequest, utils.GiveOKResponseWithData[*map[string]any](&map[string]any{
-			"errors": errors,
-		}))
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponseWithErrors[*dto.ErrorList](errors))
 	}
 }
 

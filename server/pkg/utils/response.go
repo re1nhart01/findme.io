@@ -29,6 +29,14 @@ func GiveOKResponseWithData[T comparable](data T) map[string]any {
 	}
 }
 
+func GiveResponseWithErrors[T comparable](errors T) map[string]any {
+	return map[string]interface{}{
+		"statusCode":    http.StatusBadRequest,
+		"statusMessage": "Data validation error",
+		"errors":        errors,
+	}
+}
+
 func GiveOKResponse() map[string]any {
 	return map[string]any{
 		"statusCode":    http.StatusOK,

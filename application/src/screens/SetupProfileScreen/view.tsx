@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
@@ -33,7 +33,13 @@ export type setupProfileScreenPresenterProps = {
   state: IUserRegisterSlice;
 };
 
-const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = ({ onInitialSetupPress, onFinish, onUserSetupPress, scrollRef, onGoBack,
+const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = ({
+  onInitialSetupPress,
+  onFinish,
+  onUserSetupPress,
+  scrollRef,
+  onGoBack,
+  state,
 }) => {
   return (
     <ScreenLayoutView
@@ -243,12 +249,18 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     input: [Styles.Input.animatedInputText, Styles.Text.smallText13Black] }}
                 />
                 {city.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{city.errorMessage}</Text>}
-                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_fe, Styles.MarginPadding.mt30pc]}>
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_c, Styles.MarginPadding.mt30pc]}>
                   <PrimaryButtonView
                     onPress={onSubmit}
                     styles={{ outline: Styles.Button.primaryButton, text: Styles.Text.primaryButtonText }}
                     text="finish"
                   />
+                </View>
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_c]}>
+                  {state.loading ?
+                    <ActivityIndicator color={colors.redE9} size={wDP(30)} />
+                    :
+                    null}
                 </View>
               </View>
             );

@@ -5,3 +5,11 @@ export interface ISliceBaseModel {
     errorMessage: string;
   };
 }
+
+
+export interface Action {
+  type: string;
+  payload?: unknown;
+}
+
+

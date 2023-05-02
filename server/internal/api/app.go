@@ -47,7 +47,7 @@ func (app *FindMeIoApplication) getControllers() (*controllers.FileController,
 }
 
 func (app *FindMeIoApplication) RunDatabaseBackgroundTasks() {
-	
+
 }
 
 func (app *FindMeIoApplication) Run(port string) error {
@@ -55,6 +55,7 @@ func (app *FindMeIoApplication) Run(port string) error {
 
 	app.Instance.Use(middlewares.ParseJSONBodyMiddleware())
 	routes.AuthRoute(app.Instance, auth)
+	routes.TestingRoute(app.Instance)
 
 	app.Instance.Use(middlewares.AuthMiddleware())
 	routes.UserRouter(app.Instance, user)

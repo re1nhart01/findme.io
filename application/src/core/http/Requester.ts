@@ -1,6 +1,7 @@
 import { sleep } from '@utils/helpers';
 import { __app__ } from '@core/MainActivity';
-import { API_PATHS, axiosImpl } from './client';
+import { axiosImpl } from './client';
+import { URL_PATH } from "@core/http/url";
 
 export interface IRequester<T> {
   url: string;
@@ -30,7 +31,7 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
     const bufferTimeForRefreshToken = 1000 * 60; // One minute
     if (now + bufferTimeForRefreshToken > +expiration && refresh_token && withAccess) {
       const responseToken = await axiosImpl({
-        url: API_PATHS.REFRESH_TOKEN,
+        url: URL_PATH.REGISTER,
         data: { refresh_token },
         method: 'POST',
       });

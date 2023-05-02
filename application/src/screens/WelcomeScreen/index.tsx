@@ -4,16 +4,13 @@ import { forceNavigator } from '@core/Navigator';
 
 type welcomeScreenContainerProps = {};
 const WelcomeScreenContainer = ({}) => {
-
   const onGoToAuthPress = useCallback(() => {
-    // forceNavigator.navigate('SignInScreen', {});
-    // forceNavigator.navigate('PhoneScreen', {});
-    forceNavigator.navigate('SetupProfileScreen', {});
-  }, [forceNavigator]);
+    forceNavigator.navigate('SignInScreen', {});
+  }, []);
 
   const onCreateAccountPress = useCallback(() => {
     forceNavigator.navigate('SignupScreen', {});
-  }, [forceNavigator]);
+  }, []);
 
   const ViewProps: welcomeScreenPresenterProps = {
     onCreateAccountPress,

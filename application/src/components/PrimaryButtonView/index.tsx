@@ -18,6 +18,7 @@ type primaryButtonViewProps = {
     hitSlop?: Insets;
     numberOfLines?: number;
     vars?: {[key: string]: string};
+    disabled?: boolean;
 };
 
 const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
@@ -31,7 +32,9 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
   numberOfLines,
   leftIcon,
   vars,
-  rightIcon }) => {
+  rightIcon,
+  disabled,
+}) => {
   const handleOnPress = useCallback((event: GestureResponderEvent) => {
     onPress && onPress(event);
   }, [onPress]);
@@ -42,6 +45,7 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
 
   return (
     <TouchableOpacity
+      disabled={disabled}
       activeOpacity={activeOpacity}
       onPress={handleOnPress}
       onLongPress={handleOnLongPress}

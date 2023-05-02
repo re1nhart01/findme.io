@@ -5,7 +5,7 @@ import {
   ILocationUserRegisterInfo,
   IUserRegisterSlice,
 } from '@type/models/user';
-import { ISliceBaseModel } from "@type/models";
+import { ISliceBaseModel } from '@type/models';
 
 const initialState: IUserRegisterSlice & ISliceBaseModel = {
   email: '',
@@ -33,6 +33,9 @@ const UserRegisterSlice = createSlice({
   name: 'user_register',
   initialState,
   reducers: {
+    updatePhoneNumber(state, action: PayloadAction<string>) {
+      state.phone = action.payload;
+    },
     updateBasicInformationData(state, action: PayloadAction<IBasicUserRegisterInfo>) {
       const { email, rePassword, password } = action.payload;
       if (email && rePassword && password) {
@@ -52,13 +55,33 @@ const UserRegisterSlice = createSlice({
       }
     },
 
-
     // register from api:
-
+    registerStart(state, action) {
+      state = { ...state,
+        loading: true,
+        error: {
+          errorMessage: '',
+          isError: false,
+        } };
+    },
+    registerError(state, action) {
+      state = { ...state,
+        loading: false,
+        error: action.payload,
+      };
+    },
+    registerSuccess(state, action) {
+      state = { ...state,
+        loading: false,
+        error: {
+          errorMessage: '',
+          isError: false,
+        } };
+    },
   },
 });
 
 const actions = UserRegisterSlice.actions;
 const reducer = UserRegisterSlice.reducer;
 
-export { actions, reducer as UserRegisterReducer };
+export { actions as userRegisterActions, reducer as userRegisterReducer };
