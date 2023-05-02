@@ -18,7 +18,3 @@ export interface HasPhoneOrEmailResponse<T extends object> {
 }
 
 export type HasPhoneOrEmailRequest = { phone: string; } | { email: string; } | { phone?: string; email?: string; }
-
-const a: HasPhoneOrEmailRequest = {
-
-};
