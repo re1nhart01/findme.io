@@ -4,6 +4,7 @@ import { StackNavigationOptions } from '@react-navigation/stack';
 import { FC } from 'react';
 import { RootStackParamList } from '@core/NavigatorScreens';
 import { DeepReadonly, ValueOf } from '@type/ts_extension';
+import { AxiosResponseHeaders, InternalAxiosRequestConfig, RawAxiosResponseHeaders } from 'axios/index';
 
 export interface IStackScreen {
     name: string;
@@ -29,4 +30,13 @@ export interface IFlatListRender<T> {
 export type INavigationParams<T extends keyof RootStackParamList> = {
     path: T;
     props: RootStackParamList[T];
+}
+
+export interface AxiosResponse<T = any, D = any> {
+    data: T;
+    status: number;
+    statusText: string;
+    headers: RawAxiosResponseHeaders | AxiosResponseHeaders;
+    config: InternalAxiosRequestConfig<D>;
+    request?: any;
 }

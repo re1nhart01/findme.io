@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { SetupProfileScreenPresenter, setupProfileScreenPresenterProps } from '@screens/SetupProfileScreen/view';
 import { useTypedDispatch, useTypedSelector } from '@reacts/hooks/useRedux';
 import { IAdditionalUserRegisterInfo, IBasicUserRegisterInfo, ILocationUserRegisterInfo } from '@type/models/user';
-import { userRegisterActions } from '@redux/slices/auth/user-register.slice';
+import { userRegisterActions } from '@redux/slices/auth/user-register/user-register.slice';
 import { ScrollView } from 'react-native';
 import { DEVICE_WIDTH } from '@utils/scaling';
 import { forceNavigator } from '@core/Navigator';
-import { userRegisterThunk } from '@redux/slices/auth/user-register.thunk';
+import { useSafeHTTP } from '@reacts/hooks/useSafeHTTP';
+import { RequestForge } from '@core/http/RequestForge';
 
 export type setupProfileScreenContainerProps = {};
 
@@ -14,6 +15,7 @@ const SetupProfileScreenContainer: React.FC<setupProfileScreenContainerProps> = 
   const [currentActiveSlide, setCurrentActiveSlide] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
   const dispatch = useTypedDispatch();
+  const { httpCaller } = useSafeHTTP();
   const state = useTypedSelector((state) => state.user_register);
 
   const _onScrollView = useCallback((idx: number) => {
@@ -55,8 +57,11 @@ const SetupProfileScreenContainer: React.FC<setupProfileScreenContainerProps> = 
 
   const onFinish = useCallback(async (values: ILocationUserRegisterInfo) => {
     dispatch(userRegisterActions.updateLocationInformationData(values));
-    await dispatch(userRegisterThunk(state));
-  }, [dispatch]);
+    const response = await httpCaller(RequestForge.registerCall, state);
+    if (response && response?.data) {
+
+    }
+  }, [dispatch, state]);
 
   const ViewProps: setupProfileScreenPresenterProps = {
     scrollRef,

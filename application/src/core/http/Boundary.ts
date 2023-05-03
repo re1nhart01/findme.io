@@ -1,5 +1,4 @@
-import { AxiosError } from "axios";
-import { err } from "react-native-svg/lib/typescript/xml";
+import { AxiosError } from 'axios';
 
 export class Boundary {
   private readonly ms: string;

@@ -1,13 +1,15 @@
 import { sleep } from '@utils/helpers';
 import { __app__ } from '@core/MainActivity';
+import { URL_PATH } from '@core/http/url';
+import { Boundary } from '@core/http/Boundary';
+import { AxiosError, AxiosResponse } from 'axios';
 import { axiosImpl } from './client';
-import { URL_PATH } from "@core/http/url";
 
 export interface IRequester<T> {
   url: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTION' | 'PATCH';
-  body?: T;
-  headers?: {[key: string]: string};
+  data?: T;
+  customHeaders?: {[key: string]: string};
   retries: number;
   withAccess: boolean;
 }
@@ -20,18 +22,18 @@ export interface IRResponse<T> {
 
 export interface BaseRequest {}
 
-export const requester = async <GRequest, GResponse extends BaseRequest>({ url, method, body, headers, retries = 3, withAccess }: IRequester<GRequest>): Promise<IRResponse<GResponse> | null> => {
+export const requester = async <GRequest, GResponse extends BaseRequest>({ url, method, data, customHeaders, retries = 3, withAccess }: IRequester<GRequest>): Promise<IRResponse<GResponse> | Boundary> => {
   try {
-    if (retries === 0) {
-      console.warn('[NEC]Error! Can not perform request to the server api!');
-      return null;
-    }
+    const headers = {
+      ...customHeaders,
+      'Content-Type': 'application/json',
+    };
     const { expiration, refresh_token } = __app__.getCurrentUser.tokens;
     const now = Date.now();
     const bufferTimeForRefreshToken = 1000 * 60; // One minute
     if (now + bufferTimeForRefreshToken > +expiration && refresh_token && withAccess) {
       const responseToken = await axiosImpl({
-        url: URL_PATH.REGISTER,
+        url: URL_PATH.REFRESH,
         data: { refresh_token },
         method: 'POST',
       });
@@ -39,25 +41,25 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
         await __app__.getCurrentUser.saveTokens(responseToken.data);
       }
       if (responseToken.status < 204) {
-        return await axiosImpl({
+        return (await axiosImpl({
           url,
           method,
-          body,
+          data,
           headers,
-        } as any);
+        } as any))?.data;
       }
     }
-    return await axiosImpl({
+    return (await axiosImpl({
       url,
       method,
-      body,
+      data,
       headers,
-    } as any);
+    } as any))?.data;
   } catch (ex) {
-    console.warn('requester.ex', ex);
-    await sleep(3000);
-    const newRetry = retries--;
-    await requester({ url, method, body, headers, retries: newRetry, withAccess });
-    return null;
+    const error = ex as AxiosError<unknown, unknown>;
+    if (error?.request.status === 500) {
+      return new Boundary(error);
+    }
+    return error?.response?.data as unknown as IRResponse<GResponse> | Boundary;
   }
 };

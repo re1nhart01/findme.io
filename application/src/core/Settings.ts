@@ -6,7 +6,7 @@ export class Settings {
   private readonly _API_V2: string;
 
   constructor() {
-    this._API_URL = 'http://192.168.1.92:8080/';
+    this._API_URL = 'http://192.168.1.184:8080/';
     this._ENVIRONMENT = 'development';
     this._API_V2 = 'api/v2';
   }

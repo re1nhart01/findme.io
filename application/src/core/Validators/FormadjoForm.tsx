@@ -12,7 +12,7 @@ type formadjoFormFuncValue<T> = {
 
 type formadjoFormProps<T extends object> = {
   form: FormadjoFormer<T>;
-  onFinishSubmit(values: { [key: string]: formValuesType }): void;
+  onFinishSubmit(values: { [key: string]: formValuesType }, addExtendedError: (k: keyof T, v: errorPart) => void): void;
   children?: (data: formadjoFormFuncValue<T>) => JSX.Element;
   initialProps: { [key in keyof T]: formValuesType };
   customErrorMessages?: Partial<{ [key in keyof T]:string }>;
@@ -68,6 +68,14 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
 
   const [state, dispatch] = useReducer(formadjoReducer, initialReducerProps, void 0);
 
+  const setErrorField = useCallback((k: keyof T, v: errorPart) => {
+    const customError = getCustomErrorByName(k as string);
+    if (customError) {
+      v.errorMessage = customError;
+    }
+    dispatch({ type: 'UPDATE_ERROR_VALUE', payload: { [k]: v } });
+  }, [getCustomErrorByName]);
+
   const onSubmit = useCallback(() => {
     dispatch({ type: 'CLEAR_ERRORS', payload: { ...initialErrorList } });
     const errorList = new Formadjo(form.get);
@@ -78,24 +86,16 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
     });
     if (filteredEntries.length > 0) {
       for (const [key, value] of filteredEntries) {
-        setErrorField(key, value);
+        setErrorField(key as keyof T, value);
       }
     } else {
-      onFinishSubmit && onFinishSubmit(state.formValues);
+      onFinishSubmit && onFinishSubmit(state.formValues, setErrorField);
     }
-  }, [state, form, initialErrorList]);
-
-  const setErrorField = useCallback((k: string, v: errorPart) => {
-    const customError = getCustomErrorByName(k);
-    if (customError) {
-      v.errorMessage = customError;
-    }
-    dispatch({ type: 'UPDATE_ERROR_VALUE', payload: { [k]: v } });
-  }, [getCustomErrorByName]);
+  }, [initialErrorList, form.get, state.formValues, setErrorField, onFinishSubmit]);
 
   const updateFormState = useCallback((k: keyof T, v: formValuesType) => {
     if (removeErrorOnChange && state.errorNumberFields[k as string].isError) {
-      setErrorField(k as string, { isError: false, errorMessage: '' });
+      setErrorField(k, { isError: false, errorMessage: '' });
     }
     dispatch({ type: 'UPDATE_FORM_VALUE', payload: { [k]: v } });
   }, [state, dispatch]);

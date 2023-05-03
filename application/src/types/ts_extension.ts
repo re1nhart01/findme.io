@@ -5,3 +5,5 @@ export type DeepReadonly<T> = {
     ? DeepReadonly<T[P]>
     : T[P];
 };
+
+export type Arguments<T extends (args: any) => any> = T extends (args: infer A) => any ? A : never;

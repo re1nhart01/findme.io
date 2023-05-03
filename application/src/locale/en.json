@@ -28,5 +28,6 @@
   "account": "account",
   "choose_birthday": "Choose birthday date",
   "your_location": "Your Location",
-  "finish": "Finish"
+  "finish": "Finish",
+  "user_already_exists": "This user is already exists"
 }

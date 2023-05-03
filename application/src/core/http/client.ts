@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { settings } from '@core/Settings';
-import { __app__ } from "@core/MainActivity";
+import { __app__ } from '@core/MainActivity';
 
 const axiosImpl = axios.create({
   baseURL: `${settings.API_URL}${settings.API_V2}`,
@@ -12,7 +12,6 @@ const axiosImpl = axios.create({
 
 axiosImpl.interceptors.request.use(async (config) => {
   const token = __app__.getCurrentUser.tokens.access_token;
-
   if (token) {
     config.headers.Authorization = `Bearer@${token}`;
   }

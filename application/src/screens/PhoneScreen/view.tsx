@@ -8,10 +8,11 @@ import { Styles } from '@styles/load';
 import { TextView } from '@components/TextView';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import { FormadjoForm } from '@core/Validators/FormadjoForm';
-import { phoneFormTemplate } from '@utils/forms';
+import { IPhoneFormTemplate, phoneFormTemplate } from '@utils/forms';
+import { errorPart } from '@core/Validators/MainFormadjo';
 
 export type phoneScreenPresenterProps = {
-  onContinuePress(values: { phone: string }): Promise<void>;
+  onContinuePress(values: { phone: string }, setExtendedError: (k: keyof IPhoneFormTemplate, v: errorPart) => void): Promise<void>;
 };
 const PhoneScreenPresenter: React.FC<phoneScreenPresenterProps> = ({ onContinuePress }) => {
   return (
@@ -21,6 +22,7 @@ const PhoneScreenPresenter: React.FC<phoneScreenPresenterProps> = ({ onContinueP
     >
       <MainHeaderView />
       <FormadjoForm
+        removeErrorOnChange
         form={phoneFormTemplate}
         initialProps={{
           phone: '',
@@ -42,6 +44,7 @@ const PhoneScreenPresenter: React.FC<phoneScreenPresenterProps> = ({ onContinueP
                 </View>
                 <View style={[Styles.Layout.w100, Styles.MarginPadding.mt32]}>
                   <NumberInputView
+                    isError={phone.isError}
                     value={values.phone}
                     disabled={false}
                     onChange={(v) => updateFormState('phone', v)}

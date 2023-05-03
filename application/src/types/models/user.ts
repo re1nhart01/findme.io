@@ -1,4 +1,4 @@
-import { ISliceBaseModel } from "@type/models/index";
+import { ISliceBaseModel } from '@type/models/index';
 
 export interface IUserRegisterSlice extends ISliceBaseModel {
   email: string;
