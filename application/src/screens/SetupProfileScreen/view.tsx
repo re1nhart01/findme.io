@@ -7,7 +7,7 @@ import { MainHeaderView } from '@core/Headers/MainHeader';
 import { TextView } from '@components/TextView';
 import { AnimatedTextInputView } from '@components/AnimatedTextInputView';
 import { SelectBirthdayView } from '@components/SelectBirthdayView';
-import { FormadjoForm } from '@core/Validators/FormadjoForm';
+import { FormadjoAsyncSubmitFn, FormadjoForm, FormadjoSubmitFn } from '@core/Validators/FormadjoForm';
 import {
   IBasicInformationFormTemplate,
   ILocationFormTemplate,
@@ -18,19 +18,17 @@ import { ImageButtonView } from '@components/ImageButtonView';
 import RightArrowIcon from '@assets/svg/rightArrow.svg';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import {
-  IAdditionalUserRegisterInfo,
-  IBasicUserRegisterInfo,
-  ILocationUserRegisterInfo,
   IUserRegisterSlice,
 } from '@type/models/user';
 
 export type setupProfileScreenPresenterProps = {
-  onInitialSetupPress(values: IBasicUserRegisterInfo): void;
-  onUserSetupPress(values: IAdditionalUserRegisterInfo): void;
-  onFinish(values: ILocationUserRegisterInfo): void;
+  onInitialSetupPress: FormadjoAsyncSubmitFn<IBasicInformationFormTemplate>;
+  onUserSetupPress:FormadjoSubmitFn<IPersonalInformationFormTemplate>;
+  onFinish:FormadjoSubmitFn<ILocationFormTemplate>;
   scrollRef: React.RefObject<ScrollView>;
   onGoBack(): void;
   state: IUserRegisterSlice;
+  loading: boolean;
 };
 
 const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = ({
@@ -40,6 +38,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
   scrollRef,
   onGoBack,
   state,
+  loading,
 }) => {
   return (
     <ScreenLayoutView
@@ -82,7 +81,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   isError={email.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Email"
-                  onChange={(v) => updateFormState('email', v)}
+                  onChange={(v) => updateFormState('email', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -93,7 +92,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   isError={password.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Password"
-                  onChange={(v) => updateFormState('password', v)}
+                  onChange={(v) => updateFormState('password', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -104,7 +103,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   isError={rePassword.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Re-Password"
-                  onChange={(v) => updateFormState('rePassword', v)}
+                  onChange={(v) => updateFormState('rePassword', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -152,7 +151,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     placeholderColor={colors.black00_40}
                     placeholder="First Name"
                     isError={firstName.isError}
-                    onChange={(v) => updateFormState('firstName', v)}
+                    onChange={(v) => updateFormState('firstName', v.trim())}
                     styles={{
                       error: [Styles.Container.redBorder1],
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -163,7 +162,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     placeholderColor={colors.black00_40}
                     placeholder="Last Name"
                     isError={lastName.isError}
-                    onChange={(v) => updateFormState('lastName', v)}
+                    onChange={(v) => updateFormState('lastName', v.trim())}
                     styles={{
                       error: [Styles.Container.redBorder1],
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -175,7 +174,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     placeholderColor={colors.black00_40}
                     placeholder="Provide some details about you"
                     isError={details.isError}
-                    onChange={(v) => updateFormState('details', v)}
+                    onChange={(v) => updateFormState('details', v.trim())}
                     styles={{
                       error: [Styles.Container.redBorder1],
                       outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -231,7 +230,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   isError={country.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Country"
-                  onChange={(v) => updateFormState('country', v)}
+                  onChange={(v) => updateFormState('country', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -242,7 +241,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                   isError={city.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="City"
-                  onChange={(v) => updateFormState('city', v)}
+                  onChange={(v) => updateFormState('city', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -256,8 +255,8 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
                     text="finish"
                   />
                 </View>
-                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_c]}>
-                  {state.loading ?
+                <View style={[Styles.Layout.w100, Styles.Layout.flexRow, Styles.Layout.jc_c, Styles.MarginPadding.mt32]}>
+                  {loading ?
                     <ActivityIndicator color={colors.redE9} size={wDP(30)} />
                     :
                     null}

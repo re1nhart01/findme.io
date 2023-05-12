@@ -2,6 +2,7 @@ package dto
 
 import (
 	"fmt"
+	"pkg/utils"
 	"reflect"
 	"regexp"
 	"sync"
@@ -26,11 +27,12 @@ defaultValue: "",
 // dto_map_flat: "true" || "false"
 
 type ErrorDto struct {
-	FieldName string
-	ErrorMsg  []string
+	FieldName string   `json:"field_name"`
+	ErrorMsg  []string `json:"error_msg"`
 }
 
 // ErrorList STRING | INTEGER | BOOL | NULL | OBJECT
+
 type ErrorList = []ErrorDto
 type FieldsMapping map[string]*FieldDto
 
@@ -46,6 +48,7 @@ type FieldDto struct {
 	AnyType          bool
 	Name             string
 	Remove           bool
+	Aliases          []string
 	Body             FieldsMapping
 }
 
@@ -95,11 +98,12 @@ func addError(errs *ErrorList, key string, errorStringList ...string) {
 		ErrorMsg:  errorStringList,
 	})
 }
-func ValidateModelWithDto(body map[string]any, typeModel FieldsMapping, errors *ErrorList) (map[string]any, *ErrorList) {
-	for k, v := range typeModel {
+func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors *ErrorList) (map[string]any, *ErrorList) {
+	for k, v := range *typeModel {
 
 		fieldFromBody := body[k]
-		if fieldFromBody == nil && v.Required {
+		isIncludesAliases, _, _ := utils.Includes(v.Aliases, k)
+		if fieldFromBody == nil && !isIncludesAliases && v.Required {
 			addError(errors, k, fmt.Sprintf("Field %s is required.", k))
 			continue
 		}

@@ -23,6 +23,7 @@ func (auth *AuthController) GetPath() string { return auth.Path }
 
 func (auth *AuthController) Register(ctx *gin.Context) {
 	data, ok := ctx.Get("body")
+	fmt.Println(data)
 	if !ok {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
 		return
@@ -89,6 +90,7 @@ func (auth *AuthController) Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
 		return
 	}
+	fmt.Println(data)
 	validatedData, errors := dto.ValidateModelWithDto(data.(map[string]any), ApplicationDto.LoginDto, &dto.ErrorList{})
 	if len(*errors) == 0 {
 		if userHash, verificationError := auth.AuthService.VerifyUserLogin(

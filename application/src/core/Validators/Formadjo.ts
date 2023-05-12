@@ -105,14 +105,19 @@ export class FormadjoField {
     return this;
   }
 
+  public getRegexp() {
+    return this.__regexpValidation;
+  }
+
   public validateField<T>(value: T): { isError: boolean, errorMessage: string } {
     if (typeof value !== `${this.__type}`) {
       return { isError: true, errorMessage: `Type mismatch, expects: ${this.__type} but got: ${typeof value}` };
     }
     switch (typeof value) {
       case 'string':
+        console.log(this.__regexpValidation, value);
         if (this.__regexpValidation !== void 0 && (<RegExp> this.__regexpValidation).test) {
-          const isValid = (<RegExp> this.__regexpValidation).test(value);
+          const isValid = (<RegExp> this.getRegexp()).test(value.trim());
           if (!isValid) {
             return { isError: true, errorMessage: `Invalid ${this.__NAME__}` };
           }

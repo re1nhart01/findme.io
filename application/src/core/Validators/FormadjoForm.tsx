@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { FormadjoFormer } from '@core/Validators/FormadjoFormer';
+import { IBasicInformationFormTemplate } from '@utils/forms';
 import { Formadjo, FormadjoValidator, errorPart, formValuesType } from './MainFormadjo';
+
+export type FormadjoSubmitFn<T extends object> = (values: T, addExtendedError: (k: keyof T, v: errorPart) => void) => void;
+export type FormadjoAsyncSubmitFn<T extends object> = (values: T, addExtendedError: (k: keyof T, v: errorPart) => void) => Promise<void>;
 
 type formadjoFormFuncValue<T> = {
   onSubmit(values: any): void;
@@ -12,7 +16,7 @@ type formadjoFormFuncValue<T> = {
 
 type formadjoFormProps<T extends object> = {
   form: FormadjoFormer<T>;
-  onFinishSubmit(values: { [key: string]: formValuesType }, addExtendedError: (k: keyof T, v: errorPart) => void): void;
+  onFinishSubmit: FormadjoSubmitFn<T> | FormadjoAsyncSubmitFn<T>;
   children?: (data: formadjoFormFuncValue<T>) => JSX.Element;
   initialProps: { [key in keyof T]: formValuesType };
   customErrorMessages?: Partial<{ [key in keyof T]:string }>;
@@ -49,7 +53,14 @@ function formadjoReducer(state: reducerBody, action: Action) {
   }
 }
 
-const FormadjoForm = <T extends object>({ children, initialProps, customErrorMessages, form, onFinishSubmit, removeErrorOnChange }: formadjoFormProps<T>) => {
+const FormadjoForm = <T extends object>({
+  children,
+  initialProps,
+  customErrorMessages,
+  form,
+  onFinishSubmit,
+  removeErrorOnChange,
+}: formadjoFormProps<T>) => {
   const initialErrorList = useMemo(() => Object.keys({ ...initialProps }).reduce((acc, curr) => ({
     ...acc, [curr as keyof T]: { isError: false, errorMessage: '' },
   }), {}), [initialProps]);
@@ -89,7 +100,7 @@ const FormadjoForm = <T extends object>({ children, initialProps, customErrorMes
         setErrorField(key as keyof T, value);
       }
     } else {
-      onFinishSubmit && onFinishSubmit(state.formValues, setErrorField);
+      onFinishSubmit && onFinishSubmit(state.formValues as any, setErrorField);
     }
   }, [initialErrorList, form.get, state.formValues, setErrorField, onFinishSubmit]);
 

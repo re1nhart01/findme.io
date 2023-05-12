@@ -7,7 +7,7 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   rePassword: string;
   firstName: string;
   lastName: string;
-  birthday: number;
+  birthday: string;
   details: string;
   city: string;
   country: string;
@@ -16,7 +16,3 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   hasTags: boolean;
   hasSelectedMood: boolean;
 }
-
-export type IBasicUserRegisterInfo = Omit<IUserRegisterSlice, 'firstName' | 'lastName' | 'birthday' | 'details'>;
-export type IAdditionalUserRegisterInfo = Omit<IUserRegisterSlice, 'email' | 'password' | 'rePassword' | 'username'>;
-export type ILocationUserRegisterInfo = Pick<IUserRegisterSlice, 'city' | 'country'>;

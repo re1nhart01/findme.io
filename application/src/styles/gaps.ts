@@ -74,6 +74,9 @@ export default StyleSheet.create({
   mb10: {
     marginBottom: hDP(10),
   },
+  mh10: {
+    marginHorizontal: wDP(10),
+  },
   mh40: {
     marginHorizontal: wDP(40),
   },

@@ -76,15 +76,15 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
   const handleOnPressInput = useCallback(() => {
     Animated.parallel([Animated.timing(translationValueX.current, {
       toValue: 20,
-      duration: 800,
+      duration: 500,
       easing: Easing.bezier(0.51, 0.92, 0.24, 1.15),
-      useNativeDriver: true,
+      useNativeDriver: false,
     }),
     Animated.timing(translationValueY.current, {
       toValue: -30,
-      duration: 800,
+      duration: 500,
       easing: Easing.bezier(0.51, 0.92, 0.24, 1.15),
-      useNativeDriver: true,
+      useNativeDriver: false,
     })]).start();
     set({ ...get, active: true });
   }, [get]);

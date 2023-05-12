@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-var AuthCheckEmailDto = dto.FieldsMapping{
+var AuthCheckEmailDto = &dto.FieldsMapping{
 	"email": &dto.FieldDto{
 		Type:     "STRING",
 		Required: false,
@@ -22,7 +22,7 @@ var AuthCheckEmailDto = dto.FieldsMapping{
 	},
 }
 
-var RegisterDto = dto.FieldsMapping{
+var RegisterDto = &dto.FieldsMapping{
 	"email": &dto.FieldDto{
 		Type:             "STRING",
 		Required:         true,
@@ -98,7 +98,7 @@ var RegisterDto = dto.FieldsMapping{
 	},
 }
 
-var LoginDto = dto.FieldsMapping{
+var LoginDto = &dto.FieldsMapping{
 	"login": &dto.FieldDto{
 		Type:     "STRING",
 		Min:      5,
@@ -122,7 +122,7 @@ var LoginDto = dto.FieldsMapping{
 	},
 }
 
-var UpdateTokenDto = dto.FieldsMapping{
+var UpdateTokenDto = &dto.FieldsMapping{
 	"refresh_token": &dto.FieldDto{
 		Type:     "STRING",
 		Required: true,

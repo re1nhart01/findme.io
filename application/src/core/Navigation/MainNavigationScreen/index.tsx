@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { AppState, Text, View } from 'react-native';
+import { useTypedSelector } from '@reacts/hooks/useRedux';
 import { MainNavigationPresenter, mainNavigationPresenterProps } from './view';
 
 type mainNavigationContainerProps = PropsWithChildren<{
@@ -11,7 +12,7 @@ type mainNavigationContainerState = {
 };
 const MainNavigationContainer: React.FC<mainNavigationContainerProps> = ({}) => {
   const [getState, setState] = useState<mainNavigationContainerState>({});
-
+  const isAuthState = useTypedSelector((state) => state.global);
   const ApplicationState = () => {
     const subscription = AppState.addEventListener('change', (state) => {
       switch (state) {
@@ -39,9 +40,11 @@ const MainNavigationContainer: React.FC<mainNavigationContainerProps> = ({}) => 
     };
   };
 
-  useEffect(ApplicationState, [AppState]);
+  useEffect(ApplicationState, []);
 
-  const ViewProps: mainNavigationPresenterProps = {};
+  const ViewProps: mainNavigationPresenterProps = {
+    isAuth: isAuthState.isAuth,
+  };
 
   return <MainNavigationPresenter {...ViewProps} />;
 };

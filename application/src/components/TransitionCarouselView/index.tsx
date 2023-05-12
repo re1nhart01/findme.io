@@ -23,7 +23,7 @@ type transitionCarouselViewProps = PropsWithChildren<{
 
 const transitionTimeout = 4000;
 const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscroll, firstIndexActive, photoList, styles }) => {
-  const [get, set] = useState(firstIndexActive);
+  const [get, set] = useState(0);
   const listRef = useRef(null);
   const timeout = useRef<TimeoutId | null>(null);
   const backing = useRef(false);
@@ -83,7 +83,7 @@ const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscr
     const viewSize = event.nativeEvent.layoutMeasurement.width;
     const contentOffset = event.nativeEvent.contentOffset.x;
     // make sure that is this index is convenient and right (rewrite this stuff)
-    const currentIndex = Math.round(contentOffset / 185);
+    const currentIndex = Math.round(contentOffset / 145);
     if (get !== currentIndex) {
       set(currentIndex);
     }
@@ -91,7 +91,7 @@ const TransitionCarouselView: React.FC<transitionCarouselViewProps> = ({ autoscr
 
   useFocus(() => {
     if (photoList.length > 0 && autoscroll) {
-      handleAutoscroll(transitionTimeout, get + 1);
+      _callAutoscroll(get + 1);
     }
   }, []);
 

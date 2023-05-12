@@ -16,10 +16,10 @@ type userData = Required<{
   country: string;
 }>;
 
-type tokens = {
-  refresh_token: string;
+export type tokens = {
   access_token: string;
-  expiration: number;
+  refresh_token: string;
+  expiration_time: number;
 }
 
 export enum storageKeys {
@@ -55,7 +55,7 @@ export class CurrentUser {
     this._tokens = {
       access_token: '',
       refresh_token: '',
-      expiration: 0,
+      expiration_time: 0,
     };
   }
 
@@ -64,7 +64,7 @@ export class CurrentUser {
   }
 
   public get isAuth(): boolean {
-    return false;
+    return Object.values(this._tokens).every((el) => !!el);
   }
 
   public async restoreUser() {
@@ -88,6 +88,7 @@ export class CurrentUser {
       const tokens = await AsyncStorage.getItem(storageKeys.Tokens);
       if (tokens !== void 0 && tokens !== null) {
         const parsedTokens = JSON.parse(tokens);
+        this._tokens.expiration_time = parsedTokens.expiration_time;
         this._tokens.access_token = parsedTokens.access_token;
         this._tokens.refresh_token = parsedTokens.refresh_token;
       }
@@ -116,7 +117,7 @@ export class CurrentUser {
       this._tokens = {
         refresh_token: '',
         access_token: '',
-        expiration: 0,
+        expiration_time: 0,
       };
       await this.saveUser();
     } catch (ex) {
@@ -124,7 +125,7 @@ export class CurrentUser {
     }
   }
 
-  public async saveTokens(tokenData: tokens) {
+  public async saveTokens<T extends tokens>(tokenData: T | null) {
     try {
       if (tokenData) {
         this._tokens = tokenData;
@@ -146,3 +147,5 @@ export class CurrentUser {
     }
   }
 }
+
+export const __current_user__ = new CurrentUser();

@@ -12,12 +12,13 @@ import { VerifyScreenContainer } from '@screens/VerifyPhoneScreen';
 import { SetupProfileScreenContainer } from '@screens/SetupProfileScreen';
 
 export type RootStackParamList = {
-  '': {};
+  UserRouter: { screen: string, params: {} };
   SignInScreen: {};
   SignupScreen: {};
   PhoneScreen: {};
   VerifyPhoneScreen: {};
   SetupProfileScreen: {};
+
   WelcomeScreen: {};
   AllUsersScreen: {};
   MatchesScreen: {};

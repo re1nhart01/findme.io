@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react';
-import { Alert, Platform, SafeAreaView, UIManager } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
+import { Alert, BackHandler, Platform, SafeAreaView, UIManager } from 'react-native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { MainNavigationContainer } from '@core/Navigation/MainNavigationScreen';
 import { FindStatusBar } from '@core/StatusBar';
 import { forceNavigator } from '@core/Navigator';
 import { Styles } from '@styles/load';
-import { useTypedSelector } from '@reacts/hooks/useRedux';
+import { useTypedDispatch } from '@reacts/hooks/useRedux';
+import { globalActions } from '@redux/slices/global.slice';
+import { __app__ } from '@core/MainActivity';
 
 function RootApplication(): JSX.Element {
-  const a = useTypedSelector((state) => state.global.fatalModal);
+  const rootDispatch = useTypedDispatch();
+
   useEffect(() => {
     if (Platform.OS === 'android') {
       if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);
       }
     }
-  }, []);
-
-  useEffect(() => {
-    if (a.show) {
-      Alert.alert('warn', a.boundary?.boundaryBody.ms);
-      console.log(a);
-    }
-  }, [a]);
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      forceNavigator.goBack();
+      return true;
+    });
+    rootDispatch(globalActions.setIsAuth(__app__.getCurrentUser.isAuth));
+  }, [rootDispatch]);
 
   return (
     <NavigationContainer ref={forceNavigator.navigation}>

@@ -83,9 +83,10 @@ func (auth *AuthService) VerifyUserLogin(login, password, deviceId string) (stri
 		return "", errors.New("attempts for today is already used")
 	}
 	userBody := map[string]any{}
-	if query := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Where("email = ? OR phone = ?", login, login).Scan(&userBody); query.Error != nil {
+	if query := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Where("email = ? OR phone = ?", login, login).Scan(&userBody); query.Error != nil || query.RowsAffected <= 0 {
 		return "", errors.New("database query error")
 	}
+	fmt.Println(userBody)
 	hashedPassword := userBody["password"].(string)
 	isPasswordValid := cryptography.CheckPasswordHash(password, hashedPassword)
 	if !isPasswordValid {

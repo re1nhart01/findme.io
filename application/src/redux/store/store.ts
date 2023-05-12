@@ -1,12 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
 import { userRegisterReducer } from '@redux/slices/auth/user-register/user-register.slice';
 import { globalReducer } from '@redux/slices/global.slice';
-import { PersistConfig } from 'redux-persist/es/types';
-
-
 
 const rootReducer = combineReducers({
   user_register: userRegisterReducer,

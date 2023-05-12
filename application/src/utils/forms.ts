@@ -54,20 +54,17 @@ export type ILocationFormTemplate = {
   city: string;
 };
 
-
-
-
 export const locationFormTemplate = new FormadjoFormer<ILocationFormTemplate>({
   country: new FormadjoField('Country', 'string')
     .setIsRequired(true)
     .setMinLength(5)
     .setMaxLength(100)
-    .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
+    .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
   city: new FormadjoField('City', 'string')
     .setIsRequired(true)
     .setMinLength(5)
     .setMaxLength(100)
-    .setRegexpValidation(/^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/gm),
+    .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
 });
 
 export type IPhoneFormTemplate = {
@@ -79,4 +76,22 @@ export const phoneFormTemplate = new FormadjoFormer<IPhoneFormTemplate>({
     .setIsRequired(true)
     .setMinLength(10)
     .setMaxLength(25),
+});
+
+// Login
+
+export type ILoginFormTemplate = {
+  login: string;
+  password: string;
+};
+
+export const loginFormTemplate = new FormadjoFormer<ILoginFormTemplate>({
+  login: new FormadjoField('Login', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(500),
+  password: new FormadjoField('Password', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(500),
 });

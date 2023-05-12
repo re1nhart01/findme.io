@@ -18,7 +18,7 @@ const WelcomeScreenPresenter: React.FC<welcomeScreenPresenterProps> = ({ onCreat
       <View style={[Styles.MarginPadding.mt32]}>
         <TransitionCarouselView
           photoList={CarouselPhotos}
-          firstIndexActive={0}
+          firstIndexActive={1}
           autoscroll
         />
       </View>

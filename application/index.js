@@ -1,9 +1,10 @@
 import React from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, BackHandler } from 'react-native';
 import { __app__ } from '@core/MainActivity';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistedStore, store } from '@redux/store/store';
+import { forceNavigator } from '@core/Navigator';
 import { name as appName } from './app.json';
 import RootComponent from './App';
 
@@ -16,6 +17,11 @@ const RootApp = () => {
     </Provider>
   );
 };
+
+BackHandler.addEventListener('hardwareBackPress', () => {
+  forceNavigator.goBack();
+  return true;
+});
 
 AppRegistry.registerRunnable(appName, async (initialState) => {
   try {

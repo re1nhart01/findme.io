@@ -1,8 +1,8 @@
-import { IUserRegisterSlice } from '@type/models/user';
-import { ISliceBaseModel } from '@type/models';
 import { Global } from '@type/models/global';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { Boundary } from '@core/http/Boundary';
+import { __app__ } from '@core/MainActivity';
+import { __current_user__ } from '@core/CurrentUser';
 
 const initialState: Global = {
   fatalModal: {
@@ -13,6 +13,7 @@ const initialState: Global = {
     show: false,
     callback: null,
   },
+  isAuth: __current_user__.isAuth,
 };
 
 const GlobalSlice = createSlice({
@@ -27,6 +28,9 @@ const GlobalSlice = createSlice({
         show: false,
         boundary: null,
       };
+    },
+    setIsAuth(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload;
     },
   },
 });

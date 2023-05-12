@@ -9,6 +9,5 @@ export interface Global {
     show: boolean;
     callback: Function | null;
   },
+  isAuth: boolean;
 }
-
-

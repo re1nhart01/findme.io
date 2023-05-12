@@ -1,11 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
-  IAdditionalUserRegisterInfo,
-  IBasicUserRegisterInfo,
-  ILocationUserRegisterInfo,
   IUserRegisterSlice,
 } from '@type/models/user';
 import { ISliceBaseModel } from '@type/models';
+import { IBasicInformationFormTemplate, ILocationFormTemplate, IPersonalInformationFormTemplate } from '@utils/forms';
 
 const initialState: IUserRegisterSlice & ISliceBaseModel = {
   email: '',
@@ -14,7 +12,7 @@ const initialState: IUserRegisterSlice & ISliceBaseModel = {
   rePassword: '',
   firstName: '',
   lastName: '',
-  birthday: Date.now(),
+  birthday: `${Date.now()}`,
   details: '',
   city: '',
   country: '',
@@ -34,24 +32,31 @@ const UserRegisterSlice = createSlice({
   initialState,
   reducers: {
     updatePhoneNumber(state, action: PayloadAction<string>) {
+      console.log(action);
       state.phone = action.payload;
     },
-    updateBasicInformationData(state, action: PayloadAction<IBasicUserRegisterInfo>) {
+    updateBasicInformationData(state, action: PayloadAction<IBasicInformationFormTemplate>) {
       const { email, rePassword, password } = action.payload;
       if (email && rePassword && password) {
-        state = { ...state, email, rePassword, password };
+        state.email = email;
+        state.password = password;
+        state.rePassword = rePassword;
       }
     },
-    updateUserInformationData(state, action: PayloadAction<IAdditionalUserRegisterInfo>) {
+    updateUserInformationData(state, action: PayloadAction<IPersonalInformationFormTemplate>) {
       const { details, firstName, lastName, birthday } = action.payload;
-      if (details && firstName && lastName) {
-        state = { ...state, details, firstName, lastName, birthday: birthday || Date.now() };
+      if (firstName && lastName && birthday) {
+        state.details = details;
+        state.firstName = firstName;
+        state.lastName = lastName;
+        state.birthday = `${birthday || Date.now()}`;
       }
     },
-    updateLocationInformationData(state, action: PayloadAction<ILocationUserRegisterInfo>) {
+    updateLocationInformationData(state, action: PayloadAction<ILocationFormTemplate>) {
       const { country, city } = action.payload;
       if (country && city) {
-        state = { ...state, country, city };
+        state.country = country;
+        state.city = city;
       }
     },
 

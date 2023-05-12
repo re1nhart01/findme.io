@@ -3,11 +3,11 @@ import { PushNotifications } from './PushNotifications';
 import { Activity } from './base/Activity';
 import { NativeModules } from './NativeModules';
 import { GeolocationService } from './Geolocation';
-import { CurrentUser } from './CurrentUser';
-import { Settings } from './Settings';
+import { CurrentUser, __current_user__ } from './CurrentUser';
+import { Settings, settings } from './Settings';
 
 class MainActivity extends Activity {
-  private readonly _user: CurrentUser;
+  public readonly _user: CurrentUser;
 
   private readonly _native: NativeModules;
 
@@ -19,11 +19,11 @@ class MainActivity extends Activity {
 
   public constructor() {
     super();
-    this._user = new CurrentUser();
+    this._user = __current_user__;
     this._native = new NativeModules();
     this._geo = new GeolocationService();
     this._notify = new PushNotifications();
-    this._settings = new Settings();
+    this._settings = settings;
   }
 
   public async onCreate(initialProps: any): Promise<void> {
