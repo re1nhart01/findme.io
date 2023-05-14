@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Alert, Text } from "react-native";
+import { Alert } from 'react-native';
 import { SignupScreenPresenter, signupScreenPresenterProps } from '@screens/SignupScreen/view';
 import { forceNavigator } from '@core/Navigator';
 

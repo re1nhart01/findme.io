@@ -5,13 +5,14 @@ import (
 	"app/middlewares"
 	"app/routes"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"internal/pg_database"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 const API_BASE string = "/api/v2"
@@ -46,9 +47,7 @@ func (app *FindMeIoApplication) getControllers() (*controllers.FileController,
 	return file, user, auth
 }
 
-func (app *FindMeIoApplication) RunDatabaseBackgroundTasks() {
-
-}
+func (app *FindMeIoApplication) RunDatabaseBackgroundTasks() {}
 
 func (app *FindMeIoApplication) Run(port string) error {
 	file, user, auth := app.getControllers()

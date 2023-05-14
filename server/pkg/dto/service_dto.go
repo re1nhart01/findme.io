@@ -142,7 +142,7 @@ func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors 
 			}
 		}
 		if v.Type == "OBJECT" && typeEqual && v.Body != nil {
-			ValidateModelWithDto(fieldFromBody.(map[string]interface{}), v.Body, errors)
+			ValidateModelWithDto(fieldFromBody.(map[string]interface{}), &v.Body, errors)
 		}
 	}
 	return body, errors

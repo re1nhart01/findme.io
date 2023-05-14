@@ -53,9 +53,4 @@ func HandleDefaultError(err error, ctx *gin.Context) bool {
 	return false
 }
 
-func HandleNilValues(val any, defaultVal any) any {
-	if val == nil {
-		return defaultVal
-	}
-	return val
-}
+

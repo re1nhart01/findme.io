@@ -5,7 +5,7 @@ import { TextView } from '@components/TextView';
 import { ImageButtonView } from '@components/ImageButtonView';
 
 import LeftArrow from '@assets/svg/leftArrow.svg';
-import { forceNavigator } from "@core/Navigator";
+import { forceNavigator } from '@core/Navigator';
 
 type mainHeaderViewProps = Partial<{
   rightButton: JSX.Element;

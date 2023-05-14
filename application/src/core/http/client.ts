@@ -3,6 +3,7 @@ import { settings } from '@core/Settings';
 import { __app__ } from '@core/MainActivity';
 import { Alert } from 'react-native';
 
+const TIMER_15_SEC = 15000;
 const abortMessage = (event: Event) => {
   Alert.alert('Warning', 'Something went wrong. Check your internet connection or it can be caused by Find Me server');
 };
@@ -33,7 +34,7 @@ axiosImpl.interceptors.request.use((config) => {
   timeoutId = setTimeout(() => {
     abortController.abort();
     signal.removeEventListener('abort', abortMessage);
-  }, 10000);
+  }, TIMER_15_SEC);
 
   return config;
 }, (rej) => {

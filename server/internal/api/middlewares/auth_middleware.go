@@ -1,11 +1,13 @@
 package middlewares
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
 	"net/http"
 	"pkg/jwts"
 	"pkg/utils"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 // AuthMiddleware Bearer@token
@@ -17,11 +19,13 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		unpackedHeader := strings.Split(header, "@")
+		fmt.Println(unpackedHeader[1])
 		if len(unpackedHeader) != 2 {
 			ctx.JSON(http.StatusUnauthorized, utils.GiveResponse(http.StatusUnauthorized, "Unauthorized"))
 			return
 		}
 		userHash, id, expired, err := jwts.ValidateToken(unpackedHeader[1])
+		fmt.Println(userHash, id, expired, err)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, utils.GiveResponse(http.StatusUnauthorized, "Unauthorized"))
 			return
