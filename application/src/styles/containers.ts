@@ -83,7 +83,11 @@ export default StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
-    height: hDP(120),
+    minHeight: hDP(120),
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15,
+    paddingTop: 10,
   },
   dotsLayout: {
     position: 'absolute',

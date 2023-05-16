@@ -114,7 +114,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) =
             {' '}
             {model.age}
           </Text>
-          <Text numberOfLines={4} style={Styles.Text.smallTextRed16}>{model.details}</Text>
+          <Text numberOfLines={4} style={Styles.Text.smallText16White}>{model.details}</Text>
         </View>
         <View>
           <FlatList
