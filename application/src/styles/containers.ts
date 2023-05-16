@@ -16,6 +16,10 @@ export default StyleSheet.create({
   serviceScreenLayout: {
     paddingTop: hDP(80),
   },
+  grayBorder1: {
+    borderColor: colors.grayE8,
+    borderWidth: 1,
+  },
   animatedInputContainer: {
     backgroundColor: colors.whiteFF,
     borderColor: colors.grayE8,
@@ -45,5 +49,52 @@ export default StyleSheet.create({
   },
   redBackgroundColor: {
     backgroundColor: colors.redE9_10,
+  },
+  redE9BackgroundColor: {
+    backgroundColor: colors.redE9,
+  },
+  whiteFFBackgroundColor: {
+    backgroundColor: colors.whiteFF,
+  },
+  pinContainer: {
+    width: wDP(61),
+    height: hDP(34),
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  stepContainer: {
+    width: wDP(20),
+    paddingHorizontal: 8,
+    paddingVertical: 16,
+  },
+  grayBorderContainer: {
+    backgroundColor: colors.black00_50,
+    borderRadius: 7,
+  },
+  stepItem: {
+    backgroundColor: 'rgba(255,255,255, 0.5)',
+    width: wDP(4),
+    height: wDP(4),
+    borderRadius: 100,
+  },
+  discoverCardInfo: {
+    position: 'absolute',
+    zIndex: 999,
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    height: hDP(120),
+  },
+  dotsLayout: {
+    position: 'absolute',
+    zIndex: 999,
+    right: 0,
+    top: hDP(150),
+  },
+  mapLayout: {
+    position: 'absolute',
+    zIndex: 999,
+    left: 16,
+    top: 20,
   },
 });

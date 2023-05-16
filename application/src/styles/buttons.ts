@@ -39,4 +39,14 @@ export default StyleSheet.create({
     width: wDP(52),
     height: wDP(52),
   },
+  bigRoundedCenterButton: {
+    width: wDP(99),
+    height: wDP(99),
+    borderRadius: 100,
+  },
+  smallRoundedCenterButton: {
+    width: wDP(78),
+    height: wDP(78),
+    borderRadius: 100,
+  },
 });

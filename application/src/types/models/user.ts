@@ -16,3 +16,24 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   hasTags: boolean;
   hasSelectedMood: boolean;
 }
+
+export interface IUserDiscoverModelShort {
+  full_name: string;
+  details: string;
+  user_hash: string;
+  images: Array<string>;
+  coords: { x: number; y: number };
+  age: number;
+}
+
+export interface IUserDiscoverModelFull extends IUserDiscoverModelShort {
+  birthday: Date;
+  gender: 'male' | 'female' | 'another' | 'unknown';
+  email: string;
+  mood: string;
+  active: boolean;
+  popularity: number;
+  city: string;
+  phone: string;
+  country: string;
+}

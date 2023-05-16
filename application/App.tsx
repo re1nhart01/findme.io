@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, BackHandler, Platform, SafeAreaView, UIManager } from 'react-native';
+import { Alert, BackHandler, LogBox, Platform, SafeAreaView, UIManager } from 'react-native';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { MainNavigationContainer } from '@core/Navigation/MainNavigationScreen';
 import { FindStatusBar } from '@core/StatusBar';
@@ -13,6 +13,7 @@ function RootApplication(): JSX.Element {
   const rootDispatch = useTypedDispatch();
 
   useEffect(() => {
+    LogBox.ignoreLogs(['Require cycle: ', 'Warning: TypeError: property']);
     if (Platform.OS === 'android') {
       if (UIManager.setLayoutAnimationEnabledExperimental) {
         UIManager.setLayoutAnimationEnabledExperimental(true);

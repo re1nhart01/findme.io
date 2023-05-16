@@ -30,7 +30,6 @@ axiosImpl.interceptors.request.use((config) => {
   if (timeoutId !== null) {
     clearTimeout(timeoutId);
   }
-
   timeoutId = setTimeout(() => {
     abortController.abort();
     signal.removeEventListener('abort', abortMessage);
@@ -55,6 +54,10 @@ axiosImpl.interceptors.response.use((config) => {
     success: config.status === 200 || config.status === 201,
   };
 }, (error) => {
+  if (timeoutId !== null) {
+    clearTimeout(timeoutId);
+  }
+
   return Promise.reject(error);
 });
 

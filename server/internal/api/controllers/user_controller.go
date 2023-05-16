@@ -23,7 +23,7 @@ func (user *UserController) SetupFields(ctx *gin.Context) {
 }
 
 func (user *UserController) AttachPhotos(ctx *gin.Context) {
-
+		
 }
 
 func CreateUserController(basePath string) *UserController {

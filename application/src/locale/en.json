@@ -32,5 +32,7 @@
   "finish": "Finish",
   "user_already_exists": "This user is already exists",
   "error_email_exists": "This email is already exists",
-  "error_invalid_login": "Invalid login or password, try again"
+  "error_invalid_login": "Invalid login or password, try again",
+  "discover": "Discover",
+  "press_to_refresh": "Press to refresh"
 }

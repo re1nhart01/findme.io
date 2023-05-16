@@ -8,6 +8,7 @@ import (
 func InitTables() {
 	inst := GetDatabaseInstance()
 	//inst.CreateDatabaseTable(models.USERS, models.UserModel{})
+	inst.CreateManualTable(models.CreateGenderTable())
 	inst.CreateManualTable(models.CreateUserTable())
 	inst.CreateManualTable(models.CreateUserPreferencesTable())
 	inst.CreateDatabaseTable(models.INTERESTS, models.InterestsModel{})

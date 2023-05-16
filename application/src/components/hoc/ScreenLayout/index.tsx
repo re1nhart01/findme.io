@@ -3,23 +3,32 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Styles } from '@styles/load';
 import { KeyboardAvoidingComponent } from '@components/hoc/KeyboardAvoidingView';
 import { colors } from '@utils/colors';
+import { View } from 'react-native';
 
 type screenLayoutViewProps = PropsWithChildren<{
     backgroundColor?: string;
     hasKeyboardAvoiding?: boolean;
     header?: JSX.Element
     styles?: {};
+    useKeyboardAvoid?: boolean;
 }>
-const ScreenLayoutView: React.FC<screenLayoutViewProps> = ({ children, backgroundColor, hasKeyboardAvoiding, styles, header }) => {
+const ScreenLayoutView: React.FC<screenLayoutViewProps> = ({ children, backgroundColor, hasKeyboardAvoiding, styles, header, useKeyboardAvoid }) => {
   return (
     <SafeAreaView style={[Styles.Layout.flex1, { backgroundColor }, styles]}>
-      <KeyboardAvoidingComponent>
-        {header}
-        {
+      {useKeyboardAvoid ? (
+        <KeyboardAvoidingComponent>
+          {header}
+          {
           hasKeyboardAvoiding ?
             children : children
         }
-      </KeyboardAvoidingComponent>
+        </KeyboardAvoidingComponent>
+      ) : (
+        <React.Fragment>
+          {header}
+          {children}
+        </React.Fragment>
+      )}
     </SafeAreaView>
   );
 };

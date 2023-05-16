@@ -1,8 +1,9 @@
 package models
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type BaseTypeModel struct {
@@ -15,6 +16,7 @@ type BaseTypeModel struct {
 const (
 	INTERESTS        = "interests"
 	MATCHES          = "matches"
+	GENDER           = "gender"
 	MOOD             = "mood"
 	NOTIFICATIONS    = "notifications"
 	TAGS             = "tags"

@@ -34,6 +34,12 @@ export default StyleSheet.create({
   jc_fe: {
     justifyContent: 'flex-end',
   },
+  h480: {
+    height: hDP(480),
+  },
+  cover: {
+    resizeMode: 'cover',
+  },
   ai_c: {
     alignItems: 'center',
   },
@@ -47,6 +53,16 @@ export default StyleSheet.create({
   },
   absolute: {
     position: 'absolute',
+  },
+  borderR15: {
+    borderRadius: 15,
+  },
+  absolute0: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   grow1: {
     flexGrow: 1,

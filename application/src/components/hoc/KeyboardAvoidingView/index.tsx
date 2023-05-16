@@ -9,6 +9,7 @@ function KeyboardAvoidingComponent<T extends keyboardAvoidingComponentProps>({ c
   if (Platform.OS === 'android') {
     return (
       <ScrollView
+        nestedScrollEnabled
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={[Styles.Layout.grow1]}
         style={Styles.Layout.grow1}

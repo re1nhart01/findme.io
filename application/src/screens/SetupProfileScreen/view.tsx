@@ -56,6 +56,7 @@ const SetupProfileScreenPresenter: React.FC<setupProfileScreenPresenterProps> = 
         ref={scrollRef}
         horizontal
         pagingEnabled
+        scrollEnabled={false}
       >
         {/* BASIC INFORMATION */}
         <FormadjoForm<IBasicInformationFormTemplate>

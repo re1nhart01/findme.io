@@ -101,6 +101,12 @@ export default StyleSheet.create({
   g30: {
     gap: wDP(30),
   },
+  g2: {
+    gap: wDP(2),
+  },
+  g6: {
+    gap: wDP(6),
+  },
   g7: {
     gap: wDP(7),
   },

@@ -1,4 +1,6 @@
 import { CONSTANTS } from '@utils/constants/strings';
+import { Animated } from 'react-native';
+import { wDP } from './scaling';
 
 export const toRadiansCoords = (degrees: number): number => {
   const pi = Math.PI;
@@ -22,3 +24,25 @@ export const queueMicrotask = (cb: () => void) => Promise.resolve()
   .catch((err) => setTimeout(() => { throw err; }, 0));
 
 export const sleep = (ms: number) => new Promise((r: any) => setTimeout(r, ms));
+
+export const panAndSkewAnimation = (pan: Animated.ValueXY, skewValue: Animated.Value) => {
+  Animated.parallel(
+    [
+      Animated.spring(
+        pan,
+        { toValue: {
+          x: wDP(0),
+          y: 0,
+        },
+        useNativeDriver: false,
+        },
+      ),
+      Animated.spring(
+        skewValue,
+        { toValue: 0,
+          useNativeDriver: false,
+        },
+      ),
+    ],
+  ).start();
+};

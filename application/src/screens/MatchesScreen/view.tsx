@@ -1,19 +1,51 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
 import { DraggableItemView } from '@components/draggable/DraggableItemView';
+import { colors } from '@utils/colors';
+import { Styles } from '@styles/load';
+import { MainHeaderView } from '@core/Headers/MainHeader';
+import { ImageButtonView } from '@components/ImageButtonView';
+import SettingsIcon from '@assets/svg/settings.svg';
+import { DraggableContainerView } from '@components/draggable/DraggableContainerView';
 
-export type matchesScreenPresenterProps = {};
+export type matchesScreenPresenterProps = {
+  handleSettingsPress(): void;
+  handleLikePress(): void;
+  handleSkipPress(): void;
+  handleFavoritePress(): void;
+};
 
-const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({}) => {
+const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({ handleFavoritePress, handleLikePress, handleSettingsPress, handleSkipPress }) => {
   return (
-    <ScreenLayoutView>
-      <DraggableItemView />
-      <DraggableItemView />
-      <DraggableItemView />
-      <DraggableItemView />
-      <DraggableItemView />
+    <ScreenLayoutView
+      useKeyboardAvoid={false}
+      backgroundColor={colors.whiteFF}
+      styles={[Styles.Container.serviceScreenLayoutHeader]}
+    >
+      <View style={Styles.Container.screenLayout}>
+        <MainHeaderView
+          headerText="discover"
+          subHeaderText="press_to_refresh"
+          rightButton={(
+            <ImageButtonView
+              onPress={handleSettingsPress}
+              styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]}
+              width={18}
+              height={18}
+              Icon={SettingsIcon}
+            />
+              )}
+        />
+      </View>
+      <View>
+        <DraggableContainerView
+          handleFavoritePress={handleFavoritePress}
+          handleLikePress={handleLikePress}
+          handleSkipPress={handleSkipPress}
+        />
+      </View>
     </ScreenLayoutView>
   );
 };
