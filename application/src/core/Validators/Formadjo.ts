@@ -115,7 +115,6 @@ export class FormadjoField {
     }
     switch (typeof value) {
       case 'string':
-        console.log(this.__regexpValidation, value);
         if (this.__regexpValidation !== void 0 && (<RegExp> this.__regexpValidation).test) {
           const isValid = (<RegExp> this.getRegexp()).test(value.trim());
           if (!isValid) {

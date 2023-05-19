@@ -54,6 +54,9 @@ export default StyleSheet.create({
   absolute: {
     position: 'absolute',
   },
+  zIndex10: {
+    zIndex: 10,
+  },
   borderR15: {
     borderRadius: 15,
   },

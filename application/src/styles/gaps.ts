@@ -59,6 +59,12 @@ export default StyleSheet.create({
   pt20: {
     paddingTop: hDP(20),
   },
+  pb10: {
+    paddingBottom: hDP(10),
+  },
+  ph3: {
+    paddingHorizontal: wDP(3),
+  },
   ph15: {
     paddingHorizontal: wDP(15),
   },
@@ -70,6 +76,9 @@ export default StyleSheet.create({
   },
   ml8: {
     marginLeft: wDP(8),
+  },
+  mv3: {
+    marginVertical: hDP(3),
   },
   mb10: {
     marginBottom: hDP(10),

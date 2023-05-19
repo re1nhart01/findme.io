@@ -39,6 +39,11 @@ export default StyleSheet.create({
     width: wDP(52),
     height: wDP(52),
   },
+  gearImageButton: {
+    backgroundColor: colors.whiteFF,
+    width: wDP(24),
+    height: wDP(24),
+  },
   bigRoundedCenterButton: {
     width: wDP(99),
     height: wDP(99),
