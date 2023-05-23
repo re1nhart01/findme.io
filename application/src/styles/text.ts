@@ -97,6 +97,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Bold',
     fontSize: fontSizeDP(14),
   },
+  smallTextWhiteBold14: {
+    color: colors.whiteFF,
+    fontFamily: 'Sk-Modernist-Bold',
+    fontSize: fontSizeDP(14),
+  },
   bigBoldBlack34: {
     fontSize: fontSizeDP(34),
     fontFamily: 'Sk-Modernist-Bold',

@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View } from 'react-native';
 
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
-import { DraggableItemView } from '@components/draggable/DraggableItemView';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
 import { MainHeaderView } from '@core/Headers/MainHeader';

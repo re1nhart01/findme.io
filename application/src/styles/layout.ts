@@ -60,6 +60,9 @@ export default StyleSheet.create({
   borderR15: {
     borderRadius: 15,
   },
+  borderR5: {
+    borderRadius: 5,
+  },
   absolute0: {
     position: 'absolute',
     top: 0,
@@ -98,6 +101,14 @@ export default StyleSheet.create({
     width: wDP(70),
     height: wDP(70),
   },
+  wh85_px: {
+    width: wDP(85),
+    height: wDP(85),
+  },
+  wh99_px: {
+    width: wDP(99),
+    height: wDP(99),
+  },
   w33_3pc: {
     width: '33.3%',
   },
@@ -124,5 +135,8 @@ export default StyleSheet.create({
   },
   min52_h: {
     minHeight: hDP(52),
+  },
+  max_w_100pc: {
+    maxWidth: '100%',
   },
 });

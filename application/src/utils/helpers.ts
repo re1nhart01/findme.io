@@ -46,3 +46,19 @@ export const panAndSkewAnimation = (pan: Animated.ValueXY, skewValue: Animated.V
     ],
   ).start();
 };
+
+export function accessObjectField<T extends {[key: string]: any}>(obj: T, propPath: string) {
+  const props = propPath.split('.');
+  let currentObj = obj;
+
+  for (const prop of props) {
+    if (!currentObj || typeof currentObj !== 'object' || !(prop in currentObj)) {
+      // Property doesn't exist or is not an object
+      return undefined;
+    }
+
+    currentObj = currentObj[prop];
+  }
+
+  return currentObj;
+}

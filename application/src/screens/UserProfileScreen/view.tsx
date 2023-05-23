@@ -1,12 +1,11 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 
-import SettingsIcon from '@assets/svg/settings.svg';
+import DotsIcon from '@assets/svg/dots.svg';
 import SettingsGearIcon from '@assets/svg/settings_val.svg';
 import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import {
   Animated,
-  GestureResponderEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -15,71 +14,30 @@ import {
 } from 'react-native';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
-import { DEVICE_WIDTH, hDP } from '@utils/scaling';
-import { TextView } from '@components/TextView';
+import { hDP } from '@utils/scaling';
 import { UserProfileRowView } from '@components/UserProfileRowView';
 import { ImageButtonView } from '@components/ImageButtonView';
 import ReadMoreTextView from '@components/ReadMoreTextView';
+import { MOCK_INTERESTS, MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
+import TextPathView from '@components/TextPathView';
+import ImageGalleryView from '@components/ImageGalleryView';
+import { FlexibleListView } from '@components/FlexibleListView';
+import AnimatedAvatarView from '@components/animated/AnimatedAvatarView';
+import AnimatedHeaderView from '@components/animated/AnimatedHeaderView';
 
-export type userProfileScreenPresenterProps = {};
+export type userProfileScreenPresenterProps = {
+  handleOnScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void;
+  headerImageAnim: Animated.Value;
+};
 
-const HEADER_MAX_VALUE: number = 390;
-
-const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({}) => {
-  const stickyHeaderAnim = useRef(new Animated.Value(0)).current;
-  const headerImageAnim = useRef(new Animated.Value(1)).current;
-
-  const handleSettingsPress = useCallback(() => {
-
-  }, []);
-
-  const handleNameAndBirthdaySettingsPress = useCallback(() => {
-
-  }, []);
-
-  const handleOnScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { contentOffset: { y } } = event.nativeEvent;
-    const currentPercent = (y / HEADER_MAX_VALUE) * 100;
-    if (currentPercent > 100) return;
-    stickyHeaderAnim.flattenOffset();
-    headerImageAnim.flattenOffset();
-    stickyHeaderAnim.setValue(currentPercent);
-    headerImageAnim.setValue(currentPercent);
-  }, [headerImageAnim, stickyHeaderAnim]);
-
-  const renderSettingGearButton = useCallback((handler: (event: GestureResponderEvent) => void): JSX.Element => {
-    return (
-      <ImageButtonView
-        onPress={handler}
-        styles={[Styles.Button.gearImageButton, Styles.Layout.flexCenter]}
-        width={24}
-        height={24}
-        Icon={SettingsGearIcon}
-      />
-    );
-  }, []);
-
+const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({ handleOnScroll, headerImageAnim }) => {
   return (
     <ScreenLayoutView backgroundColor={colors.whiteFF}>
-      <Animated.View
-        style={[
-          { opacity: headerImageAnim.interpolate({
-            inputRange: [0, 90],
-            outputRange: [0, 1],
-          }) },
-          Styles.Layout.flexCenter,
-          Styles.Layout.absolute,
-          Styles.Layout.zIndex10,
-          Styles.Layout.w100,
-          Styles.MarginPadding.pt20,
-          Styles.MarginPadding.pb10,
-        ]}
-      >
-        <View>
-          <TextView styles={[Styles.Text.mediumText24Black, Styles.Text.textCenter]} text="my_profile" />
-          <TextView styles={[Styles.Text.smallText12_40Black, Styles.Text.textCenter]} text="Evgeniy Kokaiko" />
-        </View>
-      </Animated.View>
+      <AnimatedHeaderView
+        animationValue={headerImageAnim}
+        inputValue={[0, 90]}
+        outputValue={[0, 1]}
+      />
       <ScrollView
         onScroll={handleOnScroll}
         bounces
@@ -90,47 +48,25 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
           <MainHeaderView
             rightButton={(
               <ImageButtonView
-                onPress={handleSettingsPress}
+                onPress={() => {}}
                 styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]}
                 width={18}
                 height={18}
-                Icon={SettingsIcon}
+                Icon={DotsIcon}
               />
             )}
           />
         </View>
-        <View style={{ backgroundColor: '#000000' }}>
-          <Animated.Image
-            style={{ width: DEVICE_WIDTH,
-              height: hDP(415),
-              resizeMode: 'cover',
-              opacity: headerImageAnim.interpolate({
-                inputRange: [0, 90],
-                outputRange: [1, 0],
-              }) }}
-            source={require('@assets/img/photo.png')}
-          />
-        </View>
-        <View
-          style={
-        { zIndex: 15,
-          position: 'relative',
-          top: -40,
-          backgroundColor: 'white',
-          borderTopStartRadius: 45,
-          borderTopEndRadius: 45,
-          paddingHorizontal: 40,
-          paddingVertical: 30,
-          height: '100%',
-          gap: hDP(30),
-        }
-}
-        >
+        <AnimatedAvatarView
+          animationValue={headerImageAnim}
+          inputValue={[0, 90]}
+          outputValue={[1, 0]}
+        />
+        <View style={Styles.Container.profileBlock}>
           {/* ~Username and age~ */}
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Jessica Parker, 23"
-            rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
           </UserProfileRowView>
@@ -138,15 +74,13 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="location"
-            rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
           </UserProfileRowView>
           {/* ~About~ */}
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
-            text="location"
-            rightSide={renderSettingGearButton(() => {})}
+            text="about"
           >
             <ReadMoreTextView
               expandLines={3}
@@ -162,7 +96,6 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gender"
-            rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Male</Text>
           </UserProfileRowView>
@@ -170,7 +103,6 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="phone"
-            rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>
               +38093965847
@@ -180,31 +112,71 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="interests"
-            rightSide={renderSettingGearButton(() => {})}
           >
-            <Text style={Styles.Text.smallText14Black_070}>
-              +38093965847
-            </Text>
+            <FlexibleListView
+              empty={<View />}
+              loader={<View />}
+              isLoading={false}
+              horizontal
+              keyExtractor={(item) => `${item.id}`}
+              items={MOCK_INTERESTS}
+              scrollStyles={[Styles.MarginPadding.pt8]}
+              contentContainerStyles={[Styles.MarginPadding.g6, Styles.Layout.max_w_100pc]}
+              renderItem={(item, index) => {
+                return (
+                  <TextPathView<typeof item>
+                    containerStyle={Styles.Container.interestsBody}
+                    textStyle={Styles.Text.smallTextWhiteBold14}
+                    text={`${item.label}`}
+                    val={item}
+                    onPress={(val) => console.log(val)}
+                  />
+                );
+              }}
+            />
           </UserProfileRowView>
           {/* Tags */}
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="tags"
-            rightSide={renderSettingGearButton(() => {})}
           >
-            <Text style={Styles.Text.smallText14Black_070}>
-              +38093965847
-            </Text>
+            <FlexibleListView
+              empty={<View />}
+              loader={<View />}
+              isLoading={false}
+              horizontal
+              keyExtractor={(item) => `${item.id}`}
+              items={MOCK_TAGS}
+              wrapped
+              scrollStyles={[Styles.MarginPadding.pt8]}
+              contentContainerStyles={[Styles.MarginPadding.g6]}
+              renderItem={(item, index) => {
+                return (
+                  <TextPathView<typeof item>
+                    containerStyle={Styles.Container.tagBody}
+                    textStyle={Styles.Text.smallTextRedBold14}
+                    text={`#${item.label}`}
+                    val={item}
+                    onPress={(val) => console.log(val)}
+                  />
+                );
+              }}
+            />
           </UserProfileRowView>
-          {/* Interests */}
+          {/* Gallery */}
           <UserProfileRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gallery"
-            rightSide={renderSettingGearButton(() => {})}
+            rightSide={(
+              <ImageButtonView
+                styles={[Styles.Button.gearImageButton, Styles.Layout.flexCenter]}
+                width={24}
+                height={24}
+                Icon={SettingsGearIcon}
+              />
+)}
           >
-            <Text style={Styles.Text.smallText14Black_070}>
-              +38093965847
-            </Text>
+            <ImageGalleryView photoList={[]} />
           </UserProfileRowView>
         </View>
       </ScrollView>

@@ -21,7 +21,7 @@ const BottomNavigation: React.FC<bottomNavigationProps> = ({ navigation, insets,
   const onPressSelectRoute = useCallback((currentRoute: keyof RootStackParamList, index: number) => () => {
     forceNavigator.navigate(currentRoute, {});
     setSelectedRoute(index);
-  }, [getSelectedRoute]);
+  }, []);
 
   const getColorByIndex = (index: number) => (getSelectedRoute === index ? colors.redE9 : colors.grayAD);
   const getBorderByIndex = (index: number) => (getSelectedRoute === index ? styles.borderTop : {});
@@ -40,11 +40,11 @@ const BottomNavigation: React.FC<bottomNavigationProps> = ({ navigation, insets,
         <DiscoverIcon color={getColorByIndex(2)} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(3)]} onPress={onPressSelectRoute('ChatsScreen', 3)}>
-        <ChatsIcon color={getColorByIndex(3)} />
-      </TouchableOpacity>
+      {/* <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(3)]} onPress={onPressSelectRoute('ChatsScreen', 3)}> */}
+      {/*  <ChatsIcon color={getColorByIndex(3)} /> */}
+      {/* </TouchableOpacity> */}
 
-      <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(4)]} onPress={onPressSelectRoute('UserProfileScreen', 4)}>
+      <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(4)]} onPress={onPressSelectRoute('MyProfileScreen', 4)}>
         <ProfileIcon color={getColorByIndex(4)} />
       </TouchableOpacity>
     </View>

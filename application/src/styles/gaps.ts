@@ -56,8 +56,14 @@ export default StyleSheet.create({
   mt15pc: {
     marginTop: '15.7%',
   },
+  pt8: {
+    paddingTop: hDP(8),
+  },
   pt20: {
     paddingTop: hDP(20),
+  },
+  pv10: {
+    paddingVertical: hDP(10)
   },
   pb10: {
     paddingBottom: hDP(10),
@@ -115,6 +121,9 @@ export default StyleSheet.create({
   },
   g6: {
     gap: wDP(6),
+  },
+  g10: {
+    gap: wDP(10),
   },
   g7: {
     gap: wDP(7),

@@ -37,11 +37,14 @@
   "press_to_refresh": "Press to refresh",
   "my_profile": "My Profile",
   "location": "Location",
+  "about": "About",
   "read_more": "Read more",
   "read_less": "Read less",
   "gender": "Gender",
   "phone": "Phone number",
   "tags": "Tags",
   "interests": "Interests and hobbies",
-  "gallery": "Gallery"
+  "gallery": "Gallery",
+  "nearby": "Nearby",
+  "matches": "Matches"
 }

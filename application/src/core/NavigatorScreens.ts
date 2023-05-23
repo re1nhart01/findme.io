@@ -10,11 +10,13 @@ import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
 import { PhoneScreenContainer } from '@screens/PhoneScreen';
 import { VerifyScreenContainer } from '@screens/VerifyPhoneScreen';
 import { SetupProfileScreenContainer } from '@screens/SetupProfileScreen';
+import { MyProfileScreenContainer } from "@screens/MyProfileScreen";
 
 export type RootStackParamList = {
   UserRouter: { screen: string, params: {} };
   SignInScreen: {};
   SignupScreen: {};
+  MyProfileScreen: {};
   PhoneScreen: {};
   VerifyPhoneScreen: {};
   SetupProfileScreen: {};
@@ -75,15 +77,15 @@ export const StackScreens: MultipleStackScreen = {
   // USER NAVIGATION (ALREADY AUTHORIZED)
   user: [
     {
-      name: 'AllUsersScreen',
-      component: AllUsersScreenContainer,
+      name: 'MatchesScreen',
+      component: MatchesScreenContainer,
       options: {
         headerShown: false,
       },
     },
     {
-      name: 'MatchesScreen',
-      component: MatchesScreenContainer,
+      name: 'AllUsersScreen',
+      component: AllUsersScreenContainer,
       options: {
         headerShown: false,
       },
@@ -105,6 +107,13 @@ export const StackScreens: MultipleStackScreen = {
     {
       name: 'UserProfileScreen',
       component: UserProfileScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'MyProfileScreen',
+      component: MyProfileScreenContainer,
       options: {
         headerShown: false,
       },
