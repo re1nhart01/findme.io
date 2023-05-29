@@ -20,6 +20,7 @@ const AnimatedAvatarView: React.FC<animatedAvatarViewProps> = ({ animationValue,
           opacity: animationValue.interpolate({
             inputRange: inputValue,
             outputRange: outputValue,
+            extrapolate: 'clamp',
           }) }}
         source={require('@assets/img/photo.png')}
       />

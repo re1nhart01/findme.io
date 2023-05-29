@@ -17,8 +17,9 @@ type mainHeaderViewProps = Partial<{
     hide: boolean;
     disabled: boolean;
   }>;
+  customHeader?: JSX.Element;
 }>;
-const MainHeaderView: React.FC<mainHeaderViewProps> = ({ headerText, subHeaderText, LeftButton, rightButton, onTouchCenter }) => {
+const MainHeaderView: React.FC<mainHeaderViewProps> = ({ headerText, subHeaderText, LeftButton, rightButton, onTouchCenter, customHeader }) => {
   const { goBack } = forceNavigator;
   const handleGoBack = useCallback(() => {
     if (LeftButton?.onOverrideGoBack) {
@@ -34,10 +35,12 @@ const MainHeaderView: React.FC<mainHeaderViewProps> = ({ headerText, subHeaderTe
         {!LeftButton?.hide && <ImageButtonView onPress={handleGoBack} disabled={LeftButton?.disabled} styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]} width={18} height={18} Icon={LeftArrow} />}
       </View>
       <View style={[Styles.Layout.w60pc, Styles.Layout.flexCenter]} onTouchStart={onTouchCenter}>
+        {customHeader || (
         <View>
           {headerText && <TextView styles={[Styles.Text.mediumText24Black, Styles.Text.textCenter]} text={headerText} />}
           {subHeaderText && <TextView styles={[Styles.Text.smallText12_40Black, Styles.Text.textCenter]} text={subHeaderText} />}
         </View>
+        )}
       </View>
       <View style={[Styles.Layout.w20pc]}>
         {rightButton || null}

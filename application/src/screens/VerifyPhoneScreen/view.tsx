@@ -1,7 +1,7 @@
 import React, { MutableRefObject, RefObject } from 'react';
 import { Text, View } from 'react-native';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import { Styles } from '@styles/load';
 import { TextView } from '@components/TextView';

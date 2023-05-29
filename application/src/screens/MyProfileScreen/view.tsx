@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import SettingsIcon from '@assets/svg/settings.svg';
 import SettingsGearIcon from '@assets/svg/settings_val.svg';
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import {
   Animated,
@@ -15,24 +15,29 @@ import {
 } from 'react-native';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
-import { DEVICE_WIDTH, hDP } from '@utils/scaling';
-import { TextView } from '@components/TextView';
-import { UserProfileRowView } from '@components/UserProfileRowView';
+import { FieldRowView } from '@components/UserProfileRowView';
 import { ImageButtonView } from '@components/ImageButtonView';
 import ReadMoreTextView from '@components/ReadMoreTextView';
 import { MOCK_INTERESTS, MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
 import TextPathView from '@components/TextPathView';
 import ImageGalleryView from '@components/ImageGalleryView';
 import { FlexibleListView } from '@components/FlexibleListView';
-import AnimatedAvatarView from '@components/animated/AnimatedAvatarView';
-import AnimatedHeaderView from '@components/animated/AnimatedHeaderView';
+import AnimatedAvatarView from '@components/common/animated/AnimatedAvatarView';
+import AnimatedHeaderView from '@components/common/animated/AnimatedHeaderView';
+import {
+  ImageCarouselModal,
+  imageCarouselModalForward,
+} from '@components/common/modals/ImageCarouselModal';
 
 export type myProfileScreenPresenterProps = {
+  handleSettingsPress(): void;
   handleOnScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void;
   headerImageAnim: Animated.Value;
+  carouselModalRef: React.RefObject<imageCarouselModalForward>;
+  openFullScreenCarousel(): void;
 };
 
-const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ handleOnScroll, headerImageAnim }) => {
+const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ handleOnScroll, headerImageAnim, handleSettingsPress, carouselModalRef, openFullScreenCarousel }) => {
   const renderSettingGearButton = useCallback((handler: (event: GestureResponderEvent) => void): JSX.Element => {
     return (
       <ImageButtonView
@@ -58,11 +63,12 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
         pagingEnabled={false}
         scrollEnabled
       >
-        <View style={[Styles.Container.screenLayout, Styles.Container.serviceScreenLayoutHeader, Styles.Layout.absolute, Styles.Layout.zIndex10]}>
+        <View style={[Styles.Container.screenLayout, Styles.Container.serviceScreenLayoutHeader, Styles.Layout.absolute, Styles.Layout.zIndex999]}>
           <MainHeaderView
+            LeftButton={{ hide: true }}
             rightButton={(
               <ImageButtonView
-                onPress={() => {}}
+                onPress={handleSettingsPress}
                 styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]}
                 width={18}
                 height={18}
@@ -78,23 +84,23 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
         />
         <View style={Styles.Container.profileBlock}>
           {/* ~Username and age~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Jessica Parker, 23"
             rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* ~City and country~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="location"
             rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* ~About~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="about"
             rightSide={renderSettingGearButton(() => {})}
@@ -108,27 +114,27 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
             I enjoy reading My name is Jessica Parker and I enjoy meeting new people
             and finding ways to help them have an uplifting experience."
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Gender */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gender"
             rightSide={renderSettingGearButton(() => {})}
           >
             <Text style={Styles.Text.smallText14Black_070}>Male</Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Phone */}
-          <UserProfileRowView
-            style={{ textStyle: [Styles.Text.mediumText24Black] }}
-            text="phone"
-            rightSide={renderSettingGearButton(() => {})}
-          >
-            <Text style={Styles.Text.smallText14Black_070}>
-              +38093965847
-            </Text>
-          </UserProfileRowView>
+          {/* <UserProfileRowView */}
+          {/*  style={{ textStyle: [Styles.Text.mediumText24Black] }} */}
+          {/*  text="phone" */}
+          {/*  rightSide={renderSettingGearButton(() => {})} */}
+          {/* > */}
+          {/*  <Text style={Styles.Text.smallText14Black_070}> */}
+          {/*    +38093965847 */}
+          {/*  </Text> */}
+          {/* </UserProfileRowView> */}
           {/* Interests */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="interests"
             rightSide={renderSettingGearButton(() => {})}
@@ -154,9 +160,9 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
                 );
               }}
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Tags */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="tags"
             rightSide={renderSettingGearButton(() => {})}
@@ -183,17 +189,18 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
                 );
               }}
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Gallery */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gallery"
-            rightSide={renderSettingGearButton(() => {})}
+            rightSide={renderSettingGearButton(openFullScreenCarousel)}
           >
             <ImageGalleryView photoList={[]} />
-          </UserProfileRowView>
+          </FieldRowView>
         </View>
       </ScrollView>
+      <ImageCarouselModal ref={carouselModalRef} />
     </ScreenLayoutView>
   );
 };

@@ -10,4 +10,5 @@ export const colors = {
   redE9_10: 'rgba(233,64,87, 0.1)',
   redE9_50: 'rgba(233,64,87, 0.5)',
   black00_50: 'rgba(0,0,0,0.5)',
+  orangeF2: '#F27121',
 };

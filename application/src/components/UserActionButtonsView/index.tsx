@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import PassIcon from '@assets/svg/close-small.svg';
 import HeartIcon from '@assets/svg/like.svg';
 import StarIcon from '@assets/svg/star.svg';
+import { colors } from '@utils/colors';
 
 type userActionButtonsViewProps = {
   handleLikePress(): void;
@@ -19,6 +20,7 @@ const UserActionButtonsView: React.FC<userActionButtonsViewProps> = ({ handleFav
         onPress={handleSkipPress}
         styles={[Styles.Button.smallRoundedCenterButton, Styles.Layout.flexCenter, Styles.Container.whiteFFBackgroundColor, Styles.Container.grayBorder1]}
         width={30}
+        color={colors.orangeF2}
         height={30}
         Icon={PassIcon}
       />

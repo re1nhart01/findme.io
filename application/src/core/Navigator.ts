@@ -17,10 +17,7 @@ export class Navigator {
   public constructor() {
     this._serviceScreens = [];
     this._stackScreens = [];
-    this._navigationStack = [{
-      path: 'WelcomeScreen',
-      props: {},
-    }];
+    this._navigationStack = [];
   }
 
   public get navigationStack() {

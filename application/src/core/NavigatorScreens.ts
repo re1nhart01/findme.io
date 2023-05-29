@@ -10,17 +10,24 @@ import { UserProfileScreenContainer } from '@screens/UserProfileScreen';
 import { PhoneScreenContainer } from '@screens/PhoneScreen';
 import { VerifyScreenContainer } from '@screens/VerifyPhoneScreen';
 import { SetupProfileScreenContainer } from '@screens/SetupProfileScreen';
-import { MyProfileScreenContainer } from "@screens/MyProfileScreen";
+import { MyProfileScreenContainer } from '@screens/MyProfileScreen';
+import { SettingsScreenContainer } from '@screens/SettingsScreen';
+import { SelectTagsScreenContainer } from '@screens/SelectTagsScreen';
+import { SelectInterestsScreenContainer } from '@screens/SelectInterestsScreen';
+import { SelectGenderScreenContainer } from '@screens/SelectGenderScreen';
 
 export type RootStackParamList = {
   UserRouter: { screen: string, params: {} };
   SignInScreen: {};
   SignupScreen: {};
+  SettingsScreen: {};
   MyProfileScreen: {};
   PhoneScreen: {};
   VerifyPhoneScreen: {};
   SetupProfileScreen: {};
-
+  SelectTagsScreen: {};
+  SelectInterestsScreen: {};
+  SelectGenderScreen: {};
   WelcomeScreen: {};
   AllUsersScreen: {};
   MatchesScreen: {};
@@ -114,6 +121,34 @@ export const StackScreens: MultipleStackScreen = {
     {
       name: 'MyProfileScreen',
       component: MyProfileScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'SettingsScreen',
+      component: SettingsScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'SelectTagsScreen',
+      component: SelectTagsScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'SelectInterestsScreen',
+      component: SelectInterestsScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'SelectGenderScreen',
+      component: SelectGenderScreenContainer,
       options: {
         headerShown: false,
       },

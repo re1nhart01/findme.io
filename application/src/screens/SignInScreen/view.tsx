@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { colors } from '@utils/colors';
 import { TextView } from '@components/TextView';
 import { Styles } from '@styles/load';

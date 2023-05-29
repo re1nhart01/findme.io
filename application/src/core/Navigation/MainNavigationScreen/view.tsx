@@ -1,16 +1,16 @@
-import React, { PropsWithChildren, useRef } from 'react';
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import React, { PropsWithChildren } from 'react';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { UserRouter } from '@core/Navigation/UserRouter';
 import { Navigator } from '@core/Navigator';
-import { StackNavigationOptions, createStackNavigator } from '@react-navigation/stack';
-import { FatalApiErrorModal } from '@components/modals/FatalApiErrorModal';
+import { FatalApiErrorModal } from '@components/common/modals/FatalApiErrorModal';
 import { __app__ } from '@core/MainActivity';
+import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export type mainNavigationPresenterProps = PropsWithChildren<{
   isAuth: boolean;
 }>;
 
-const MainStack = createStackNavigator();
+const MainStack = createNativeStackNavigator();
 const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => {
   return (
     <ScreenLayoutView backgroundColor="white">
@@ -18,13 +18,13 @@ const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => 
         <MainStack.Navigator>
           <MainStack.Group>
             {Navigator.StackScreens.auth.map(({ component, name, options }) => {
-              return <MainStack.Screen name={name} component={component} options={options as StackNavigationOptions} key={name} />;
+              return <MainStack.Screen name={name} component={component} options={options as NativeStackNavigationOptions} key={name} />;
             })}
           </MainStack.Group>
         </MainStack.Navigator>
       )
         :
-        <UserRouter />}
+        <UserRouter Stack={MainStack} />}
       <React.Fragment>
         <FatalApiErrorModal block={false} />
       </React.Fragment>

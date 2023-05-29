@@ -1,5 +1,6 @@
 import { ISliceBaseModel } from '@type/models/index';
 
+export type IUserDiscoverType = 'mutually' | 'incoming';
 export interface IUserRegisterSlice extends ISliceBaseModel {
   email: string;
   phone: string;
@@ -18,12 +19,15 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
 }
 
 export interface IUserDiscoverModelShort {
+  type?: IUserDiscoverType;
+  alreadyLiked?: boolean;
   full_name: string;
   details: string;
   user_hash: string;
   images: Array<string>;
   coords: { x: number; y: number };
   age: number;
+  dateOfCreation?: number;
 }
 
 export interface IUserDiscoverModelFull extends IUserDiscoverModelShort {

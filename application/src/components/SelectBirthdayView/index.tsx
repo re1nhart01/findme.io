@@ -5,7 +5,7 @@ import BirthdayIcon from '@assets/svg/birthday.svg';
 import { wDP } from '@utils/scaling';
 import { Styles } from '@styles/load';
 import { Calendar, DateData } from 'react-native-calendars';
-import { CalendarModal, calendarModalForward } from '@components/modals/CalendarModal';
+import { CalendarModal, calendarModalForward } from '@components/common/modals/CalendarModal';
 
 type selectBirthdayViewProps = {
   value: number;

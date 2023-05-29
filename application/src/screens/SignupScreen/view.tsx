@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Logo from '@assets/svg/trademark.svg';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { TextView } from '@components/TextView';
 import { Styles } from '@styles/load';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';

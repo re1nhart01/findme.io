@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { hDP, wDP } from '@utils/scaling';
+import { DEVICE_WIDTH, hDP, wDP } from '@utils/scaling';
 import { colors } from '@utils/colors';
 
 export default StyleSheet.create({
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     paddingHorizontal: wDP(40),
   },
   serviceScreenLayoutHeader: {
-    paddingTop: hDP(40),
+    paddingTop: hDP(20),
   },
   serviceScreenLayout: {
     paddingTop: hDP(80),
@@ -28,6 +28,10 @@ export default StyleSheet.create({
     zIndex: 9,
     height: hDP(60),
     paddingHorizontal: wDP(15),
+  },
+  borderRedBottom: {
+    borderBottomColor: colors.redE9,
+    borderBottomWidth: 2,
   },
   animatedInputPlaceholder: {
     backgroundColor: colors.whiteFF,
@@ -59,6 +63,9 @@ export default StyleSheet.create({
   },
   whiteFFBackgroundColor: {
     backgroundColor: colors.whiteFF,
+  },
+  whiteFF50BackgroundColor: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
   },
   pinContainer: {
     width: wDP(61),
@@ -138,5 +145,23 @@ export default StyleSheet.create({
     borderColor: colors.redE9,
     borderWidth: 3,
     borderRadius: 999,
+  },
+  fullScreenBody: {
+    width: DEVICE_WIDTH,
+    height: '100%',
+    backgroundColor: 'transparent',
+  },
+  matchesCardActions: {
+    width: '100%',
+    borderBottomEndRadius: 15,
+    borderBottomStartRadius: 15,
+    backgroundColor: 'rgba(0,0,0,0.8)',
+  },
+  matchesCardBody: {
+    backgroundColor: colors.whiteFF,
+    width: wDP(140),
+    height: hDP(200),
+    borderRadius: 15,
+    overflow: 'hidden',
   },
 });

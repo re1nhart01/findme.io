@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text } from 'react-native';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { __app__ } from '@core/MainActivity';
 
 export type aboutScreenPresenterProps = {};

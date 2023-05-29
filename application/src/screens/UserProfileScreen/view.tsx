@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import DotsIcon from '@assets/svg/dots.svg';
 import SettingsGearIcon from '@assets/svg/settings_val.svg';
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import {
   Animated,
@@ -15,15 +15,15 @@ import {
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
 import { hDP } from '@utils/scaling';
-import { UserProfileRowView } from '@components/UserProfileRowView';
+import { FieldRowView } from '@components/UserProfileRowView';
 import { ImageButtonView } from '@components/ImageButtonView';
 import ReadMoreTextView from '@components/ReadMoreTextView';
 import { MOCK_INTERESTS, MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
 import TextPathView from '@components/TextPathView';
 import ImageGalleryView from '@components/ImageGalleryView';
 import { FlexibleListView } from '@components/FlexibleListView';
-import AnimatedAvatarView from '@components/animated/AnimatedAvatarView';
-import AnimatedHeaderView from '@components/animated/AnimatedHeaderView';
+import AnimatedAvatarView from '@components/common/animated/AnimatedAvatarView';
+import AnimatedHeaderView from '@components/common/animated/AnimatedHeaderView';
 
 export type userProfileScreenPresenterProps = {
   handleOnScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void;
@@ -64,21 +64,21 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
         />
         <View style={Styles.Container.profileBlock}>
           {/* ~Username and age~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Jessica Parker, 23"
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* ~City and country~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="location"
           >
             <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* ~About~ */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="about"
           >
@@ -91,25 +91,16 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
             I enjoy reading My name is Jessica Parker and I enjoy meeting new people
             and finding ways to help them have an uplifting experience."
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Gender */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gender"
           >
             <Text style={Styles.Text.smallText14Black_070}>Male</Text>
-          </UserProfileRowView>
-          {/* Phone */}
-          <UserProfileRowView
-            style={{ textStyle: [Styles.Text.mediumText24Black] }}
-            text="phone"
-          >
-            <Text style={Styles.Text.smallText14Black_070}>
-              +38093965847
-            </Text>
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Interests */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="interests"
           >
@@ -134,9 +125,9 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
                 );
               }}
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Tags */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="tags"
           >
@@ -162,9 +153,9 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
                 );
               }}
             />
-          </UserProfileRowView>
+          </FieldRowView>
           {/* Gallery */}
-          <UserProfileRowView
+          <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gallery"
             rightSide={(
@@ -177,7 +168,7 @@ const UserProfileScreenPresenter: React.FC<userProfileScreenPresenterProps> = ({
 )}
           >
             <ImageGalleryView photoList={[]} />
-          </UserProfileRowView>
+          </FieldRowView>
         </View>
       </ScrollView>
     </ScreenLayoutView>

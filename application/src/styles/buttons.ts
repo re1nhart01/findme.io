@@ -44,6 +44,11 @@ export default StyleSheet.create({
     width: wDP(24),
     height: wDP(24),
   },
+  matchesActions: {
+    backgroundColor: 'transparent',
+    width: '50%',
+    height: hDP(40),
+  },
   bigRoundedCenterButton: {
     width: wDP(99),
     height: wDP(99),

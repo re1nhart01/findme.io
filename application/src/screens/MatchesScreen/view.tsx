@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import { ImageButtonView } from '@components/ImageButtonView';
 import SettingsIcon from '@assets/svg/settings.svg';
-import { DraggableContainerView } from '@components/draggable/DraggableContainerView';
+import { DraggableContainerView } from '@components/common/draggable/DraggableContainerView';
 
 export type matchesScreenPresenterProps = {
   handleSettingsPress(): void;
@@ -25,6 +25,7 @@ const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({ handleF
     >
       <View style={Styles.Container.screenLayout}>
         <MainHeaderView
+          LeftButton={{ hide: true }}
           headerText="discover"
           subHeaderText="press_to_refresh"
           rightButton={(

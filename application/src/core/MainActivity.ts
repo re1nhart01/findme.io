@@ -33,9 +33,12 @@ class MainActivity extends Activity {
     await this._notify.onCreate(initialProps);
     const isAuth = this._user.isAuth;
     if (!isAuth) {
-      forceNavigator.navigate('MatchesScreen', {});
-    } else {
       forceNavigator.navigate('WelcomeScreen', {});
+    } else {
+      forceNavigator.navigationStack.unshift({
+        path: 'MatchesScreen',
+        props: {},
+      });
     }
   }
 

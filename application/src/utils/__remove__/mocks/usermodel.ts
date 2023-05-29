@@ -94,3 +94,21 @@ export const user_short = [
     age: 154,
   },
 ];
+
+export const userSectionShort = [{
+  title: 'Today',
+  data: [...user_short],
+},
+{
+  title: 'Yesterday',
+  data: [...user_short],
+},
+{
+  title: 'Apr 21',
+  data: [...user_short],
+}, {
+  title: 'Bruh',
+  data: [...user_short],
+},
+
+];

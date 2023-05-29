@@ -1,15 +1,15 @@
 import React from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import SettingsIcon from '@assets/svg/settings.svg';
 import { ImageButtonView } from '@components/ImageButtonView';
 import { MainHeaderView } from '@src/core/Headers/MainHeader';
 import { Styles } from '@src/styles/load';
 import { colors } from '@utils/colors';
 import { user_short } from '@utils/__remove__/mocks/usermodel';
-import NearbyItemView from '@components/list-items/NearbyItemView';
 import { DEVICE_WIDTH } from '@utils/scaling';
+import NearbyItemView from '@components/list-items/NearbyItemView';
 
 export type allUsersScreenPresenterProps = {
   handleSettingsPress(): void;
@@ -26,6 +26,7 @@ const AllUsersScreenPresenter: React.FC<allUsersScreenPresenterProps> = ({ handl
     >
       <View style={Styles.Container.screenLayout}>
         <MainHeaderView
+          LeftButton={{ hide: true }}
           headerText="nearby"
           subHeaderText="press_to_refresh"
           rightButton={(

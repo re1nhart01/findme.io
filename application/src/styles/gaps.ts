@@ -23,6 +23,12 @@ export default StyleSheet.create({
   mb15pc: {
     marginBottom: '15.7%',
   },
+  mb15: {
+    marginBottom: hDP(15),
+  },
+  mb20: {
+    marginBottom: hDP(20),
+  },
   ml5: {
     marginLeft: wDP(5),
   },
@@ -44,6 +50,9 @@ export default StyleSheet.create({
   mt85pc: {
     marginTop: '85%',
   },
+  pb100: {
+    paddingBottom: hDP(100),
+  },
   mt93pc: {
     marginTop: '93%',
   },
@@ -63,13 +72,19 @@ export default StyleSheet.create({
     paddingTop: hDP(20),
   },
   pv10: {
-    paddingVertical: hDP(10)
+    paddingVertical: hDP(10),
   },
   pb10: {
     paddingBottom: hDP(10),
   },
   ph3: {
     paddingHorizontal: wDP(3),
+  },
+  pl16: {
+    paddingHorizontal: wDP(16),
+  },
+  pb4: {
+    paddingBottom: hDP(4),
   },
   ph15: {
     paddingHorizontal: wDP(15),
@@ -91,6 +106,9 @@ export default StyleSheet.create({
   },
   mh10: {
     marginHorizontal: wDP(10),
+  },
+  ph60: {
+    paddingHorizontal: wDP(60),
   },
   mh40: {
     marginHorizontal: wDP(40),

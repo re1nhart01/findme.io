@@ -31,6 +31,9 @@ export default StyleSheet.create({
   jc_sb: {
     justifyContent: 'space-between',
   },
+  jc_sa: {
+    justifyContent: 'space-around',
+  },
   jc_fe: {
     justifyContent: 'flex-end',
   },
@@ -46,6 +49,10 @@ export default StyleSheet.create({
   ai_fs: {
     alignItems: 'flex-start',
   },
+  wh100_pc: {
+    width: '100%',
+    height: '100%',
+  },
   flexCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -57,11 +64,22 @@ export default StyleSheet.create({
   zIndex10: {
     zIndex: 10,
   },
+  zIndex100: {
+    zIndex: 100,
+  },
+  zIndex999: {
+    zIndex: 999,
+  },
   borderR15: {
     borderRadius: 15,
   },
   borderR5: {
     borderRadius: 5,
+  },
+  absolute_bottom: {
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
   },
   absolute0: {
     position: 'absolute',
@@ -97,9 +115,19 @@ export default StyleSheet.create({
     width: wDP(65),
     height: wDP(65),
   },
+  borderR10: {
+    borderRadius: 10
+  },
+  overflowHidden: {
+    overflow: 'hidden',
+  },
   wh70_px: {
     width: wDP(70),
     height: wDP(70),
+  },
+  whfull_px: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
   },
   wh85_px: {
     width: wDP(85),
@@ -132,6 +160,15 @@ export default StyleSheet.create({
   },
   w100_px: {
     width: 100,
+  },
+  wfull_px: {
+    width: DEVICE_WIDTH,
+  },
+  h600: {
+    height: hDP(600)
+  },
+  h560: {
+    height: hDP(560)
   },
   min52_h: {
     minHeight: hDP(52),

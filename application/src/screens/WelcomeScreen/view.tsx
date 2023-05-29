@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { ScreenLayoutView } from '@components/hoc/ScreenLayout';
+import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { Text, View } from 'react-native';
 import { TransitionCarouselView } from '@components/TransitionCarouselView';
 import { CarouselPhotos } from '@utils/constants/images';
