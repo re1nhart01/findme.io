@@ -10,6 +10,7 @@ type primaryButtonViewProps = {
     styles?: {
         outline?: {};
         text?: {};
+        disabled?: {};
     }
     onPress?: (event: GestureResponderEvent) => void;
     onLongPress?: (event: GestureResponderEvent) => void;
@@ -51,7 +52,7 @@ const PrimaryButtonView: React.FC<primaryButtonViewProps> = ({
       onLongPress={handleOnLongPress}
       hitSlop={hitSlop}
       delayLongPress={delayLongPress}
-      style={styles?.outline}
+      style={[styles?.outline, disabled && styles?.disabled]}
     >
       {leftIcon || null}
       {text && <TextView vars={vars} text={text} styles={styles?.text} numberOfLines={numberOfLines} />}

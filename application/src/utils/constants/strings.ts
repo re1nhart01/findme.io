@@ -5,3 +5,9 @@ export const CONSTANTS = {
   headerMaxValue: 390,
   matchesNumOfColumns: 2,
 };
+
+export const gendersList = [
+  'Male',
+  'Female',
+  'Other',
+];

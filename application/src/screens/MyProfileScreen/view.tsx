@@ -35,9 +35,19 @@ export type myProfileScreenPresenterProps = {
   headerImageAnim: Animated.Value;
   carouselModalRef: React.RefObject<imageCarouselModalForward>;
   openFullScreenCarousel(): void;
+  handleSelectGendersPress(): void;
+  handleSelectInterestsPress(): void;
 };
 
-const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ handleOnScroll, headerImageAnim, handleSettingsPress, carouselModalRef, openFullScreenCarousel }) => {
+const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
+  handleOnScroll,
+  headerImageAnim,
+  handleSettingsPress,
+  carouselModalRef,
+  openFullScreenCarousel,
+  handleSelectGendersPress,
+  handleSelectInterestsPress,
+}) => {
   const renderSettingGearButton = useCallback((handler: (event: GestureResponderEvent) => void): JSX.Element => {
     return (
       <ImageButtonView
@@ -119,7 +129,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gender"
-            rightSide={renderSettingGearButton(() => {})}
+            rightSide={renderSettingGearButton(handleSelectGendersPress)}
           >
             <Text style={Styles.Text.smallText14Black_070}>Male</Text>
           </FieldRowView>
@@ -137,13 +147,14 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({ han
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="interests"
-            rightSide={renderSettingGearButton(() => {})}
+            rightSide={renderSettingGearButton(handleSelectInterestsPress)}
           >
             <FlexibleListView
               empty={<View />}
               loader={<View />}
               isLoading={false}
               horizontal
+              wrapped
               keyExtractor={(item) => `${item.id}`}
               items={MOCK_INTERESTS}
               scrollStyles={[Styles.MarginPadding.pt8]}

@@ -20,6 +20,14 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
 
   }, []);
 
+  const handleSelectGendersPress = useCallback(() => {
+    forceNavigator.navigate('SelectGenderScreen', {});
+  }, []);
+
+  const handleSelectInterestsPress = useCallback(() => {
+    forceNavigator.navigate('SelectInterestsScreen', {});
+  }, []);
+
   const openFullScreenCarousel = useCallback(() => {
     if (carouselModalRef && carouselModalRef.current) {
       carouselModalRef.current.onOpen(MOCK_CAROUSEL_IMAGES);
@@ -40,6 +48,8 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
     handleSettingsPress,
     carouselModalRef,
     openFullScreenCarousel,
+    handleSelectGendersPress,
+    handleSelectInterestsPress,
   };
 
   return (

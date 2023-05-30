@@ -164,4 +164,20 @@ export default StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
   },
+  pickerStyleContainer: {
+    width: '100%',
+    height: hDP(58),
+    backgroundColor: colors.whiteFF,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: wDP(20),
+    alignItems: 'center',
+    borderRadius: 15,
+    borderColor: colors.grayE8,
+    borderWidth: 1,
+  },
+  pickerActiveContainer: {
+    backgroundColor: colors.redE9,
+    borderColor: colors.redE9,
+  },
 });

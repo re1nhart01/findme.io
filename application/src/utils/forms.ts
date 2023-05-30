@@ -1,6 +1,7 @@
 import { FormadjoValidator } from '@core/Validators/MainFormadjo';
 import { FormadjoFormer } from '@core/Validators/FormadjoFormer';
 import { FormadjoField } from '@core/Validators/Formadjo';
+import { Interest } from '@type/models/interests';
 
 export type IBasicInformationFormTemplate = {
   email: string;
@@ -15,7 +16,7 @@ export const basicInformationFormTemplate = new FormadjoFormer<IBasicInformation
     .setIsRequired(true),
   password: new FormadjoField('password', 'string')
     .setIsRequired(true)
-    .setMinLength(5)
+    .setMinLength(4)
     .setMaxLength(100),
   rePassword: new FormadjoField('rePassword', 'string')
     .setIsRequired(true)
@@ -94,4 +95,33 @@ export const loginFormTemplate = new FormadjoFormer<ILoginFormTemplate>({
     .setIsRequired(true)
     .setMinLength(5)
     .setMaxLength(500),
+});
+
+export type IGenderFormTemplate = {
+  gender: string;
+  lookingForGender: string;
+};
+
+export const genderSelectTemplate = new FormadjoFormer<IGenderFormTemplate>({
+  gender: new FormadjoField('Gender', 'string')
+    .setIsRequired(true)
+    .setMinLength(3)
+    .setMaxLength(500),
+  lookingForGender: new FormadjoField('LookingForGender', 'string')
+    .setIsRequired(true)
+    .setMinLength(3)
+    .setMaxLength(500),
+});
+
+export type IInterestsFormTemplate = {
+  interests: Array<number>;
+};
+
+export const interestSelectTemplate = new FormadjoFormer<IInterestsFormTemplate>({
+  interests: new FormadjoField('Interest', 'object')
+    .setMinLength(3)
+    .setMaxLength(3)
+    .setArrayValueType('number')
+    .setIsRequired(true)
+    .setType('object'),
 });

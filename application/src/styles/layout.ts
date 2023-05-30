@@ -16,6 +16,12 @@ export default StyleSheet.create({
   w20pc: {
     width: '20%',
   },
+  w48pc: {
+    width: '48%',
+  },
+  w50pc: {
+    width: '50%',
+  },
   w60pc: {
     width: '60%',
   },
@@ -116,7 +122,7 @@ export default StyleSheet.create({
     height: wDP(65),
   },
   borderR10: {
-    borderRadius: 10
+    borderRadius: 10,
   },
   overflowHidden: {
     overflow: 'hidden',
@@ -165,10 +171,10 @@ export default StyleSheet.create({
     width: DEVICE_WIDTH,
   },
   h600: {
-    height: hDP(600)
+    height: hDP(600),
   },
   h560: {
-    height: hDP(560)
+    height: hDP(560),
   },
   min52_h: {
     minHeight: hDP(52),

@@ -46,6 +46,11 @@ export default StyleSheet.create({
     fontFamily: 'Sk-Modernist-Regular',
     fontSize: fontSizeDP(14),
   },
+  smallText14White: {
+    color: colors.whiteFF,
+    fontFamily: 'Sk-Modernist-Regular',
+    fontSize: fontSizeDP(14),
+  },
   smallText14Black_070: {
     color: colors.black00_50,
     fontFamily: 'Sk-Modernist-Regular',
@@ -99,6 +104,11 @@ export default StyleSheet.create({
   },
   smallTextWhiteBold14: {
     color: colors.whiteFF,
+    fontFamily: 'Sk-Modernist-Bold',
+    fontSize: fontSizeDP(14),
+  },
+  smallTextBlackBold14: {
+    color: colors.black00,
     fontFamily: 'Sk-Modernist-Bold',
     fontSize: fontSizeDP(14),
   },

@@ -47,5 +47,13 @@
   "gallery": "Gallery",
   "nearby": "Nearby",
   "matches": "Matches",
-  "settings": "Settings"
+  "settings": "Settings",
+  "direct": "Direct",
+  "chat_list": "Chat List",
+  "select_gender": "Select who",
+  "select_gender2": "you are, and who you preffer",
+  "i_am": "I am",
+  "looking_for": "Looking for",
+  "your_interests": "Your interests",
+  "select_tags": "Select tags"
 }

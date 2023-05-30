@@ -22,9 +22,7 @@ const SettingsScreenPresenter: React.FC<
           headerText="settings"
         />
       </View>
-      <View style={[]}>
-
-      </View>
+      <View style={[]} />
     </ScreenLayoutView>
   );
 };
