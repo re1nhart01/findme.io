@@ -6,10 +6,12 @@ export interface ISliceBaseModel {
   };
 }
 
-
 export interface Action {
   type: string;
   payload?: unknown;
 }
 
-
+export interface ISliceError {
+  errorMessage: string;
+  isError: boolean;
+}

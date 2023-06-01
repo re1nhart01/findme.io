@@ -146,6 +146,9 @@ export default StyleSheet.create({
   w33_3pc: {
     width: '33.3%',
   },
+  h35: {
+    height: hDP(45),
+  },
   h60: {
     height: hDP(60),
   },
@@ -172,6 +175,15 @@ export default StyleSheet.create({
   },
   h600: {
     height: hDP(600),
+  },
+  h400: {
+    height: hDP(420),
+  },
+  h150: {
+    height: hDP(150),
+  },
+  h250: {
+    height: hDP(250),
   },
   h560: {
     height: hDP(560),

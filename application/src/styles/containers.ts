@@ -20,6 +20,10 @@ export default StyleSheet.create({
     borderColor: colors.grayE8,
     borderWidth: 1,
   },
+  whiteF3Border1: {
+    borderColor: colors.whiteF3,
+    borderWidth: 1,
+  },
   animatedInputContainer: {
     backgroundColor: colors.whiteFF,
     borderColor: colors.grayE8,
@@ -28,6 +32,14 @@ export default StyleSheet.create({
     zIndex: 9,
     height: hDP(60),
     paddingHorizontal: wDP(15),
+  },
+  animatedInputContainer_bottomCorner: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  animatedInputContainer_cornerFull: {
+    borderBottomStartRadius: 15,
+    borderBottomEndRadius: 15,
   },
   borderRedBottom: {
     borderBottomColor: colors.redE9,
@@ -60,6 +72,12 @@ export default StyleSheet.create({
   },
   redE9BackgroundColor: {
     backgroundColor: colors.redE9,
+  },
+  grayE8BackgroundColor: {
+    backgroundColor: colors.whiteF3,
+  },
+  whiteF3BackgroundColor: {
+    backgroundColor: colors.whiteF3,
   },
   whiteFFBackgroundColor: {
     backgroundColor: colors.whiteFF,
@@ -179,5 +197,14 @@ export default StyleSheet.create({
   pickerActiveContainer: {
     backgroundColor: colors.redE9,
     borderColor: colors.redE9,
+  },
+  optionMenuContainer: {
+    backgroundColor: 'white',
+    width: '100%',
+    height: hDP(150),
+    top: hDP(70),
+    borderWidth: 1,
+    borderColor: colors.whiteF3,
+    overflow: 'hidden',
   },
 });

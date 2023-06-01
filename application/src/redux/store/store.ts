@@ -3,16 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { userRegisterReducer } from '@redux/slices/auth/user-register/user-register.slice';
 import { globalReducer } from '@redux/slices/global.slice';
+import { tagsReducer } from '@redux/slices/tags/tags.slice';
 
 const rootReducer = combineReducers({
   user_register: userRegisterReducer,
   global: globalReducer,
+  tags_reducer: tagsReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['global'],
+  blacklist: ['global', 'tags_reducer'],
 };
 
 // @ts-ignore

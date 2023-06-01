@@ -11,3 +11,20 @@ export const gendersList = [
   'Female',
   'Other',
 ];
+
+export const moodList = [
+  'Here to date 😺',
+  'Open to chat 📣',
+  'Ready for relationship 💑',
+  'In search of incredible 🌍',
+  'Into hardworking stuff 🧑‍💼',
+  'Reject modernity, embrace masculinity 🦾',
+];
+
+export const relationsList = [
+  'Single',
+  'Taken',
+  "It's complicated",
+  'Open',
+  "I'd rather not say",
+];

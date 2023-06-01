@@ -5,14 +5,15 @@ import { MainNavigationContainer } from '@core/Navigation/MainNavigationScreen';
 import { FindStatusBar } from '@core/StatusBar';
 import { forceNavigator } from '@core/Navigator';
 import { Styles } from '@styles/load';
-import { useTypedDispatch } from '@reacts/hooks/useRedux';
+import { useTypedDispatch, useTypedSelector } from '@reacts/hooks/useRedux';
 import { globalActions } from '@redux/slices/global.slice';
 import { __app__ } from '@core/MainActivity';
 
 function RootApplication(): JSX.Element {
   const rootDispatch = useTypedDispatch();
-
+  const state = useTypedSelector((state) => state);
   useEffect(() => {
+    console.log(state);
     LogBox.ignoreLogs(['Require cycle: ', 'Warning: TypeError: property']);
     if (Platform.OS === 'android') {
       if (UIManager.setLayoutAnimationEnabledExperimental) {

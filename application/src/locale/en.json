@@ -3,6 +3,7 @@
   "algorithm": "Algorithm",
   "users_going_through": "We match you with people that have a\nlarge array of similar interests.",
   "create_an_account": "Create an account",
+  "save": "Save",
   "already_have_acc": "Already have an account?",
   "sign_in": "Sign in",
   "sign_up_continue": "Sign up to continue",
@@ -29,6 +30,8 @@
   "account": "account",
   "choose_birthday": "Choose birthday date",
   "your_location": "Your Location",
+  "your_mood": "Your mood",
+  "your_relationship": "Your relationship",
   "finish": "Finish",
   "user_already_exists": "This user is already exists",
   "error_email_exists": "This email is already exists",
@@ -37,6 +40,8 @@
   "press_to_refresh": "Press to refresh",
   "my_profile": "My Profile",
   "location": "Location",
+  "relations": "Relationship",
+  "age": "Age",
   "about": "About",
   "read_more": "Read more",
   "read_less": "Read less",
@@ -55,5 +60,9 @@
   "i_am": "I am",
   "looking_for": "Looking for",
   "your_interests": "Your interests",
-  "select_tags": "Select tags"
+  "select_tags": "Select tags",
+  "write_tag": "Write your tag or select from exists...",
+  "selected_tags": "Your selected tags. Press to remove.",
+  "edit": "Edit",
+  "edit_photos": "Edit Photos"
 }

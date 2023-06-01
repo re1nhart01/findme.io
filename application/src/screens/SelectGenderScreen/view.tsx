@@ -44,7 +44,6 @@ const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = 
             isDisabled,
             values,
             onSubmit,
-            errorsList,
           }) => {
             return (
               <View style={[Styles.MarginPadding.mt32]}>

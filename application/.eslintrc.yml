@@ -86,6 +86,7 @@ rules:
   no-use-before-define: 0
   implicit-arrow-linebreak: 0
   no-console: off
+  linebreak-style: 0
   arrow-body-style: off
   operator-linebreak: 0
   import/prefer-default-export: 0

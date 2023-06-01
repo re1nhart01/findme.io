@@ -6,11 +6,11 @@ export const useLoader = (timeout: number = 0, isOptimized: boolean = true) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(true);
-    }, 0);
+    }, timeout);
     return () => {
       setLoading(false);
     };
   }, []);
-
+  console.log(getLoading, 'loading');
   return isOptimized ? getLoading : true;
 };

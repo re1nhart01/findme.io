@@ -1,53 +1,53 @@
 export const MOCK_TAGS = [
   {
     id: 1,
-    label: 'zxc',
-    value: 154,
+    label: 'Morph',
+    value: 1,
   },
   {
     id: 2,
-    label: 'zxc',
-    value: 154,
+    label: 'Mars',
+    value: 2,
   },
   {
     id: 3,
-    label: 'zxc',
-    value: 154,
+    label: 'Marci',
+    value: 3,
   },
   {
     id: 4,
-    label: 'zxc',
-    value: 154,
+    label: 'Void',
+    value: 4,
   },
   {
     id: 5,
-    label: 'zxc',
-    value: 154,
+    label: 'Tinker',
+    value: 5,
   },
   {
     id: 6,
-    label: 'zxc',
-    value: 154,
+    label: 'Invoker',
+    value: 6,
   },
   {
     id: 7,
-    label: 'zxc',
-    value: 154,
+    label: 'Juggernaut',
+    value: 7,
   },
   {
     id: 8,
-    label: 'zxc',
-    value: 154,
+    label: 'CM',
+    value: 8,
   },
   {
     id: 9,
-    label: 'zxc',
-    value: 154,
+    label: 'Visage',
+    value: 9,
   },
   {
     id: 0,
-    label: 'zxc',
-    value: 154,
+    label: 'Ghoul',
+    value: 10,
   },
 ];
 

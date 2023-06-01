@@ -15,13 +15,19 @@ import { SettingsScreenContainer } from '@screens/SettingsScreen';
 import { SelectTagsScreenContainer } from '@screens/SelectTagsScreen';
 import { SelectInterestsScreenContainer } from '@screens/SelectInterestsScreen';
 import { SelectGenderScreenContainer } from '@screens/SelectGenderScreen';
+import { EditProfileScreenContainer } from '@screens/EditProfileScreen';
+import { EditMoodRelationsContainer } from '@screens/EditMoodRelationsScreen';
+import { EditImagesScreenContainer } from '@screens/EditImagesScreen';
 
 export type RootStackParamList = {
   UserRouter: { screen: string, params: {} };
   SignInScreen: {};
   SignupScreen: {};
   SettingsScreen: {};
+  EditProfileScreen: {};
   MyProfileScreen: {};
+  EditMoodRelationsScreen: {};
+  EditImagesScreen: {};
   PhoneScreen: {};
   VerifyPhoneScreen: {};
   SetupProfileScreen: {};
@@ -149,6 +155,27 @@ export const StackScreens: MultipleStackScreen = {
     {
       name: 'SelectGenderScreen',
       component: SelectGenderScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'EditProfileScreen',
+      component: EditProfileScreenContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'EditMoodRelationsScreen',
+      component: EditMoodRelationsContainer,
+      options: {
+        headerShown: false,
+      },
+    },
+    {
+      name: 'EditImagesScreen',
+      component: EditImagesScreenContainer,
       options: {
         headerShown: false,
       },

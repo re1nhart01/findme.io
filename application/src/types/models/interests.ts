@@ -1,5 +1,6 @@
-export interface Interest {
-    id: number;
-    interests_label: string;
-    interests_value: string;
-};
+export interface IInterest {
+    label: string;
+    value: number | string;
+}
+
+export type IInterests = Array<IInterest>;

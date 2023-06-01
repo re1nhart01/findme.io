@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 
+import GalleryIcon from '@assets/svg/gallery.svg';
 import SettingsIcon from '@assets/svg/settings.svg';
 import SettingsGearIcon from '@assets/svg/settings_val.svg';
 import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
@@ -37,6 +38,10 @@ export type myProfileScreenPresenterProps = {
   openFullScreenCarousel(): void;
   handleSelectGendersPress(): void;
   handleSelectInterestsPress(): void;
+  handleSelectTagsPress(): void;
+  handleEditBasicInformation(): void;
+  handleEditMood(): void;
+  handleEditImages(): void;
 };
 
 const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
@@ -47,6 +52,10 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
   openFullScreenCarousel,
   handleSelectGendersPress,
   handleSelectInterestsPress,
+  handleSelectTagsPress,
+  handleEditBasicInformation,
+  handleEditMood,
+  handleEditImages,
 }) => {
   const renderSettingGearButton = useCallback((handler: (event: GestureResponderEvent) => void): JSX.Element => {
     return (
@@ -93,27 +102,36 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           outputValue={[1, 0]}
         />
         <View style={Styles.Container.profileBlock}>
+          <FieldRowView
+            style={{ textStyle: [Styles.Text.mediumText24Black] }}
+            text="basic_info"
+            rightSide={renderSettingGearButton(handleEditBasicInformation)}
+          />
           {/* ~Username and age~ */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
-            text="Jessica Parker, 23"
-            rightSide={renderSettingGearButton(() => {})}
+            text="Name"
           >
-            <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
+            <Text style={Styles.Text.smallText14Black_070}>Jessica Parker</Text>
           </FieldRowView>
-          {/* ~City and country~ */}
+          {/* ~Age~ */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
-            text="location"
-            rightSide={renderSettingGearButton(() => {})}
+            text="age"
           >
-            <Text style={Styles.Text.smallText14Black_070}>Current age - 23 years old</Text>
+            <Text style={Styles.Text.smallText14Black_070}>23 years</Text>
+          </FieldRowView>
+          {/* ~City and country~relations */}
+          <FieldRowView
+            style={{ textStyle: [Styles.Text.mediumText24Black] }}
+            text="Location"
+          >
+            <Text style={Styles.Text.smallText14Black_070}>Uzhgorod, Ukraine</Text>
           </FieldRowView>
           {/* ~About~ */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="about"
-            rightSide={renderSettingGearButton(() => {})}
           >
             <ReadMoreTextView
               expandLines={3}
@@ -125,6 +143,21 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             and finding ways to help them have an uplifting experience."
             />
           </FieldRowView>
+          {/* ~Relations~ */}
+          <FieldRowView
+            style={{ textStyle: [Styles.Text.mediumText24Black] }}
+            text="relations"
+            rightSide={renderSettingGearButton(handleEditMood)}
+          >
+            <Text style={Styles.Text.smallText14Black_070}>Single</Text>
+          </FieldRowView>
+          <FieldRowView
+            style={{ textStyle: [Styles.Text.mediumText24Black] }}
+            text="Mood"
+            rightSide={renderSettingGearButton(handleEditMood)}
+          >
+            <Text style={Styles.Text.smallText14Black_070}>In search of brightness</Text>
+          </FieldRowView>
           {/* Gender */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
@@ -133,16 +166,6 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           >
             <Text style={Styles.Text.smallText14Black_070}>Male</Text>
           </FieldRowView>
-          {/* Phone */}
-          {/* <UserProfileRowView */}
-          {/*  style={{ textStyle: [Styles.Text.mediumText24Black] }} */}
-          {/*  text="phone" */}
-          {/*  rightSide={renderSettingGearButton(() => {})} */}
-          {/* > */}
-          {/*  <Text style={Styles.Text.smallText14Black_070}> */}
-          {/*    +38093965847 */}
-          {/*  </Text> */}
-          {/* </UserProfileRowView> */}
           {/* Interests */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
@@ -155,7 +178,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
               isLoading={false}
               horizontal
               wrapped
-              keyExtractor={(item) => `${item.id}`}
+              keyExtractor={(item) => `${item.value}`}
               items={MOCK_INTERESTS}
               scrollStyles={[Styles.MarginPadding.pt8]}
               contentContainerStyles={[Styles.MarginPadding.g6, Styles.Layout.max_w_100pc]}
@@ -176,7 +199,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="tags"
-            rightSide={renderSettingGearButton(() => {})}
+            rightSide={renderSettingGearButton(handleSelectTagsPress)}
           >
             <FlexibleListView
               empty={<View />}
@@ -205,7 +228,18 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gallery"
-            rightSide={renderSettingGearButton(openFullScreenCarousel)}
+            rightSide={(
+              <View style={[Styles.Layout.flexRow, Styles.MarginPadding.g10]}>
+                <ImageButtonView
+                  onPress={openFullScreenCarousel}
+                  styles={[Styles.Button.gearImageButton, Styles.Layout.flexCenter]}
+                  width={24}
+                  height={24}
+                  Icon={GalleryIcon}
+                />
+                {renderSettingGearButton(handleEditImages)}
+              </View>
+)}
           >
             <ImageGalleryView photoList={[]} />
           </FieldRowView>

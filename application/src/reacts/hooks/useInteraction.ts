@@ -13,3 +13,12 @@ export const useInteraction = (timeLocked: number = 2000) => {
     return () => InteractionManager.clearInteractionHandle(handle);
   }, [timeLocked]);
 };
+
+export const createInteraction = (timeLocked: number = 2000) => {
+  const handle = InteractionManager.createInteractionHandle();
+
+  setTimeout(
+    () => InteractionManager.clearInteractionHandle(handle),
+    timeLocked,
+  );
+};

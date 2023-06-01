@@ -125,3 +125,56 @@ export const interestSelectTemplate = new FormadjoFormer<IInterestsFormTemplate>
     .setIsRequired(true)
     .setType('object'),
 });
+
+export type IEditProfileForm = {
+  firstName: string;
+  lastName: string;
+  birthday: number;
+  city: string;
+  country: string;
+  details: string;
+}
+
+export const editProfileForm = new FormadjoFormer<IEditProfileForm>({
+  firstName: new FormadjoField('firstName', 'string')
+    .setMinLength(2)
+    .setIsRequired(true),
+  lastName: new FormadjoField('lastName', 'string')
+    .setIsRequired(true)
+    .setMinLength(2)
+    .setMaxLength(100),
+  details: new FormadjoField('details', 'string')
+    .setIsRequired(true)
+    .setMinLength(10)
+    .setMaxLength(100),
+  birthday: new FormadjoField('birthday', 'number')
+    .setIsRequired(true)
+    .setMinLength(1005)
+    .setMaxLength(Date.now()),
+  country: new FormadjoField('Country', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(100)
+    .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
+  city: new FormadjoField('City', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(100)
+    .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
+});
+
+export type IEditMoodRelationsForm = {
+  mood: string;
+  relationship: string;
+}
+
+export const editMoodRelationsForm = new FormadjoFormer<IEditMoodRelationsForm>({
+  mood: new FormadjoField('Mood', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(250),
+  relationship: new FormadjoField('Relationship', 'string')
+    .setIsRequired(true)
+    .setMinLength(5)
+    .setMaxLength(250),
+});

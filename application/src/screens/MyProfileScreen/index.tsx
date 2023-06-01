@@ -16,8 +16,8 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
     forceNavigator.navigate('SettingsScreen', {});
   }, []);
 
-  const handleNameAndBirthdaySettingsPress = useCallback(() => {
-
+  const handleEditBasicInformation = useCallback(() => {
+    forceNavigator.navigate('EditProfileScreen', {});
   }, []);
 
   const handleSelectGendersPress = useCallback(() => {
@@ -26,6 +26,18 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
 
   const handleSelectInterestsPress = useCallback(() => {
     forceNavigator.navigate('SelectInterestsScreen', {});
+  }, []);
+
+  const handleSelectTagsPress = useCallback(() => {
+    forceNavigator.navigate('SelectTagsScreen', {});
+  }, []);
+
+  const handleEditMood = useCallback(() => {
+    forceNavigator.navigate('EditMoodRelationsScreen', {});
+  }, []);
+
+  const handleEditImages = useCallback(() => {
+    forceNavigator.navigate('EditImagesScreen', {});
   }, []);
 
   const openFullScreenCarousel = useCallback(() => {
@@ -37,7 +49,6 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
   const handleOnScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset: { y } } = event.nativeEvent;
     const currentPercent = (y / CONSTANTS.headerMaxValue) * 100;
-    console.log(currentPercent);
     headerImageAnim.flattenOffset();
     headerImageAnim.setValue(currentPercent);
   }, [headerImageAnim]);
@@ -50,6 +61,10 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
     openFullScreenCarousel,
     handleSelectGendersPress,
     handleSelectInterestsPress,
+    handleSelectTagsPress,
+    handleEditBasicInformation,
+    handleEditMood,
+    handleEditImages,
   };
 
   return (

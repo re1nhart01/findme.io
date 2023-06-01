@@ -81,9 +81,13 @@ const FlexibleListView = <T = any>({
     );
   };
 
+  if (items.length === 0) {
+    return empty;
+  }
+
   return (
     <React.Fragment>
-      {isLoaded ?
+      {isLoading ?
         loader : (
           <ScrollView
             style={scrollStyles}
@@ -92,7 +96,7 @@ const FlexibleListView = <T = any>({
             horizontal={horizontal}
           >
             {
-                listItems?.map(renderListWithKey)
+                items?.map(renderListWithKey)
             }
           </ScrollView>
         )}

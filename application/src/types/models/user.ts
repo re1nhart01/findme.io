@@ -1,4 +1,6 @@
 import { ISliceBaseModel } from '@type/models/index';
+import { ITags } from '@type/models/tags';
+import { IInterests } from '@type/models/interests';
 
 export type IUserDiscoverType = 'mutually' | 'incoming';
 export interface IUserRegisterSlice extends ISliceBaseModel {
@@ -12,10 +14,11 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   details: string;
   city: string;
   country: string;
-  hasInterest: boolean;
+  interests: IInterests;
+  tags: ITags;
+  mood: string | null;
+  relations: string | null;
   gender: string;
-  hasTags: boolean;
-  hasSelectedMood: boolean;
 }
 
 export interface IUserDiscoverModelShort {

@@ -41,10 +41,9 @@ const BottomNavigation: React.FC<bottomNavigationProps> = () => {
             setSelectedRoute(4);
             break;
           default:
-            setSelectedRoute(0);
+            setSelectedRoute(10);
             break;
         }
-        console.log(event.data.state.routes);
       }
     };
     forceNavigator.navigation.addListener('state', listener);
