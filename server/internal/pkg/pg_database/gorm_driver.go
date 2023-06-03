@@ -3,24 +3,39 @@ package pg_database
 import (
 	"fmt"
 	"internal/models"
+	"sync"
 )
+
+var wg sync.WaitGroup
 
 func InitTables() {
 	inst := GetDatabaseInstance()
-	//inst.CreateDatabaseTable(models.USERS, models.UserModel{})
-	inst.CreateManualTable(models.CreateGenderTable())
-	inst.CreateManualTable(models.CreateUserTable())
-	inst.CreateManualTable(models.CreateUserPreferencesTable())
-	inst.CreateDatabaseTable(models.INTERESTS, models.InterestsModel{})
-	inst.CreateDatabaseTable(models.MATCHES, models.MatchesModel{})
-	inst.CreateDatabaseTable(models.NOTIFICATIONS, models.NotificationsModel{})
-	inst.CreateDatabaseTable(models.TAGS, models.TagsModel{})
-	inst.CreateDatabaseTable(models.USER_DEVICE, models.UserDeviceModel{})
-	inst.CreateDatabaseTable(models.USER_POSTS, models.UserPostModel{})
-	inst.CreateDatabaseTable(models.USER_PHOTOS, models.UserPhotosModel{})
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		instance.CallManualSQL(models.CalculateCoords())
+	}()
+	go func() {
+		defer wg.Done()
+		inst.CallManualSQL(models.CreateInterestsTable())
+		inst.CallManualSQL(models.CreateGenderTable())
+		inst.CallManualSQL(models.CreateUserTable())
+		inst.CallManualSQL(models.CreateUserPreferencesTable())
+		inst.CallManualSQL(models.CreateGenderTable())
+		inst.CallManualSQL(models.CreateMatchesTable())
+		inst.CallManualSQL(models.CreateUserMessagesTable())
+		inst.CallManualSQL(models.CreateNotificationTable())
+		inst.CallManualSQL(models.CreateTagsTable())
+		inst.CallManualSQL(models.CreateUserDeviceTable())
+		inst.CallManualSQL(models.CreateFavoritesTable())
+		inst.CallManualSQL(models.CreateUserPhotosTable())
+		inst.CallManualSQL(models.CreateUserPreferencesTable())
+		inst.CallManualSQL(models.CreateUserInterestsTable())
+	}()
+	wg.Wait()
 }
 
-func (db *postgresInstance) CreateDatabaseTable(tableName string, model any) {
+func (db *postgresInstance) MigrateTable(tableName string, model any) {
 	if isExists := db.Instance.Migrator().HasTable(tableName); !isExists {
 		err := db.Instance.Migrator().AutoMigrate(&model)
 		if err != nil {
@@ -29,6 +44,6 @@ func (db *postgresInstance) CreateDatabaseTable(tableName string, model any) {
 	}
 }
 
-func (db *postgresInstance) CreateManualTable(query string) {
+func (db *postgresInstance) CallManualSQL(query string) {
 	db.Instance.Exec(query)
 }

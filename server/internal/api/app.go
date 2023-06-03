@@ -24,7 +24,7 @@ type FindMeIoApplication struct {
 
 func NewApp(withLogger bool) *FindMeIoApplication {
 	inst := &FindMeIoApplication{
-		Ver:      "0.0.1",
+		Ver:      "0.0.2",
 		Instance: gin.Default(),
 	}
 	inst.Instance.Use(

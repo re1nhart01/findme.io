@@ -27,4 +27,5 @@ const (
 	USER_PHOTOS      = "user_photos"
 	USER_INTERESTS   = "user_interests"
 	USERS_MESSAGES   = "users_message"
+	USER_FAVORITES   = "user_favorites"
 )

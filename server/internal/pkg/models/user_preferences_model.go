@@ -5,12 +5,13 @@ import (
 )
 
 type UserPreferenceModel struct {
-	UserHashId     string `json:"user_hash_id"`
-	Theme          bool   `json:"theme"`
-	Lang           string `json:"lang"`
-	Muted          bool   `json:"muted"`
-	EmergencyAlert bool   `json:"emergency_alert"`
-	Coords         string `gorm:"type:point" json:"coords"`
+	Id                int    `json:"id"`
+	UserHashId        string `json:"user_hash_id"`
+	Theme             bool   `json:"theme"`
+	Lang              string `json:"lang"`
+	Muted             bool   `json:"muted"`
+	EmergencyAlert    bool   `json:"emergency_alert"`
+	NotificationToken string `json:"notification_token"`
 }
 
 func CreateUserPreferencesTable() string {

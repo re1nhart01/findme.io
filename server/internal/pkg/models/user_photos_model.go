@@ -3,11 +3,10 @@ package models
 import "fmt"
 
 type UserPhotosModel struct {
-	BaseTypeModel
-	UserModel  UserModel `gorm:"foreignKey:UserHashId"`
-	UserHashId string    `json:"user_hash_id,omitempty" json:"user_hash_id,omitempty"`
-	PhotoHash  string    `json:"photo_hash,omitempty"`
-	Active     bool      `json:"active,omitempty"`
+	Id              int    `json:"id"`
+	UserHashId      string `json:"user_hash_id,omitempty" json:"user_hash_id,omitempty"`
+	StorageBucketId string `json:"storage_bucket_id"`
+	IsDefault       bool   `json:"is_default"`
 }
 
 func (UserPhotosModel) TableName() string {

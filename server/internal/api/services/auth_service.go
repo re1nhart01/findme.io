@@ -71,7 +71,6 @@ func (auth *AuthService) CreateUserPreferences(userHash string) error {
 		Lang:           "en-EN",
 		Muted:          false,
 		EmergencyAlert: false,
-		Coords:         "(0,0)",
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USER_PREFERENCES).Create(&emptyUserModel)
 	return result.Error
