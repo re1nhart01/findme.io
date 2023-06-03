@@ -86,7 +86,7 @@ func (auth *AuthService) VerifyUserLogin(login, password, deviceId string) (stri
 	if query := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Where("email = ? OR phone = ?", login, login).Scan(&userBody); query.Error != nil || query.RowsAffected <= 0 {
 		return "", errors.New("database query error")
 	}
-	fmt.Println(userBody)
+
 	hashedPassword := userBody["password"].(string)
 	isPasswordValid := cryptography.CheckPasswordHash(password, hashedPassword)
 	if !isPasswordValid {

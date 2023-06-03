@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 type TagsModel struct {
 	BaseTypeModel
 	UserModel  UserModel `gorm:"foreignKey:UserHashId" json:"user"`
@@ -9,4 +11,12 @@ type TagsModel struct {
 
 func (TagsModel) TableName() string {
 	return TAGS
+}
+
+func CreateTagsTable() string {
+	return fmt.Sprintf(`
+	CREATE TABLE IF NOT EXISTS %s (
+	id SERIAL PRIMARY KEY,
+	tag_label VARCHAR(500) UNIQUE NOT NULL
+	)`, TAGS)
 }

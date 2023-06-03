@@ -1,10 +1,8 @@
 package models
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type UserPreferenceModel struct {
+type UserMessagesModel struct {
 	UserHashId     string `json:"user_hash_id"`
 	Theme          bool   `json:"theme"`
 	Lang           string `json:"lang"`
@@ -15,13 +13,13 @@ type UserPreferenceModel struct {
 
 func CreateUserPreferencesTable() string {
 	return fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-    id SERIAL PRIMARY KEY,
-    user_hash_id VARCHAR(500) NOT NULL UNIQUE REFERENCES users(user_hash) ON DELETE CASCADE,
-    theme BOOL NOT NULL DEFAULT false,
-    lang VARCHAR(20) NOT NULL DEFAULT 'en-US',
-    muted BOOL DEFAULT false,
-    emergency_alert BOOL DEFAULT false,
-	notification_token VARCHAR(500) NOT NULL UNIQUE
+id SERIAL PRIMARY KEY,
+user_hash_id VARCHAR(500) NOT NULL UNIQUE REFERENCES users(user_hash) ON DELETE CASCADE,
+theme BOOL NOT NULL DEFAULT false,
+lang VARCHAR(20) NOT NULL DEFAULT 'en-US',
+muted BOOL DEFAULT false,
+emergency_alert BOOL DEFAULT false,
+notification_token VARCHAR(500) NOT NULL UNIQUE
 )`, USER_PREFERENCES)
 }
 

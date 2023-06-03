@@ -25,4 +25,6 @@ const (
 	USER_POSTS       = "user_posts"
 	USER_PREFERENCES = "user_preferences"
 	USER_PHOTOS      = "user_photos"
+	USER_INTERESTS   = "user_interests"
+	USERS_MESSAGES   = "users_message"
 )

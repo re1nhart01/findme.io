@@ -32,6 +32,7 @@ func CreateUserTable() string {
     birthday DATE NOT NULL DEFAULT CURRENT_DATE,
     details VARCHAR(500),
     gender VARCHAR(500) DEFAULT 'male',
+	looking_for VARCHAR(500) NOT NULL,
     password VARCHAR(500) NOT NULL,
     email VARCHAR(500) CHECK (email ~ '^[^\s@]+@[^\s@]+\.[^\s@]+$'),
     phone VARCHAR(500) CHECK (LEFT(phone,1) = '+'),
@@ -40,6 +41,7 @@ func CreateUserTable() string {
     popularity DOUBLE PRECISION DEFAULT 0,
     city VARCHAR(500) NOT NULL,
     country VARCHAR(500) NOT NULL,
+	coords POINT NOT NULL,
     createdAt TIMESTAMP NOT NULL DEFAULT NOW()
 )`, USERS)
 }

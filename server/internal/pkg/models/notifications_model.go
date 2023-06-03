@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 type NotificationsModel struct {
 	BaseTypeModel     `json:"base_type_model"`
 	UserModel         UserModel `gorm:"foreignKey:UserHashId"`
@@ -11,4 +13,14 @@ type NotificationsModel struct {
 
 func (NotificationsModel) TableName() string {
 	return NOTIFICATIONS
+}
+
+func CreateNotificationTable() string {
+	return fmt.Sprintf(`
+	CREATE TABLE IF NOT EXISTS %s (
+	id SERIAL PRIMARY KEY,
+	user_hash_id VARCHAR(500) NOT NULL REFERENCES %s(user_hash) ON DELETE CASCADE,
+	notification_label VARCHAR(500) NOT NULL,
+	notification_text VARCHAR(500) NOT NULL
+)`, NOTIFICATIONS, USERS)
 }
