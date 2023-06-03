@@ -36,7 +36,8 @@ func SpawnDb() error {
 		},
 	}
 	c := apt.cfg
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.username, c.pass, c.host, c.port, c.dbname)
+	//dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", c.username, c.pass, c.host, c.port, c.dbname)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d", c.host, c.username, c.pass, c.dbname, 5432)
 	fmt.Println(c.username, c.pass, c.host, c.port, c.dbname)
 	apt.Instance, _ = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if apt.Instance.Error != nil {

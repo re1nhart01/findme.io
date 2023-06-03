@@ -66,11 +66,12 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 
 func (auth *AuthService) CreateUserPreferences(userHash string) error {
 	emptyUserModel := models.UserPreferenceModel{
-		UserHashId:     userHash,
-		Theme:          false,
-		Lang:           "en-EN",
-		Muted:          false,
-		EmergencyAlert: false,
+		UserHashId:        userHash,
+		Theme:             false,
+		Lang:              "en-EN",
+		Muted:             false,
+		EmergencyAlert:    false,
+		NotificationToken: "",
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USER_PREFERENCES).Create(&emptyUserModel)
 	return result.Error

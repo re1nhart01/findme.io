@@ -9,22 +9,25 @@ import (
 // userhash, active, popularity,
 
 type UserModel struct {
-	Id         int               `json:"id"`
-	UserHash   string            `json:"user_hash"`
-	FullName   string            `json:"full_name"`
-	Birthday   time.Time         `json:"birthday"`
-	Details    string            `json:"details"`
-	Gender     string            `json:"gender"`
-	LookingFor string            `json:"looking_for"`
-	Password   string            `json:"password"`
-	Email      string            `json:"email"`
-	Mood       string            `json:"mood"`
-	Active     bool              `json:"active"`
-	City       string            `json:"city"`
-	Country    string            `json:"country"`
-	Phone      string            `json:"phone"`
-	Coords     map[string]string `json:"coords"`
-	CreatedAt  int               `json:"created_at"`
+	Id         int                  `json:"id"`
+	UserHash   string               `json:"user_hash"`
+	FullName   string               `json:"full_name"`
+	Birthday   time.Time            `json:"birthday"`
+	Details    string               `json:"details"`
+	Gender     string               `json:"gender"`
+	LookingFor string               `json:"looking_for"`
+	Password   string               `json:"password"`
+	Email      string               `json:"email"`
+	Mood       string               `json:"mood"`
+	Active     bool                 `json:"active"`
+	City       string               `json:"city"`
+	Country    string               `json:"country"`
+	Phone      string               `json:"phone"`
+	Coords     map[string]string    `json:"coords"`
+	Interests  []UserInterestsModel `json:"interests"`
+	Tags       []TagsModel          `json:"tags"`
+	Photos     []string             `json:"photos"`
+	CreatedAt  int                  `json:"created_at"`
 }
 
 func CreateUserTable() string {
@@ -40,11 +43,12 @@ func CreateUserTable() string {
     email VARCHAR(500) CHECK (email ~ '^[^\s@]+@[^\s@]+\.[^\s@]+$'),
     phone VARCHAR(500) CHECK (LEFT(phone,1) = '+'),
     mood VARCHAR(500) NOT NULL DEFAULT 'Here to date',
+    relations VARCHAR(500) NOT NULL DEFAULT 'Single',
     active BOOL DEFAULT true,
     city VARCHAR(500) NOT NULL,
     country VARCHAR(500) NOT NULL,
 	coords POINT NOT NULL,
-    createdAt TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 )`, USERS)
 }
 

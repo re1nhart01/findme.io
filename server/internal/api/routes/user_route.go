@@ -7,11 +7,12 @@ import (
 
 type IUserController interface {
 	controllers.IBaseController
+	GetMe(context *gin.Context)
 }
 
 func UserRouter(engine *gin.Engine, controller IUserController) {
-//	router := engine.Group(controller.GetPath())
+	router := engine.Group(controller.GetPath())
 	{
-//		router.GET("/create", controller.CreateUser)
+		router.GET("/me", controller.GetMe)
 	}
 }

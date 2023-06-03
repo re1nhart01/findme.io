@@ -10,7 +10,7 @@ import (
 func Init() {
 	currentWorkDirectory, _ := os.Getwd()
 	fmt.Println("FINDME: ", currentWorkDirectory)
-	if err := godotenv.Load(fmt.Sprintf("%s%s", currentWorkDirectory, "\\internal\\config\\.env")); err != nil {
+	if err := godotenv.Load(fmt.Sprintf("%s%s", currentWorkDirectory, "/internal/config/.env")); err != nil {
 		fmt.Println("No .env file found")
 	}
 }

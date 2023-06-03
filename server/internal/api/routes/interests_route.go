@@ -10,7 +10,8 @@ type IInterestsController interface {
 	controllers.IBaseController
 }
 
-func UserRouter(engine *gin.Engine, controller IInterestsController) {
+func InterestsRoute(engine *gin.Engine, controller IInterestsController) {
 	{
+
 	}
 }
