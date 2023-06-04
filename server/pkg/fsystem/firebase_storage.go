@@ -62,3 +62,12 @@ func SendFileToBucket(file *os.File, dest string) error {
 	}
 	return nil
 }
+
+func RemoveFileFromBucket(bucketId string) error {
+	bucket := CreateStorageApplication()
+	obj := bucket.Object(bucketId)
+	if err := obj.Delete(ctx); err != nil {
+		return err
+	}
+	return nil
+}

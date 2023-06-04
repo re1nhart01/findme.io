@@ -47,18 +47,19 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 	userSalt := fmt.Sprintf("%s:%s:%s:%d", email, fullName, country, birthday.UnixMicro())
 	userHash := cryptography.GetSha1(serverHash, userSalt)
 	emptyUserModel := models.UserModel{
-		UserHash: userHash,
-		FullName: fullName,
-		Birthday: birthday,
-		Details:  details,
-		Password: password,
-		Email:    email,
-		Active:   true,
-		City:     city,
-		Phone:    phone,
-		Country:  country,
-		Mood:     "Here to date",
-		Gender:   "Male",
+		UserHash:  userHash,
+		FullName:  fullName,
+		Birthday:  birthday,
+		Details:   details,
+		Password:  password,
+		Email:     email,
+		Active:    true,
+		City:      city,
+		Phone:     phone,
+		Country:   country,
+		Mood:      "Here to date",
+		Gender:    "Male",
+		CreatedAt: time.Now(),
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Create(&emptyUserModel)
 	return userHash, result.Error
@@ -95,7 +96,7 @@ func (auth *AuthService) VerifyUserLogin(login, password, deviceId string) (stri
 	return userBody["user_hash"].(string), nil
 }
 
-const Min30Expiration = 1800000
+const Min30Expiration = 180000000
 
 func (auth *AuthService) GenerateTokens(userHash string) (map[string]any, error) {
 	accessToken, err := jwts.CreateToken(userHash, -1, Min30Expiration)

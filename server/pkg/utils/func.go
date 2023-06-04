@@ -16,6 +16,19 @@ func Includes[T comparable](list []T, item T) (bool, T, int) {
 	return false, item, -1
 }
 
+func Some[T comparable](list []T, callback func(item T, index int) bool) bool {
+	result := true
+	if len(list) == 0 {
+		return false
+	}
+	for k, v := range list {
+		if !callback(v, k) {
+			result = false
+		}
+	}
+	return result
+}
+
 func HandleNilValues(val any, defaultVal any) any {
 	if val == nil {
 		return defaultVal

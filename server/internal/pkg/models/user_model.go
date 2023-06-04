@@ -16,7 +16,7 @@ type UserModel struct {
 	Details    string               `json:"details"`
 	Gender     string               `json:"gender"`
 	LookingFor string               `json:"looking_for"`
-	Password   string               `json:"password"`
+	Password   string               `json:"password,omitempty"`
 	Email      string               `json:"email"`
 	Mood       string               `json:"mood"`
 	Active     bool                 `json:"active"`
@@ -27,7 +27,7 @@ type UserModel struct {
 	Interests  []UserInterestsModel `json:"interests"`
 	Tags       []TagsModel          `json:"tags"`
 	Photos     []string             `json:"photos"`
-	CreatedAt  int                  `json:"created_at"`
+	CreatedAt  time.Time            `json:"created_at"`
 }
 
 func CreateUserTable() string {
@@ -47,7 +47,7 @@ func CreateUserTable() string {
     active BOOL DEFAULT true,
     city VARCHAR(500) NOT NULL,
     country VARCHAR(500) NOT NULL,
-	coords POINT NOT NULL,
+	coords POINT NOT NULL DEFAULT POINT(0,0),
     created_at TIMESTAMP NOT NULL DEFAULT NOW()
 )`, USERS)
 }

@@ -50,6 +50,8 @@ type FieldDto struct {
 	Remove           bool
 	Aliases          []string
 	Body             FieldsMapping
+	MaxLength        int
+	MinLength        int
 }
 
 var MapTypes = map[string]string{
@@ -57,6 +59,7 @@ var MapTypes = map[string]string{
 	"INTEGER": "int",
 	"OBJECT":  "map[string]interface {}",
 	"NULL":    "null",
+	"ARRAY":   "[]interface {}",
 }
 
 var __TestBody__ = map[string]any{
@@ -111,6 +114,7 @@ func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors 
 			continue
 		}
 		typeOfField := reflect.TypeOf(fieldFromBody).String()
+		fmt.Println(typeOfField, MapTypes[v.Type], v.Type)
 		typeEqual := MapTypes[v.Type] == typeOfField
 
 		if MapTypes[v.Type] != typeOfField {
@@ -140,6 +144,26 @@ func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors 
 			if v.Max != nil && cField > v.Max.(int) {
 				addError(errors, k, fmt.Sprintf("Number should expect greater than %d but got: %d", v.Max.(int), cField))
 			}
+		}
+
+		if v.Type == "ARRAY" && typeEqual {
+			cField := fieldFromBody.([]any)
+			if v.MinLength > len(cField) || v.MaxLength < len(cField) {
+				addError(errors, k, fmt.Sprintf("Length of this list is less than expected. Should be %d but got: %d", v.MinLength, len(cField)))
+			}
+			//if v.MinLength > len(cField) || v.MaxLength < len(cField) {
+			//	addError(errors, k, fmt.Sprintf("Length of this list is less than expected. Should be %d but got: %d", v.MinLength, len(cField)))
+			//}
+			//if v.Min != nil && utils.Some(cField, func(item any, index int) bool {
+			//	return item.(int) < v.Min.(int)
+			//}) {
+			//	addError(errors, k, fmt.Sprintf("Number should expect less than %d", v.Min.(int)))
+			//}
+			//if v.Max != nil && utils.Some(cField, func(item any, index int) bool {
+			//	return item.(int) > v.Max.(int)
+			//}) {
+			//	addError(errors, k, fmt.Sprintf("Number should expect greater than %d", v.Max.(int)))
+			//}
 		}
 		if v.Type == "OBJECT" && typeEqual && v.Body != nil {
 			ValidateModelWithDto(fieldFromBody.(map[string]interface{}), &v.Body, errors)

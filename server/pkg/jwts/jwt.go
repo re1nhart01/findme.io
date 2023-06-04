@@ -29,13 +29,14 @@ func CreateToken(userHash string, id int, expirationTime int) (string, error) {
 		Id:       id,
 	}
 	if expirationTime != 0 {
-		claims.StandardClaims.ExpiresAt = jwt.At(time.Now().Add(time.Duration(expirationTime)))
+		expirationTime := time.Now().Add(24 * time.Hour)
+		claims.StandardClaims.ExpiresAt = jwt.At(expirationTime)
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &claims)
 	return token.SignedString([]byte(serverKey))
 }
 
-func ValidateToken(token string) (string, string, int, error) {
+func ValidateToken(token string) (string, string, int64, error) {
 	serverKey := env.ReadEnv("SERVER_HASH")
 	parsedToken, err := jwt.ParseWithClaims(token, &UserClaim{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -50,7 +51,7 @@ func ValidateToken(token string) (string, string, int, error) {
 		if claims.ExpiresAt == nil {
 			return claims.UserHash, strconv.Itoa(claims.Id), 0, nil
 		}
-		return claims.UserHash, strconv.Itoa(claims.Id), claims.ExpiresAt.Second(), nil
+		return claims.UserHash, strconv.Itoa(claims.Id), claims.ExpiresAt.UnixMicro(), nil
 	}
 	return "", "", 0, &jwt.TokenExpiredError{}
 }

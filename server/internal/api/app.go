@@ -40,17 +40,20 @@ func NewApp(withLogger bool) *FindMeIoApplication {
 
 func (app *FindMeIoApplication) getControllers() (*controllers.FileController,
 	*controllers.UserController,
-	*controllers.AuthController) {
+	*controllers.AuthController,
+	*controllers.InterestsTagsController,
+) {
 	user := controllers.CreateUserController(API_BASE)
 	auth := controllers.CreateAuthController(API_BASE)
 	file := controllers.CreateFileController(API_BASE)
-	return file, user, auth
+	tagsInterests := controllers.CreateInterestsTagsController(API_BASE)
+	return file, user, auth, tagsInterests
 }
 
 func (app *FindMeIoApplication) RunDatabaseBackgroundTasks() {}
 
 func (app *FindMeIoApplication) Run(port string) error {
-	file, user, auth := app.getControllers()
+	file, user, auth, tagsInterests := app.getControllers()
 
 	app.Instance.Use(middlewares.ParseJSONBodyMiddleware())
 	routes.AuthRoute(app.Instance, auth)
@@ -59,7 +62,7 @@ func (app *FindMeIoApplication) Run(port string) error {
 	app.Instance.Use(middlewares.AuthMiddleware())
 	routes.UserRouter(app.Instance, user)
 	routes.FileRoute(app.Instance, file)
-
+	routes.TagsInterestsRoute(app.Instance, tagsInterests)
 	httpServer := &http.Server{
 		Addr:           port,
 		Handler:        app.Instance,
