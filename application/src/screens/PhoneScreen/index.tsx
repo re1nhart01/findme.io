@@ -20,7 +20,11 @@ const PhoneScreenContainer: React.FC<phoneScreenContainerProps> = ({}) => {
   const onContinuePress = useCallback(async (values: { phone: string }, setExtendedError: (k: keyof IPhoneFormTemplate, v: errorPart) => void) => {
     await onUpdatePhone(values.phone);
     const res = await httpCaller(RequestForge.checkIsPhoneExistsCall, values);
-    if (!res || res?.data?.isPhoneExists) {
+    if (!res) {
+      setExtendedError('phone', { isError: true, errorMessage: i18next.t('error_unexpected') });
+      return;
+    }
+    if (res && res?.data?.isPhoneExists) {
       setExtendedError('phone', { isError: true, errorMessage: i18next.t('user_already_exists') });
       return;
     }

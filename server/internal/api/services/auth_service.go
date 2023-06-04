@@ -60,6 +60,8 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 		Mood:      "Here to date",
 		Gender:    "Male",
 		CreatedAt: time.Now(),
+		Lat:       0,
+		Long:      0,
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Create(&emptyUserModel)
 	return userHash, result.Error

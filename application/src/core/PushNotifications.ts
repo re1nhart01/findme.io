@@ -1,6 +1,7 @@
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import notifee, { AndroidImportance, AndroidVisibility } from '@notifee/react-native';
+import notifee, { AndroidImportance } from '@notifee/react-native';
 import { Activity } from '@core/base/Activity';
+import { AppState } from 'react-native';
 
 type pushIndividual = 1 | 2; // 1 - background, 2 - foreground
 export class PushNotifications implements Omit<Activity, 'onUpdate' | 'onFallbackCreate'> {
@@ -47,7 +48,8 @@ export class PushNotifications implements Omit<Activity, 'onUpdate' | 'onFallbac
   public onMessageHandler = async (remoteMessage: FirebaseMessagingTypes.RemoteMessage, type: pushIndividual) => {
     const { notification, data } = remoteMessage;
     console.log(notification, data);
-    if (notification) {
+    const appState = AppState.currentState;
+    if (notification && appState !== 'active') {
       await notifee.displayNotification({
         title: notification.title,
         body: notification.body,

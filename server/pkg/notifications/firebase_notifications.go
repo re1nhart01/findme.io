@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"internal/env"
+	"os"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/messaging"
@@ -15,7 +17,9 @@ const appName = "APP_NAME"
 var ctx = context.Background()
 
 func CreateApplication() *messaging.Client {
-	opts := []option.ClientOption{option.WithCredentialsFile("firebase/inspirationplatform-a3494-firebase-adminsdk-86sen-ca8df7f86a.json")}
+	pathToFile := env.ReadEnv("FIREBASE_ADMINSDK_PATH")
+	wd, _ := os.Getwd()
+	opts := []option.ClientOption{option.WithCredentialsFile(fmt.Sprintf("%s%s", wd, pathToFile))}
 	app, err := firebase.NewApp(ctx, nil, opts...)
 	if err != nil {
 		return nil

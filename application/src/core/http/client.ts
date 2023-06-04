@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios, { CancelToken } from 'axios';
 import { settings } from '@core/Settings';
 import { __app__ } from '@core/MainActivity';
 import { Alert } from 'react-native';
 
-const TIMER_15_SEC = 15000;
+const TIMER_10_SEC = 10000;
 const abortMessage = (event: Event) => {
   Alert.alert('Warning', 'Something went wrong. Check your internet connection or it can be caused by Find Me server');
 };
@@ -11,7 +11,7 @@ const abortMessage = (event: Event) => {
 let timeoutId: null | ReturnType<typeof setTimeout> = null;
 const axiosImpl = axios.create({
   baseURL: `${settings.API_URL}${settings.API_V2}`,
-  timeout: 60 * 1000,
+  timeout: 60 * 10000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -33,8 +33,7 @@ axiosImpl.interceptors.request.use((config) => {
   timeoutId = setTimeout(() => {
     abortController.abort();
     signal.removeEventListener('abort', abortMessage);
-  }, TIMER_15_SEC);
-
+  }, TIMER_10_SEC);
   return config;
 }, (rej) => {
   if (timeoutId !== null) {
@@ -54,6 +53,7 @@ axiosImpl.interceptors.response.use((config) => {
     success: config.status === 200 || config.status === 201,
   };
 }, (error) => {
+  console.log(error, 'REJECTED ERROR');
   if (timeoutId !== null) {
     clearTimeout(timeoutId);
   }

@@ -37,7 +37,7 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
         data: { refresh_token },
         method: 'POST',
       });
-      if (responseToken.data) {
+      if (responseToken?.data) {
         await __app__.getCurrentUser.saveTokens(responseToken.data);
       }
       if (responseToken?.status < 204) {
@@ -57,13 +57,13 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
     } as any))?.data;
   } catch (ex) {
     const error = ex as AxiosError<unknown, unknown>;
-    if (error?.request?.status === 500) {
+    if (error?.request?.status === 500 || error.code === AxiosError.ERR_NETWORK) {
       return new Boundary(error, {
         url: error.config?.url,
         method,
         data,
       });
     }
-    return error?.response?.data as unknown as IRResponse<GResponse> | Boundary;
+    return error?.response as unknown as IRResponse<GResponse> | Boundary;
   }
 };

@@ -22,7 +22,7 @@ func CreateUserPreferencesTable() string {
     lang VARCHAR(20) NOT NULL DEFAULT 'en-US',
     muted BOOL DEFAULT false,
     emergency_alert BOOL DEFAULT false,
-	notification_token VARCHAR(500) NOT NULL UNIQUE
+	notification_token VARCHAR(500) NOT NULL DEFAULT ''
 )`, USER_PREFERENCES)
 }
 

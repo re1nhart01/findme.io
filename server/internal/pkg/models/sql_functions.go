@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 const (
 	CALCULATE_COORDS = "calculate_distance"
 )
@@ -37,4 +39,24 @@ RETURN dist;
 END IF;
 END;
 $dist$ LANGUAGE plpgsql;`
+}
+
+func CreateExpireFunction(tableName, timeCol string) string {
+	return fmt.Sprintf(`
+CREATE OR REPLACE FUNCTION expire_table_delete_old_rows() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  DELETE FROM %s WHERE %s < NOW() - INTERVAL '1 minute';
+  RETURN NEW;
+END;
+$$;`, tableName, timeCol)
+}
+
+func CreateExpireTrigger(tableName string) string {
+	return fmt.Sprintf(`
+CREATE OR REPLACE TRIGGER expire_table_delete_old_rows_trigger
+    AFTER INSERT ON %s
+    EXECUTE PROCEDURE expire_table_delete_old_rows();
+`, tableName)
 }

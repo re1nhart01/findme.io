@@ -19,7 +19,7 @@ type imageCarouselModalState = {
   visible: boolean;
 };
 
-const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselModalProps>(({ images }, ref) => {
+const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselModalProps>(({ images = [] }, ref) => {
   const { scrollableRef, handleOnScroll, handleButtonScroll, getActiveIndex, setActiveIndex } = useScrollable<FlatList>('x', DEVICE_WIDTH, 0, 'flatlist');
   const [getState, setState] = useState<imageCarouselModalState>({
     photos: images || [],
@@ -45,7 +45,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
   if (!getState.visible) {
     return null;
   }
-
+  console.warn(images?.length , getState?.photos.length, getState?.photos)
   return (
     <Modal
       visible={getState.visible}
@@ -64,7 +64,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
                 {' '}
                 /
                 {' '}
-                { images.length || getState.photos.length }
+                { images?.length || getState?.photos.length }
               </Text>
             </View>
       )}
@@ -84,7 +84,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
             length: getState.photos.length,
             offset: DEVICE_WIDTH * index,
           })}
-          data={images || getState.photos}
+          data={images && images.length > 0 ? images : getState.photos}
           renderItem={({ item, index }) => {
             return (
               <View style={[Styles.Layout.wfull_px, Styles.Layout.h100]}>
@@ -99,7 +99,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
           contentContainerStyle={[Styles.MarginPadding.g10, Styles.MarginPadding.ph60]}
           showsHorizontalScrollIndicator={false}
           horizontal
-          data={images || getState.photos}
+          data={images && images.length > 0 ? images : getState.photos}
           renderItem={({ item, index }) => {
             return (
               <TouchableOpacity onPress={() => handleButtonScroll(index)} style={[Styles.Layout.wh65_px, Styles.Layout.borderR10, Styles.Layout.overflowHidden]}>

@@ -16,13 +16,17 @@ replace pkg/jwts => ./../../../pkg/jwts
 
 replace pkg/fsystem => ./../../../pkg/fsystem
 
+replace pkg/notifications => ./../../../pkg/notifications
+
 require (
+	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11
 	internal/env v0.0.0-00010101000000-000000000000
 	internal/models v0.0.0-00010101000000-000000000000
 	internal/pg_database v0.0.0-00010101000000-000000000000
 	pkg/cryptography v0.0.0-00010101000000-000000000000
 	pkg/fsystem v0.0.0-00010101000000-000000000000
 	pkg/jwts v0.0.0-00010101000000-000000000000
+	pkg/notifications v0.0.0-00010101000000-000000000000
 	pkg/utils v0.0.0-00010101000000-000000000000
 )
 
@@ -83,5 +87,4 @@ require (
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.0 // indirect
-	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 )

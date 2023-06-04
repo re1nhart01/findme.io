@@ -41,13 +41,17 @@ export class RequestForge {
 
   public static async checkIsPhoneExistsCall(body: HasPhoneOrEmailRequest) {
     try {
-      return await requester<HasPhoneOrEmailRequest, HasPhoneOrEmailResponse<typeof body>>({
+      console.log(1, 'aboba2');
+      const z = await requester<HasPhoneOrEmailRequest, HasPhoneOrEmailResponse<typeof body>>({
         data: body,
         method: 'POST',
         retries: 0,
         url: URL_PATH.CHECK_EMAIL_OR_PHONE,
         withAccess: false,
       });
+      console.log(z, 'aboba2');
+
+      return z;
     } catch (e: unknown) {
       console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
       return null;

@@ -5,6 +5,7 @@ go 1.20
 require (
 	firebase.google.com/go v3.13.0+incompatible
 	google.golang.org/api v0.114.0
+	internal/env v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -21,6 +22,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
 	github.com/googleapis/gax-go/v2 v2.7.1 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/oauth2 v0.6.0 // indirect
@@ -34,3 +36,5 @@ require (
 	google.golang.org/grpc v1.53.0 // indirect
 	google.golang.org/protobuf v1.29.1 // indirect
 )
+
+replace internal/env => ./../../internal/pkg/env

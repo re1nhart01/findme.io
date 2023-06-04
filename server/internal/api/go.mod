@@ -103,3 +103,6 @@ replace internal/pg_database => ./../pkg/pg_database
 replace pkg/cryptography => ./../../pkg/cryptography
 
 replace pkg/fsystem => ./../../pkg/fsystem
+
+replace pkg/notifications => ./../../pkg/notifications
+

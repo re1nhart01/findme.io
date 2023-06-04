@@ -22,11 +22,31 @@ func Some[T comparable](list []T, callback func(item T, index int) bool) bool {
 		return false
 	}
 	for k, v := range list {
+		if callback(v, k) {
+			result = true
+		}
+	}
+	return result
+}
+
+func Every[T comparable](list []T, callback func(item T, index int) bool) bool {
+	result := true
+	if len(list) == 0 {
+		return false
+	}
+	for k, v := range list {
 		if !callback(v, k) {
 			result = false
 		}
 	}
 	return result
+}
+
+func IsArrayIncludes[T comparable](list, list2 []T) bool {
+	return Every(list, func(item T, index int) bool {
+		inc, _, _ := Includes(list2, item)
+		return inc
+	})
 }
 
 func HandleNilValues(val any, defaultVal any) any {

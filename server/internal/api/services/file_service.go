@@ -22,8 +22,8 @@ func (file *FileService) GetService() any {
 }
 
 func (file *FileService) GenerateUniqueFileName(user any, serverFileName string) string {
-	user_hash := user.(map[string]any)["user_hash"].(string)
-	generatedHash := file.CryptoService.GenerateUniqueSha([]string{user_hash, serverFileName})
+	userHash := user.(map[string]any)["user_hash"].(string)
+	generatedHash := file.CryptoService.GenerateUniqueSha([]string{userHash, serverFileName})
 	extension := utils.GetFileExtensionFromFile(serverFileName)
 	return generatedHash + "." + extension
 }

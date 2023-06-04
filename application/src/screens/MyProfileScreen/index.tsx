@@ -42,6 +42,7 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
 
   const openFullScreenCarousel = useCallback(() => {
     if (carouselModalRef && carouselModalRef.current) {
+      console.log()
       carouselModalRef.current.onOpen(MOCK_CAROUSEL_IMAGES);
     }
   }, []);

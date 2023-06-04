@@ -13,6 +13,8 @@ func InitTables() {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
+		instance.CallManualSQL(models.CreateExpireFunction(models.MATCHES, "ttl"))
+		instance.CallManualSQL(models.CreateExpireTrigger(models.MATCHES))
 		instance.CallManualSQL(models.CalculateCoords())
 	}()
 	go func() {

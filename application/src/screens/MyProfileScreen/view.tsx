@@ -245,7 +245,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           </FieldRowView>
         </View>
       </ScrollView>
-      <ImageCarouselModal ref={carouselModalRef} />
+      <ImageCarouselModal images={[]} ref={carouselModalRef} />
     </ScreenLayoutView>
   );
 };

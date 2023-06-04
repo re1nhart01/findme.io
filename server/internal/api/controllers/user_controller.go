@@ -18,14 +18,43 @@ type UserController struct {
 func (user *UserController) GetName() string { return user.Name }
 func (user *UserController) GetPath() string { return user.Path }
 
+func (user *UserController) UpdatePreferences(ctx *gin.Context) {
+	err, userData, validated := user.ManageTokenAndDto(ctx, ApplicationDto.EditUserPreferencesDto)
+	if err != nil {
+		return
+	}
+	userHash := userData["user_hash"].(string)
+	if err := user.UpdateUserPreferences(userHash, validated); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, err.Error()))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponse())
+}
+
+func (user *UserController) UpdateGeolocation(ctx *gin.Context) {
+	err, userData, validated := user.ManageTokenAndDto(ctx, ApplicationDto.GeolocationDto)
+	if err != nil {
+		return
+	}
+	userHash := userData["user_hash"].(string)
+	if err := user.UpdateUserGeolocation(userHash, validated); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, err.Error()))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponse())
+}
+
 func (user *UserController) SetupFields(ctx *gin.Context) {
-	//data, ok := ctx.Get("body")
-	//if !ok {
-	//	ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!"))
-	//	return
-	//}
-	//fmt.Println(data)
-	//validatedData, errors := dto.ValidateModelWithDto(data.(map[string]any), ApplicationDto.LoginDto, &dto.ErrorList{})
+	err, userData, validated := user.ManageTokenAndDto(ctx, ApplicationDto.EditUserDto)
+	if err != nil {
+		return
+	}
+	userHash := userData["user_hash"].(string)
+	if err := user.UpdateFields(userHash, validated); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, err.Error()))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponse())
 }
 
 func (user *UserController) AttachPhotos(ctx *gin.Context) {
@@ -33,7 +62,6 @@ func (user *UserController) AttachPhotos(ctx *gin.Context) {
 	if err != nil {
 		return
 	}
-	fmt.Println(userData)
 	err = user.AttachPhotoToUser(validated["bucket_id"].(string), userData["user_hash"].(string))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Can not attach photo to user"))

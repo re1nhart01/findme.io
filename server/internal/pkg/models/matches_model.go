@@ -6,11 +6,11 @@ import (
 )
 
 type MatchesModel struct {
-	Id              string    `json:"id"`
+	Id              int       `json:"id"`
 	FirstUserMatch  string    `json:"first_user_match,omitempty"`
 	SecondUserMatch string    `json:"second_user_match,omitempty"`
-	Op              string    `json:"operation"`
-	TimeToLive      time.Time `json:"ttl"`
+	Operation       string    `json:"operation"`
+	Ttl             time.Time `json:"ttl"`
 }
 
 func (MatchesModel) TableName() string {

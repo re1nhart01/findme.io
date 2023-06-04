@@ -65,7 +65,7 @@ const SetupProfileScreenContainer: React.FC<setupProfileScreenContainerProps> = 
     _onScrollView(2);
   }, [dispatch, _onScrollView]);
 
-  const onFinish: FormadjoAsyncSubmitFn<ILocationFormTemplate> = useCallback(async (values) => {
+  const onFinish: FormadjoAsyncSubmitFn<ILocationFormTemplate> = useCallback(async (values, addExtendedError) => {
     const mergedValuesWithPhone = { ...state, ...values };
     const response = await httpCaller(RequestForge.registerCall, mergedValuesWithPhone);
     if (response) {
@@ -76,6 +76,8 @@ const SetupProfileScreenContainer: React.FC<setupProfileScreenContainerProps> = 
         await __app__.getCurrentUser.saveTokens(loginResponse.data);
         dispatch(globalActions.setIsAuth(__app__.getCurrentUser.isAuth));
       }
+    } else {
+      addExtendedError('country', { isError: true, errorMessage: 'Ooops, something went. Try again later' });
     }
   }, [dispatch, httpCaller, state]);
 

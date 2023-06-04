@@ -105,4 +105,6 @@ replace pkg/dto => ./pkg/dto
 
 replace pkg/cryptography => ./pkg/cryptography
 
+replace pkg/notifications => ./pkg/notifications
+
 replace pkg/fsystem => ./pkg/fsystem

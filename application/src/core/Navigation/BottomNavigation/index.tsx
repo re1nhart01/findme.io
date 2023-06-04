@@ -14,7 +14,7 @@ import styles from './styles';
 type bottomNavigationProps = {};
 
 const BottomNavigation: React.FC<bottomNavigationProps> = () => {
-  const [getSelectedRoute, setSelectedRoute] = useState(1);
+  const [getSelectedRoute, setSelectedRoute] = useState(0);
 
   const onPressSelectRoute = useCallback((currentRoute: keyof RootStackParamList, index: number) => () => {
     forceNavigator.navigate(currentRoute, {});
