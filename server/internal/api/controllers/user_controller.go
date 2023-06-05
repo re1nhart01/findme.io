@@ -111,7 +111,7 @@ func (user *UserController) GetMe(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(userModel))
 }
 
-func (user *UserController) GetShortUsers() {
+func (user *UserController) GetShortUsers(ctx *gin.Context) {
 
 }
 
