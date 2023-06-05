@@ -13,8 +13,27 @@ type MatchesService struct {
 	*NotificationService
 }
 
+const (
+	MATCH_TYPE_MUTUAL   = "mutual"
+	MATCH_TYPE_INCOMING = "incoming"
+
+	MATCH_TYPE_DISLIKES  = "dislikes"
+	MATCH_ACTION_LIKE    = "LIKE"
+	MATCH_ACTION_DISLIKE = "DISLIKE"
+)
+
 func (matches *MatchesService) GetService() any {
 	return matches
+}
+
+func (matches *MatchesService) GetUserMatches(userHash, matchType string) ([]*models.FullUserMatchModel, error) {
+	var modelList []*models.FullUserMatchModel
+	query := ""
+	query = models.GetMatches(matchType)
+	if res := pg_database.GetDatabaseInstance().Instance.Raw(query, userHash).Scan(&modelList); res.Error != nil {
+		return []*models.FullUserMatchModel{}, res.Error
+	}
+	return modelList, nil
 }
 
 func (matches *MatchesService) SwipeMatch(userHash string, fields map[string]any) error {

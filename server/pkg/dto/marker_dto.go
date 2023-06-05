@@ -14,6 +14,9 @@ func validateString(v *FieldDto, typeEqual bool, fieldFromBody any, errors *Erro
 				addError(errors, index, fmt.Sprintf("String '%s' is not valid", fieldAsString))
 			}
 		}
+		if v.AcceptOnly != nil && !utils.ShortInclude(v.AcceptOnly, fieldFromBody) {
+			addError(errors, index, "String only accept specific values")
+		}
 		if v.Min != nil && l < v.Min.(int) {
 			addError(errors, index, fmt.Sprintf("String should expect min length %d but got less %d", v.Min.(int), l))
 		}
@@ -53,8 +56,8 @@ func validateArray(v *FieldDto, typeEqual bool, fieldFromBody any, errors *Error
 		if v.MinLength > len(cField) || v.MaxLength < len(cField) {
 			addError(errors, index, fmt.Sprintf("Length of this list is less than expected. Should be %d but got: %d", v.MinLength, len(cField)))
 		}
-		if v.TupleIncludes != nil {
-			isIncludesAll := utils.IsArrayIncludes(v.TupleIncludes, cField)
+		if v.AcceptOnly != nil {
+			isIncludesAll := utils.IsArrayIncludes(v.AcceptOnly, cField)
 			if !isIncludesAll {
 				addError(errors, index, "Tuple list is not includes all items")
 			}

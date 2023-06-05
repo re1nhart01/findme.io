@@ -21,7 +21,7 @@ func GiveResponseWithData[T comparable](statusCode int, statusMessage string, da
 	}
 }
 
-func GiveOKResponseWithData[T comparable](data T) map[string]any {
+func GiveOKResponseWithData[T any](data T) map[string]any {
 	return map[string]interface{}{
 		"statusCode":    http.StatusOK,
 		"statusMessage": "Accepted",
@@ -52,5 +52,3 @@ func HandleDefaultError(err error, ctx *gin.Context) bool {
 	}
 	return false
 }
-
-

@@ -73,6 +73,7 @@ require (
 	pkg/dto v0.0.0-00010101000000-000000000000 // indirect
 	pkg/fsystem v0.0.0-00010101000000-000000000000 // indirect
 	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
+	pkg/notifications v0.0.0-00010101000000-000000000000 // indirect
 	pkg/utils v0.0.0-00010101000000-000000000000 // indirect
 )
 
@@ -97,3 +98,5 @@ replace pkg/dto => ./../../../pkg/dto
 replace pkg/cryptography => ./../../../pkg/cryptography
 
 replace pkg/fsystem => ./../../../pkg/fsystem
+
+replace pkg/notifications => ./../../../pkg/notifications

@@ -73,6 +73,7 @@ require (
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
 	internal/pg_database v0.0.0-00010101000000-000000000000 // indirect
 	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
+	pkg/notifications v0.0.0-00010101000000-000000000000 // indirect
 )
 
 replace internal/pg_database => ../../pkg/pg_database
@@ -94,3 +95,5 @@ replace pkg/dto => ./../../../pkg/dto
 replace pkg/cryptography => ./../../../pkg/cryptography
 
 replace pkg/fsystem => ./../../../pkg/fsystem
+
+replace pkg/notifications => ./../../../pkg/notifications

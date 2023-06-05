@@ -10,6 +10,7 @@ type IMatchesController interface {
 	MatchUser(context *gin.Context)
 	UpdateMatch(context *gin.Context)
 	RemoveMatch(context *gin.Context)
+	GetMatches(context *gin.Context)
 }
 
 func MatchesRoute(engine *gin.Engine, controller IMatchesController) {
@@ -19,5 +20,6 @@ func MatchesRoute(engine *gin.Engine, controller IMatchesController) {
 		router.POST("/match", controller.MatchUser)
 		router.PATCH("/match", controller.UpdateMatch)
 		router.DELETE("/match", controller.RemoveMatch)
+		router.POST("/get", controller.GetMatches)
 	}
 }

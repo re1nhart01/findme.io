@@ -52,7 +52,7 @@ type FieldDto struct {
 	Body             FieldsMapping
 	MaxLength        int
 	MinLength        int
-	TupleIncludes    []any
+	AcceptOnly       []any
 }
 
 var MapTypes = map[string]string{

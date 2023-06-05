@@ -5,6 +5,21 @@ import (
 	"time"
 )
 
+type FullUserMatchModel struct {
+	Id              int       `json:"id"`
+	UserHash        string    `json:"user_hash"`
+	FirstUserMatch  string    `json:"first_user_match,omitempty"`
+	SecondUserMatch string    `json:"second_user_match,omitempty"`
+	Operation       string    `json:"operation"`
+	Ttl             time.Time `json:"ttl"`
+	FullName        string    `json:"full_name"`
+	Details         string    `json:"details"`
+	Lat             float64   `json:"lat"`
+	Long            float64   `json:"long"`
+	Birthday        time.Time `json:"birthday"`
+	StorageBucketId string    `json:"storage_bucket_id"`
+}
+
 type MatchesModel struct {
 	Id              int       `json:"id"`
 	FirstUserMatch  string    `json:"first_user_match,omitempty"`
