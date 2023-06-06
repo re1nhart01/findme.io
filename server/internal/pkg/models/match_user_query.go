@@ -21,7 +21,10 @@ func getSqlListFromSlice(tags []int) string {
 func getMatchListWithoutArrays(lat, long float64, distance, years int, gender string, flags map[string]any) string {
 	return fmt.Sprintf(`
 select calculate_distance(%f, %f, users.lat, users.long, 'KM'), user_hash, full_name, birthday, gender, email, mood, relations, lat, long from users
+	LEFT JOIN (SELECT user_hash_id, storage_bucket_id from user_photos LIMIT 1) as photo_query
+                            ON photo_query.user_hash_id = users.user_hash
 	where
+	NOT EXISTS (select * from matches as m2 where users.user_hash = m2.first_user_match OR users.user_hash = m2.second_user_match) AND
 	(CASE WHEN %t THEN calculate_distance(%f, %f, users.lat, users.long, 'KM') > %d ELSE true END) 
 	AND
 		(CASE WHEN %t THEN birthday = (CURRENT_DATE - interval '%d years') OR birthday = (CURRENT_DATE + interval '%d years') ELSE true END) AND
