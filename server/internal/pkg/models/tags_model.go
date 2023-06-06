@@ -3,13 +3,17 @@ package models
 import "fmt"
 
 type TagsModel struct {
-	Id         int    `json:"id"`
-	UserHashId string `json:"user_hash_id" json:"user_hash_id,omitempty"`
-	TagLabel   string `json:"tag_label"`
+	Id         int    `json:"id" gorm:"column:id"`
+	UserHashId string `json:"user_hash_id" json:"user_hash_id,omitempty" gorm:"user_hash_id:id"`
+	TagLabel   string `json:"tag_label" gorm:"tag_label:id"`
 }
 
 func (TagsModel) TableName() string {
 	return TAGS
+}
+
+func (tags TagsModel) GetId() int {
+	return tags.Id
 }
 
 func CreateTagsTable() string {

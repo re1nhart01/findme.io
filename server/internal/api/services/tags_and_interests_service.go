@@ -33,6 +33,22 @@ func (tai *TAIService) AddTags(tagList []any, userHash string) error {
 	return nil
 }
 
+func (tai *TAIService) GetTagsIds(tags []models.TagsModel) []int {
+	var result []int
+	for _, v := range tags {
+		result = append(result, v.GetId())
+	}
+	return result
+}
+
+func (tai *TAIService) GetInterestsIds(interests []models.UserInterestsModel) []int {
+	var result []int
+	for _, v := range interests {
+		result = append(result, v.Id)
+	}
+	return result
+}
+
 func (tai *TAIService) RemoveTags(tagList []any, userHash string) error {
 	model := &models.TagsModel{}
 	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Where("user_hash_id = ? AND id IN ?", userHash, tagList).Delete(&model); res.RowsAffected != int64(len(tagList)) || res.Error != nil {

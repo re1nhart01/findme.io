@@ -71,11 +71,13 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/postgres v1.5.0 // indirect
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
+	internal/external v0.0.0-00010101000000-000000000000 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
 	pkg/cryptography v0.0.0-00010101000000-000000000000 // indirect
 	pkg/dto v0.0.0-00010101000000-000000000000 // indirect
 	pkg/fsystem v0.0.0-00010101000000-000000000000 // indirect
 	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
+	pkg/notifications v0.0.0-00010101000000-000000000000 // indirect
 	pkg/utils v0.0.0-00010101000000-000000000000 // indirect
 )
 
@@ -84,6 +86,8 @@ replace internal/pg_database => ./internal/pkg/pg_database
 replace internal/env => ./internal/pkg/env
 
 replace internal/api => ./internal/api
+
+replace internal/external => ./internal/pkg/external
 
 replace internal/models => ./internal/pkg/models
 

@@ -71,6 +71,11 @@ func addError(errs *ErrorList, key string, errorStringList ...string) {
 		ErrorMsg:  errorStringList,
 	})
 }
+
+func isIntegral(val float64) bool {
+	return val == float64(int(val))
+}
+
 func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors *ErrorList) (map[string]any, *ErrorList) {
 	for k, v := range *typeModel {
 
@@ -84,6 +89,15 @@ func ValidateModelWithDto(body map[string]any, typeModel *FieldsMapping, errors 
 			continue
 		}
 		typeOfField := reflect.TypeOf(fieldFromBody).String()
+		if typeOfField == "float64" {
+			v1 := reflect.ValueOf(fieldFromBody)
+			v1 = reflect.Indirect(v1)
+			fv := v1.Convert(reflect.TypeOf(float64(0)))
+			if isIntegral(fv.Float()) {
+				typeOfField = "int"
+				fieldFromBody = fv.Interface()
+			}
+		}
 		typeEqual := MapTypes[v.Type] == typeOfField
 
 		if MapTypes[v.Type] != typeOfField {

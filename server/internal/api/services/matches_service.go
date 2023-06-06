@@ -26,10 +26,23 @@ func (matches *MatchesService) GetService() any {
 	return matches
 }
 
+func (matches *MatchesService) RequestForMatchesList(userHash string, flags map[string]any, currentUserModel *models.UserModelFull, tagsIds, interestsIds []int) ([]*models.UserModel, error) {
+	distance := int(flags["distance"].(float64))
+	years := int(flags["years"].(float64))
+	var userMatchList []*models.UserModel
+	if res := pg_database.
+		GetDatabaseInstance().
+		Instance.
+		Table(models.USERS).
+		Raw(models.GetMatchList(flags, currentUserModel, distance, years, tagsIds, interestsIds)).Scan(&userMatchList); res.Error != nil {
+		return []*models.UserModel{}, res.Error
+	}
+	return userMatchList, nil
+}
+
 func (matches *MatchesService) GetUserMatches(userHash, matchType string) ([]*models.FullUserMatchModel, error) {
 	var modelList []*models.FullUserMatchModel
-	query := ""
-	query = models.GetMatches(matchType)
+	query := models.GetMatches(matchType)
 	if res := pg_database.GetDatabaseInstance().Instance.Raw(query, userHash).Scan(&modelList); res.Error != nil {
 		return []*models.FullUserMatchModel{}, res.Error
 	}

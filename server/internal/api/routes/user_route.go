@@ -14,7 +14,7 @@ type IUserController interface {
 	RemovePhotos(context *gin.Context)
 	SetupFields(context *gin.Context)
 	UpdateGeolocation(context *gin.Context)
-	GetShortUsers(context *gin.Context)
+	GetUsersList(context *gin.Context)
 }
 
 func UserRouter(engine *gin.Engine, controller IUserController) {
@@ -23,7 +23,7 @@ func UserRouter(engine *gin.Engine, controller IUserController) {
 		router.GET("/:user_hash", controller.GetUser)
 		router.GET("/me", controller.GetMe)
 		router.PATCH("/me", controller.SetupFields)
-		router.GET("/get", controller.GetShortUsers)
+		router.GET("/get", controller.GetUsersList)
 		router.PATCH("/settings", controller.UpdatePreferences)
 		router.POST("/photos/attach", controller.AttachPhotos)
 		router.DELETE("/photos/remove", controller.RemovePhotos)

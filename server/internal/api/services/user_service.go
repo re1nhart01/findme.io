@@ -34,7 +34,7 @@ func (user *UserService) UpdateFields(userHash string, fields map[string]any) er
 }
 
 func (user *UserService) GetUserByUserHash(userHash string) (*models.UserModelFull, error) {
-	model := models.UserModelFull{}
+	var model models.UserModelFull
 	if getUserRes := pg_database.GetDatabaseInstance().
 		Instance.
 		Table(models.USERS).

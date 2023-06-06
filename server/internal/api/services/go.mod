@@ -6,6 +6,8 @@ replace internal/pg_database => ./../../pkg/pg_database
 
 replace internal/env => ./../../pkg/env
 
+replace internal/external => ./../../pkg/external
+
 replace pkg/cryptography => ./../../../pkg/cryptography
 
 replace pkg/utils => ./../../../pkg/utils
@@ -21,6 +23,7 @@ replace pkg/notifications => ./../../../pkg/notifications
 require (
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11
 	internal/env v0.0.0-00010101000000-000000000000
+	internal/external v0.0.0-00010101000000-000000000000
 	internal/models v0.0.0-00010101000000-000000000000
 	internal/pg_database v0.0.0-00010101000000-000000000000
 	pkg/cryptography v0.0.0-00010101000000-000000000000

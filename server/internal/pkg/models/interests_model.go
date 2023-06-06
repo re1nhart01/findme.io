@@ -6,12 +6,16 @@ type Tabler interface {
 	TableName() string
 }
 type InterestsModel struct {
-	Id             string `json:"id"`
+	Id             int    `json:"id"`
 	InterestsLabel string `json:"interests_label"`
 }
 
 func (InterestsModel) TableName() string {
 	return INTERESTS
+}
+
+func (interests InterestsModel) GetId() int {
+	return interests.Id
 }
 
 func CreateInterestsTable() string {

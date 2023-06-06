@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"internal/env"
+	"internal/external"
 	"internal/models"
 	"internal/pg_database"
 	"pkg/cryptography"
@@ -46,6 +47,7 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 	serverHash := env.ReadEnv("SERVER_HASH")
 	userSalt := fmt.Sprintf("%s:%s:%s:%d", email, fullName, country, birthday.UnixMicro())
 	userHash := cryptography.GetSha1(serverHash, userSalt)
+	coords := external.GetCoordsByCityAndCountry(city, country)
 	emptyUserModel := models.UserModel{
 		UserHash:  userHash,
 		FullName:  fullName,
@@ -60,8 +62,8 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 		Mood:      "Here to date",
 		Gender:    "Male",
 		CreatedAt: time.Now(),
-		Lat:       0,
-		Long:      0,
+		Lat:       coords.Latitude,
+		Long:      coords.Longitude,
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Create(&emptyUserModel)
 	return userHash, result.Error

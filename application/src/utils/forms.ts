@@ -1,7 +1,5 @@
-import { FormadjoValidator } from '@core/Validators/MainFormadjo';
 import { FormadjoFormer } from '@core/Validators/FormadjoFormer';
 import { FormadjoField } from '@core/Validators/Formadjo';
-import { Interest } from '@type/models/interests';
 
 export type IBasicInformationFormTemplate = {
   email: string;

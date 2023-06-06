@@ -67,6 +67,7 @@ require (
 	gorm.io/driver/postgres v1.5.0 // indirect
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 	internal/env v0.0.0-00010101000000-000000000000 // indirect
+	internal/external v0.0.0-00010101000000-000000000000 // indirect
 	internal/models v0.0.0-00010101000000-000000000000 // indirect
 	internal/pg_database v0.0.0-00010101000000-000000000000 // indirect
 	pkg/cryptography v0.0.0-00010101000000-000000000000 // indirect
@@ -88,6 +89,8 @@ replace internal/models => ./../../pkg/models
 replace internal/pg_database => ./../../pkg/pg_database
 
 replace internal/env => ./../../pkg/env
+
+replace internal/external => ./../../pkg/external
 
 replace pkg/jwts => ./../../../pkg/jwts
 

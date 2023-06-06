@@ -23,3 +23,31 @@ where m.first_user_match = '15db4664e9ca5a4ed2f5d0978ff402481016686d'
   AND EXISTS (select * from matches as m2 where m.second_user_match = m2.first_user_match);
 
 DELETE FROM matches where matches.first_user_match = '15db4664e9ca5a4ed2f5d0978ff402481016686d'
+
+
+select calculate_distance(0, 0, users.lat, users.long, 'KM'), user_hash, full_name, birthday, gender, email, mood, relations, lat, long from users
+where
+    (CASE WHEN true THEN calculate_distance(0, 0, users.lat, users.long, 'KM') > 1 ELSE true END)
+  AND
+    (CASE WHEN false THEN birthday = (CURRENT_DATE - interval '4 years') OR birthday = (CURRENT_DATE + interval '4 years') ELSE true END) AND
+    (CASE WHEN false THEN GENDER = 'male' ELSE true END) AND
+    (CASE WHEN false THEN relations = 'single' else true end)
+
+UNION
+select calculate_distance(0, 0, users.lat, users.long, 'KM'), user_hash, full_name, birthday, gender, email, mood, relations, lat, long from users
+where
+    (CASE WHEN true THEN calculate_distance(0, 0, users.lat, users.long, 'KM') > 1 ELSE true END)
+  AND
+    (CASE WHEN false THEN birthday = (CURRENT_DATE - interval '4 years') OR birthday = (CURRENT_DATE + interval '4 years') ELSE true END) AND
+    (CASE WHEN false THEN GENDER = 'male' ELSE true END)
+  AND (CASE WHEN false THEN EXISTS (Select * from user_interests
+                                    where user_hash_id = users.user_hash
+                                      and user_interests.interests_id in (1, 2, 3)) ELSE TRUE END)
+  AND (CASE WHEN false THEN EXISTS ( Select * from tags
+                                     where user_hash_id = users.user_hash
+                                       and tags.id in (1,2,3)
+    ) ELSE true END)
+
+
+
+

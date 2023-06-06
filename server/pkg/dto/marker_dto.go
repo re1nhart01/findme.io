@@ -28,7 +28,7 @@ func validateString(v *FieldDto, typeEqual bool, fieldFromBody any, errors *Erro
 
 func validateInteger(v *FieldDto, typeEqual bool, fieldFromBody any, errors *ErrorList, index string) {
 	if v.Type == "INTEGER" && typeEqual {
-		cField := fieldFromBody.(int)
+		cField := int(fieldFromBody.(float64))
 		if v.Min != nil && cField < v.Min.(int) {
 			addError(errors, index, fmt.Sprintf("Number should expect less than %d but got: %d", v.Min.(int), cField))
 		}

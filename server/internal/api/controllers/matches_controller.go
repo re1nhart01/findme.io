@@ -13,10 +13,33 @@ import (
 type MatchesController struct {
 	*BaseController
 	*services.MatchesService
+	user *services.UserService
+	tai  *services.TAIService
 }
 
 func (matches *MatchesController) GetName() string { return matches.Name }
 func (matches *MatchesController) GetPath() string { return matches.Path }
+
+func (matches *MatchesController) GetUsersMatching(ctx *gin.Context) {
+	err, userData, validated := matches.ManageTokenAndDto(ctx, ApplicationDto.GetMatchesDto)
+	if err != nil {
+		return
+	}
+	userHash := userData["user_hash"].(string)
+	currentUserModel, err := matches.user.GetUserByUserHash(userHash)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, err.Error()))
+	}
+	tagsIds := matches.tai.GetTagsIds(currentUserModel.Tags)
+	interestsIds := matches.tai.GetInterestsIds(currentUserModel.Interests)
+
+	if matchesList, err := matches.RequestForMatchesList(userHash, validated, currentUserModel, tagsIds, interestsIds); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, err.Error()))
+		return
+	} else {
+		ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData[[]*models.UserModel](matchesList))
+	}
+}
 
 func (matches *MatchesController) GetMatches(ctx *gin.Context) {
 	err, userData, validated := matches.ManageTokenAndDto(ctx, ApplicationDto.MatchesListDto)
@@ -79,5 +102,7 @@ func CreateMatchesController(basePath string) *MatchesController {
 			fmt.Sprintf("%s/matches", basePath),
 		},
 		&services.MatchesService{},
+		&services.UserService{},
+		&services.TAIService{},
 	}
 }

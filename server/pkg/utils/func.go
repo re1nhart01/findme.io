@@ -16,6 +16,20 @@ func Includes[T comparable](list []T, item T) (bool, T, int) {
 	return false, item, -1
 }
 
+type TagsInterests interface {
+	GetId() int
+}
+
+type listOf []TagsInterests
+
+func GetIntListFromModel(list listOf) []int {
+	result := []int{}
+	for _, v := range list {
+		result = append(result, v.GetId())
+	}
+	return result
+}
+
 func ShortInclude[T comparable](list []T, item T) bool {
 	if len(list) == 0 {
 		return false

@@ -47,10 +47,9 @@ type UserModelFull struct {
 	Phone      string               `json:"phone"`
 	Lat        float64              `json:"lat"`
 	Long       float64              `json:"long"`
-	Interests  []UserInterestsModel `json:"interests,omitempty"`
-	Tags       []TagsModel          `json:"tags,omitempty"`
-	Photos     []string             `json:"photos,omitempty"`
-	CreatedAt  time.Time            `json:"created_at"`
+	Interests  []UserInterestsModel `json:"interests"`
+	Tags       []TagsModel          `json:"tags"`
+	Photos     []string             `json:"photos"`
 }
 
 func CreateUserTable() string {

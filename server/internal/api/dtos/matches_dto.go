@@ -37,3 +37,50 @@ var MatchesListDto = &dto.FieldsMapping{
 		AcceptOnly: []any{"mutual", "incoming", "dislikes"},
 	},
 }
+
+var GetMatchesDto = &dto.FieldsMapping{
+	"by_interests": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_interests",
+	},
+	"by_tags": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_tags",
+	},
+	"by_coords": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_coords",
+	},
+	"by_birthday": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_birthday",
+	},
+	"by_gender": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_gender",
+	},
+	"by_relation": &dto.FieldDto{
+		Type:     "BOOL",
+		Required: true,
+		Name:     "by_gender",
+	},
+	"distance": &dto.FieldDto{
+		Type:     "INTEGER",
+		Required: true,
+		Min:      0,
+		Max:      999,
+		Name:     "distance",
+	},
+	"years": &dto.FieldDto{
+		Type:     "INTEGER",
+		Required: true,
+		Min:      0,
+		Max:      999,
+		Name:     "distance",
+	},
+}

@@ -6,6 +6,7 @@ require (
 	app/dtos v0.0.0-00010101000000-000000000000
 	app/services v0.0.0-00010101000000-000000000000
 	github.com/gin-gonic/gin v1.9.0
+	internal/models v0.0.0-00010101000000-000000000000
 	pkg/cryptography v0.0.0-00010101000000-000000000000
 	pkg/dto v0.0.0-00010101000000-000000000000
 	pkg/fsystem v0.0.0-00010101000000-000000000000
@@ -70,7 +71,7 @@ require (
 	gorm.io/driver/postgres v1.5.0 // indirect
 	gorm.io/gorm v1.24.7-0.20230306060331-85eaf9eeda11 // indirect
 	internal/env v0.0.0-00010101000000-000000000000 // indirect
-	internal/models v0.0.0-00010101000000-000000000000 // indirect
+	internal/external v0.0.0-00010101000000-000000000000 // indirect
 	internal/pg_database v0.0.0-00010101000000-000000000000 // indirect
 	pkg/jwts v0.0.0-00010101000000-000000000000 // indirect
 	pkg/notifications v0.0.0-00010101000000-000000000000 // indirect
@@ -85,6 +86,8 @@ replace app/dtos => ../dtos
 replace pkg/jwts => ./../../../pkg/jwts
 
 replace internal/env => ./../../pkg/env
+
+replace internal/external => ./../../pkg/external
 
 replace internal/models => ./../../pkg/models
 
