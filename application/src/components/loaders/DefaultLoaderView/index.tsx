@@ -5,7 +5,7 @@ import { colors } from '@utils/colors';
 type defaultLoaderViewProps = {
   show: boolean;
   style?: {};
-  color: keyof typeof colors;
+  color: string;
   size: number;
 };
 const DefaultLoaderView: React.FC<defaultLoaderViewProps> = ({ size, color, style, show }) => {

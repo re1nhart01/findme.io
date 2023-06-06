@@ -19,7 +19,6 @@ import { Styles } from '@styles/load';
 import { FieldRowView } from '@components/UserProfileRowView';
 import { ImageButtonView } from '@components/ImageButtonView';
 import ReadMoreTextView from '@components/ReadMoreTextView';
-import { MOCK_INTERESTS, MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
 import TextPathView from '@components/TextPathView';
 import ImageGalleryView from '@components/ImageGalleryView';
 import { FlexibleListView } from '@components/FlexibleListView';
@@ -29,33 +28,36 @@ import {
   ImageCarouselModal,
   imageCarouselModalForward,
 } from '@components/common/modals/ImageCarouselModal';
+import { IUserStorage } from '@reacts/hooks/useUserStorage';
+import { getAge } from '@utils/helpers';
+import { InterestsList } from '@utils/constants/strings';
+import { TextView } from '@components/TextView';
+import {
+  handleEditBasicInformation,
+  handleEditImages,
+  handleEditMood,
+  handleSelectGendersPress,
+  handleSelectInterestsPress,
+  handleSelectTagsPress,
+  handleSettingsPress,
+} from '@screens/MyProfileScreen/utils';
 
 export type myProfileScreenPresenterProps = {
-  handleSettingsPress(): void;
   handleOnScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void;
   headerImageAnim: Animated.Value;
   carouselModalRef: React.RefObject<imageCarouselModalForward>;
   openFullScreenCarousel(): void;
-  handleSelectGendersPress(): void;
-  handleSelectInterestsPress(): void;
-  handleSelectTagsPress(): void;
-  handleEditBasicInformation(): void;
-  handleEditMood(): void;
-  handleEditImages(): void;
+  userState: IUserStorage;
+  handleRemovePhotos(item: string): void;
 };
 
 const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
   handleOnScroll,
   headerImageAnim,
-  handleSettingsPress,
   carouselModalRef,
   openFullScreenCarousel,
-  handleSelectGendersPress,
-  handleSelectInterestsPress,
-  handleSelectTagsPress,
-  handleEditBasicInformation,
-  handleEditMood,
-  handleEditImages,
+  handleRemovePhotos,
+  userState: { user },
 }) => {
   const renderSettingGearButton = useCallback((handler: (event: GestureResponderEvent) => void): JSX.Element => {
     return (
@@ -75,6 +77,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
         animationValue={headerImageAnim}
         inputValue={[0, 90]}
         outputValue={[0, 1]}
+        text={user.full_name}
       />
       <ScrollView
         onScroll={handleOnScroll}
@@ -112,21 +115,29 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Name"
           >
-            <Text style={Styles.Text.smallText14Black_070}>Jessica Parker</Text>
+            <Text style={Styles.Text.smallText14Black_070}>{user.full_name}</Text>
           </FieldRowView>
           {/* ~Age~ */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="age"
           >
-            <Text style={Styles.Text.smallText14Black_070}>23 years</Text>
+            <Text style={Styles.Text.smallText14Black_070}>
+              { getAge(user.birthday) }
+              {' '}
+              years
+            </Text>
           </FieldRowView>
           {/* ~City and country~relations */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Location"
           >
-            <Text style={Styles.Text.smallText14Black_070}>Uzhgorod, Ukraine</Text>
+            <Text style={Styles.Text.smallText14Black_070}>
+              { user.city }
+              {' '}
+              { user.country }
+            </Text>
           </FieldRowView>
           {/* ~About~ */}
           <FieldRowView
@@ -138,9 +149,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
               buttonText="read_more"
               unfoldText="read_less"
               style={[Styles.Text.smallText14Black_070, Styles.MarginPadding.mv3]}
-              text="My name is Jessica Parker and I enjoy meeting new people and finding ways to help them have an uplifting experience.
-            I enjoy reading My name is Jessica Parker and I enjoy meeting new people
-            and finding ways to help them have an uplifting experience."
+              text={user.details}
             />
           </FieldRowView>
           {/* ~Relations~ */}
@@ -149,14 +158,14 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             text="relations"
             rightSide={renderSettingGearButton(handleEditMood)}
           >
-            <Text style={Styles.Text.smallText14Black_070}>Single</Text>
+            <Text style={Styles.Text.smallText14Black_070}>{ user.relations }</Text>
           </FieldRowView>
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="Mood"
             rightSide={renderSettingGearButton(handleEditMood)}
           >
-            <Text style={Styles.Text.smallText14Black_070}>In search of brightness</Text>
+            <Text style={Styles.Text.smallText14Black_070}>{ user.mood }</Text>
           </FieldRowView>
           {/* Gender */}
           <FieldRowView
@@ -164,7 +173,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             text="gender"
             rightSide={renderSettingGearButton(handleSelectGendersPress)}
           >
-            <Text style={Styles.Text.smallText14Black_070}>Male</Text>
+            <Text style={Styles.Text.smallText14Black_070}>{ user.gender }</Text>
           </FieldRowView>
           {/* Interests */}
           <FieldRowView
@@ -173,13 +182,13 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             rightSide={renderSettingGearButton(handleSelectInterestsPress)}
           >
             <FlexibleListView
-              empty={<View />}
+              empty={<TextView styles={[Styles.Text.redSubHeader, Styles.Text.textCenter]} text="This user didn't add his(her) interests" />}
               loader={<View />}
               isLoading={false}
               horizontal
               wrapped
-              keyExtractor={(item) => `${item.value}`}
-              items={MOCK_INTERESTS}
+              keyExtractor={(item) => `${item.interests_id}`}
+              items={user.interests || []}
               scrollStyles={[Styles.MarginPadding.pt8]}
               contentContainerStyles={[Styles.MarginPadding.g6, Styles.Layout.max_w_100pc]}
               renderItem={(item, index) => {
@@ -187,7 +196,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
                   <TextPathView<typeof item>
                     containerStyle={Styles.Container.interestsBody}
                     textStyle={Styles.Text.smallTextWhiteBold14}
-                    text={`${item.label}`}
+                    text={`${InterestsList[item.interests_id - 1].label}`}
                     val={item}
                     onPress={(val) => console.log(val)}
                   />
@@ -202,12 +211,12 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
             rightSide={renderSettingGearButton(handleSelectTagsPress)}
           >
             <FlexibleListView
-              empty={<View />}
+              empty={<TextView styles={[Styles.Text.redSubHeader, Styles.Text.textCenter]} text="This user didn't add his(her) custom tags" />}
               loader={<View />}
               isLoading={false}
               horizontal
-              keyExtractor={(item) => `${item.id}`}
-              items={MOCK_TAGS}
+              keyExtractor={(item) => `${item.user_hash_id}${item.id}`}
+              items={user.tags || []}
               wrapped
               scrollStyles={[Styles.MarginPadding.pt8]}
               contentContainerStyles={[Styles.MarginPadding.g6]}
@@ -216,7 +225,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
                   <TextPathView<typeof item>
                     containerStyle={Styles.Container.tagBody}
                     textStyle={Styles.Text.smallTextRedBold14}
-                    text={`#${item.label}`}
+                    text={`#${item.tag_label}`}
                     val={item}
                     onPress={(val) => console.log(val)}
                   />
@@ -224,7 +233,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
               }}
             />
           </FieldRowView>
-          {/* Gallery */}
+          {/* Gallery  */}
           <FieldRowView
             style={{ textStyle: [Styles.Text.mediumText24Black] }}
             text="gallery"
@@ -239,9 +248,14 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
                 />
                 {renderSettingGearButton(handleEditImages)}
               </View>
-)}
+          )}
           >
-            <ImageGalleryView photoList={[]} />
+            <ImageGalleryView
+              onPressSmallImage={handleRemovePhotos}
+              onPressBigImage={handleRemovePhotos}
+              photoList={user.photos || []}
+              isFirebase
+            />
           </FieldRowView>
         </View>
       </ScrollView>

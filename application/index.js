@@ -8,6 +8,7 @@ import { forceNavigator } from '@core/Navigator';
 import { name as appName } from './app.json';
 import RootComponent from './App';
 
+console.log(__app__);
 const RootApp = () => {
   return (
     <Provider store={store}>

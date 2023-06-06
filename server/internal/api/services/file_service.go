@@ -35,11 +35,14 @@ func (file *FileService) GetPhotosByUserHash(photoList *[]string, userHash strin
 	return nil
 }
 
-func (file *FileService) AttachPhotoToUser(bucketId, userHash string) error {
-	model := models.UserPhotosModel{
-		UserHashId:      userHash,
-		StorageBucketId: bucketId,
-		IsDefault:       false,
+func (file *FileService) AttachPhotoToUser(bucketIds []any, userHash string) error {
+	var model []*models.UserPhotosModel
+	for _, v := range bucketIds {
+		model = append(model, &models.UserPhotosModel{
+			UserHashId:      userHash,
+			StorageBucketId: v.(string),
+			IsDefault:       false,
+		})
 	}
 	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_PHOTOS).Create(&model); res.Error != nil {
 		return errors.New("attachPhotoToUser exception")

@@ -1,9 +1,10 @@
-import React, { memo, useCallback } from 'react';
+import React, {memo, useCallback, useMemo} from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import { Styles } from '@styles/load';
 import { FlexibleListView } from '@components/FlexibleListView';
 import { useLoader } from '@reacts/hooks/useLoader';
 import { TextView } from '@components/TextView';
+import { firebase_base_url } from '@utils/constants/strings';
 
 type imageGalleryViewProps = {
     photoList: Array<string>;
@@ -11,6 +12,7 @@ type imageGalleryViewProps = {
     contentContainerStyles?: {};
     onPressSmallImage?(uri: string): void;
     onPressBigImage?(uri: string): void;
+    isFirebase?: boolean;
 };
 
 const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
@@ -19,20 +21,21 @@ const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
   contentContainerStyles,
   onPressBigImage = () => {},
   onPressSmallImage = () => {},
+  isFirebase,
 }) => {
   const isLoadedGallery = useLoader(500);
-  const renderPhoto = useCallback(<T = any>(item: string, index: number) => {
+  const renderPhoto = useCallback(<T extends object = any>(item: string, index: number) => {
     if (index < bigImagesCount) {
       const bigWidthPercent = bigImagesCount >= 2 ? '48%' : bigImagesCount === 1 ? '100%' : '66%';
       return (
         <TouchableOpacity onPress={() => onPressBigImage(item)} style={{ width: bigWidthPercent, height: 200 }}>
-          <Image style={[Styles.Layout.w100, Styles.Layout.h100, { resizeMode: 'cover' }, Styles.Layout.borderR5]} source={{ uri: item }} />
+          <Image style={[Styles.Layout.w100, Styles.Layout.h100, { resizeMode: 'cover' }, Styles.Layout.borderR5]} source={{ uri: isFirebase ? `${firebase_base_url(item)}&d=${new Date().toString()}` : item }} />
         </TouchableOpacity>
       );
     }
     return (
       <TouchableOpacity onPress={() => onPressSmallImage(item)} style={{ width: '31%', height: 122 }}>
-        <Image style={[Styles.Layout.w100, Styles.Layout.h100, { resizeMode: 'cover' }, Styles.Layout.borderR5]} source={{ uri: item }} />
+        <Image style={[Styles.Layout.w100, Styles.Layout.h100, { resizeMode: 'cover' }, Styles.Layout.borderR5]} source={{ uri: isFirebase ? `${firebase_base_url(item)}&d=${new Date().toString()}` : item }} />
       </TouchableOpacity>
     );
   }, []);
@@ -63,7 +66,7 @@ const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
       scrollStyles={[Styles.MarginPadding.pt8]}
       contentContainerStyles={[Styles.MarginPadding.g10, Styles.Layout.wrap, Styles.Layout.max_w_100pc, Styles.Layout.flexCenter, contentContainerStyles]}
       horizontal
-      keyExtractor={(item, index) => `${item}${index}`}
+      keyExtractor={(item, index) => `${item}`}
       renderItem={renderPhoto}
       items={photoList}
     />

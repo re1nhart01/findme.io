@@ -4,16 +4,25 @@ import { MainHeaderView } from '@core/Headers/MainHeader';
 import { Styles } from '@styles/load';
 import { colors } from '@utils/colors';
 import { ScrollView, Text, View } from 'react-native';
-import { FormadjoForm } from '@core/Validators/FormadjoForm';
+import { FormadjoAsyncSubmitFn, FormadjoForm } from '@core/Validators/FormadjoForm';
 import { IEditProfileForm, editProfileForm } from '@utils/forms';
 import { SelectBirthdayView } from '@components/SelectBirthdayView';
 import { AnimatedTextInputView } from '@components/AnimatedTextInputView';
 import { TextView } from '@components/TextView';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
+import { IUserStorage } from '@reacts/hooks/useUserStorage';
+import { DefaultLoaderView } from '@components/loaders/DefaultLoaderView';
 
-export type editProfileScreenPresenterProps = {};
+export type editProfileScreenPresenterProps = {
+    userState: IUserStorage;
+    handleOnSave: FormadjoAsyncSubmitFn<IEditProfileForm>;
+    loading: boolean;
+};
 
-const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({}) => {
+const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
+  handleOnSave,
+  loading,
+  userState: { user: { birthday, city, country, details, full_name } } }) => {
   return (
     <ScreenLayoutView
       disableKeyboardPersist
@@ -27,16 +36,17 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
       />
       <ScrollView>
         <FormadjoForm<IEditProfileForm>
+          removeErrorOnChange
           form={editProfileForm}
           initialProps={{
-            birthday: 0,
-            city: '',
-            country: '',
-            details: '',
-            firstName: '',
-            lastName: '',
+            birthday: new Date(birthday).valueOf(),
+            city,
+            country,
+            details,
+            firstName: full_name.split(' ')[0],
+            lastName: full_name.split(' ')[1],
           }}
-          onFinishSubmit={() => {}}
+          onFinishSubmit={handleOnSave}
         >
           {
           ({
@@ -74,7 +84,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                 />
                 {firstName.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{firstName.errorMessage}</Text>}
                 <AnimatedTextInputView
-                  defaultValue={values.firstName}
+                  defaultValue={values.lastName}
                   autoComplete="email"
                   isError={firstName.isError}
                   placeholderColor={colors.black00_40}
@@ -87,12 +97,12 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                 />
                 {lastName.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{lastName.errorMessage}</Text>}
                 <AnimatedTextInputView
-                  defaultValue={values.firstName}
+                  defaultValue={values.details}
                   autoComplete="email"
                   isError={firstName.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="Details"
-                  onChange={(v) => updateFormState('firstName', v.trim())}
+                  onChange={(v) => updateFormState('details', v.trim())}
                   styles={{
                     error: [Styles.Container.redBorder1],
                     outline: [Styles.Container.animatedInputContainer, Styles.MarginPadding.mt10],
@@ -107,7 +117,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                 </View>
               </View>
               <View>
-                <View style={Styles.MarginPadding.mt50}>
+                <View style={Styles.MarginPadding.mt32}>
                   <View style={[Styles.MarginPadding.ml8]}>
                     <TextView text="your_location" styles={Styles.Text.smallTextBold18} />
                   </View>
@@ -126,6 +136,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                 />
                 {country.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{country.errorMessage}</Text>}
                 <AnimatedTextInputView
+                  defaultValue={values.city}
                   isError={city.isError}
                   placeholderColor={colors.black00_40}
                   placeholder="City"
@@ -139,7 +150,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
               </View>
               <View style={[Styles.MarginPadding.mt10]}>
                 <PrimaryButtonView
-                  disabled={isDisabled}
+                  disabled={isDisabled || loading}
                   styles={{
                     outline: Styles.Button.primaryButton,
                     text: Styles.Text.primaryButtonText,
@@ -148,6 +159,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                   text="save"
                   onPress={onSubmit}
                 />
+                <DefaultLoaderView show={loading} color={colors.redE9} size={20} />
               </View>
             </View>
           )

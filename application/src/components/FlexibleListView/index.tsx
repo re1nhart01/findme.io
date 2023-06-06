@@ -35,7 +35,7 @@ type flexibleListViewState<T = any> = {
     items: Array<T>;
 }
 
-const FlexibleListView = <T = any>({
+const FlexibleListView = <T extends object>({
   keyExtractor,
   contentContainerStyles,
   empty,

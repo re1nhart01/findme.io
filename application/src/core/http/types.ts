@@ -1,5 +1,5 @@
 // Register
-import { tokens } from "@core/CurrentUser";
+import { preferences, tokens, userData } from '@type/models/user';
 
 export type RegisterResponse = boolean;
 
@@ -33,4 +33,33 @@ export interface LoginRequest {
     login: string;
     password: string;
     device_id: string;
+}
+
+// Me
+
+export interface MeRequest {}
+
+export interface MeResponse {
+    preferences: preferences;
+    user: userData;
+}
+
+// Update Interests
+
+export type UpInterestsResponse = {};
+export interface UpInterestsRequest {
+    interests_list: number[]
+}
+
+// attach photo
+
+export type AttachPhotoResponse = {};
+export interface AttachPhotoRequest {
+    bucket_ids: string[]
+}
+
+// remove photo
+
+export interface RemovePhotoRequest {
+    buckets_ids: string[]
 }

@@ -49,5 +49,19 @@ where
     ) ELSE true END)
 
 
-
+    INSERT INTO interests ( interests_label ) VALUES
+    (	'📷   Photography' ),
+    ( '🛍️   Shopping'),
+    ('🎙️   Karaoke'),
+    (  '🧘‍♀️   Yoga'),
+    ( '🍪   Cooking'),
+    ( '🎾   Tennis'),
+    ( '👟   Run'),
+    ( '🏊   Swimming'),
+    ('🎨   Art'),
+    ( '🌆   Traveling'),
+    ( '🥾   Extreme'),
+    ( '🎵    Music'),
+    ( '🍹   Drink'),
+    ( '🎮   Games')
 

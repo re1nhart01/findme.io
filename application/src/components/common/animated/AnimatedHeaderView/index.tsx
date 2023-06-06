@@ -7,9 +7,10 @@ type animatedHeaderViewProps = {
     animationValue: Animated.Value;
     inputValue: Array<number>;
     outputValue: Array<number>;
+    text: string;
 };
 
-const AnimatedHeaderView: React.FC<animatedHeaderViewProps> = ({ animationValue, inputValue, outputValue }) => {
+const AnimatedHeaderView: React.FC<animatedHeaderViewProps> = ({ animationValue, inputValue, outputValue, text }) => {
   return (
     <Animated.View
       style={[
@@ -27,7 +28,7 @@ const AnimatedHeaderView: React.FC<animatedHeaderViewProps> = ({ animationValue,
         style={[Styles.MarginPadding.pv10, Styles.Layout.w100, Styles.Container.whiteFFBackgroundColor]}
       >
         <TextView styles={[Styles.Text.mediumText24Black, Styles.Text.textCenter]} text="my_profile" />
-        <TextView styles={[Styles.Text.smallText12_40Black, Styles.Text.textCenter]} text="Evgeniy Kokaiko" />
+        <TextView styles={[Styles.Text.smallText12_40Black, Styles.Text.textCenter]} text={text} />
       </View>
     </Animated.View>
   );

@@ -63,8 +63,8 @@ export type userData = Required<{
   phone: string;
   lat: number;
   long: number;
-  interests: ApiTags[] | null;
-  tags: ApiInterests[] | null;
+  interests: ApiInterests[] | null;
+  tags: ApiTags[] | null;
   photos: string[] | null;
 }>;
 

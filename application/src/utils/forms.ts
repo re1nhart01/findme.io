@@ -97,7 +97,7 @@ export const loginFormTemplate = new FormadjoFormer<ILoginFormTemplate>({
 
 export type IGenderFormTemplate = {
   gender: string;
-  lookingForGender: string;
+  looking_for: string;
 };
 
 export const genderSelectTemplate = new FormadjoFormer<IGenderFormTemplate>({
@@ -105,7 +105,7 @@ export const genderSelectTemplate = new FormadjoFormer<IGenderFormTemplate>({
     .setIsRequired(true)
     .setMinLength(3)
     .setMaxLength(500),
-  lookingForGender: new FormadjoField('LookingForGender', 'string')
+  looking_for: new FormadjoField('Looking For', 'string')
     .setIsRequired(true)
     .setMinLength(3)
     .setMaxLength(500),
@@ -117,8 +117,8 @@ export type IInterestsFormTemplate = {
 
 export const interestSelectTemplate = new FormadjoFormer<IInterestsFormTemplate>({
   interests: new FormadjoField('Interest', 'object')
-    .setMinLength(3)
-    .setMaxLength(3)
+    .setMinLength(0)
+    .setMaxLength(10)
     .setArrayValueType('number')
     .setIsRequired(true)
     .setType('object'),
@@ -127,7 +127,7 @@ export const interestSelectTemplate = new FormadjoFormer<IInterestsFormTemplate>
 export type IEditProfileForm = {
   firstName: string;
   lastName: string;
-  birthday: number;
+  birthday: number | string;
   city: string;
   country: string;
   details: string;
@@ -144,26 +144,26 @@ export const editProfileForm = new FormadjoFormer<IEditProfileForm>({
   details: new FormadjoField('details', 'string')
     .setIsRequired(true)
     .setMinLength(10)
-    .setMaxLength(100),
+    .setMaxLength(500),
   birthday: new FormadjoField('birthday', 'number')
     .setIsRequired(true)
     .setMinLength(1005)
     .setMaxLength(Date.now()),
   country: new FormadjoField('Country', 'string')
     .setIsRequired(true)
-    .setMinLength(5)
+    .setMinLength(3)
     .setMaxLength(100)
     .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
   city: new FormadjoField('City', 'string')
     .setIsRequired(true)
-    .setMinLength(5)
+    .setMinLength(3)
     .setMaxLength(100)
     .setRegexpValidation(new RegExp('^[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*$', 'mi')),
 });
 
 export type IEditMoodRelationsForm = {
   mood: string;
-  relationship: string;
+  relations: string;
 }
 
 export const editMoodRelationsForm = new FormadjoFormer<IEditMoodRelationsForm>({
@@ -171,7 +171,7 @@ export const editMoodRelationsForm = new FormadjoFormer<IEditMoodRelationsForm>(
     .setIsRequired(true)
     .setMinLength(5)
     .setMaxLength(250),
-  relationship: new FormadjoField('Relationship', 'string')
+  relations: new FormadjoField('Relations', 'string')
     .setIsRequired(true)
     .setMinLength(5)
     .setMaxLength(250),

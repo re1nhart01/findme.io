@@ -2,7 +2,7 @@ import { Coords } from '@type/defaults';
 import { HaversineCalculation, toRadiansCoords } from '@utils/helpers';
 import { PERMISSIONS, check, checkMultiple, request, requestMultiple } from 'react-native-permissions';
 import { Alert } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation, { GeoError, GeoPosition } from 'react-native-geolocation-service';
 
 export class GeolocationService {
   public calculateKilometers(coords1: Coords, coords2: Coords): number {
@@ -36,15 +36,15 @@ export class GeolocationService {
     }
   }
 
-  public async updateGeo() {
-    return new Promise((resolve, reject) => {
+  public async updateGeo(): Promise<GeoPosition | GeoError> {
+    return new Promise((resolve) => {
       Geolocation.getCurrentPosition(
         (position) => {
           resolve(position);
         },
         (error) => {
           // See error code charts below.
-          reject(error);
+          resolve(error);
         },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
       );

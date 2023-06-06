@@ -10,6 +10,7 @@ export interface IRequester<T> {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTION' | 'PATCH';
   data?: T;
   customHeaders?: {[key: string]: string};
+  isMultipart?: boolean;
   retries: number;
   withAccess: boolean;
 }
@@ -22,11 +23,11 @@ export interface IRResponse<T> {
 
 export interface BaseRequest {}
 
-export const requester = async <GRequest, GResponse extends BaseRequest>({ url, method, data, customHeaders, retries = 3, withAccess }: IRequester<GRequest>): Promise<IRResponse<GResponse> | Boundary> => {
+export const requester = async <GRequest, GResponse extends BaseRequest>({ url, method, data, customHeaders, retries = 3, withAccess, isMultipart }: IRequester<GRequest>): Promise<IRResponse<GResponse> | Boundary> => {
   try {
     const headers = {
       ...customHeaders,
-      'Content-Type': 'application/json',
+      'Content-Type': isMultipart ? 'multipart/form-data' : 'application/json',
     };
     const { expiration_time, refresh_token } = __app__.getCurrentUser.tokens;
     const now = Date.now();

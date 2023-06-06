@@ -4,22 +4,27 @@ import { MainHeaderView } from '@core/Headers/MainHeader';
 import { Styles } from '@styles/load';
 import { colors } from '@utils/colors';
 import { ScrollView, Text, View } from 'react-native';
-import { FormadjoForm } from '@core/Validators/FormadjoForm';
+import { FormadjoAsyncSubmitFn, FormadjoForm, FormadjoSubmitFn } from '@core/Validators/FormadjoForm';
 import {
   IEditMoodRelationsForm,
-  editMoodRelationsForm,
+  IEditProfileForm, editMoodRelationsForm,
 } from '@utils/forms';
-import { AnimatedTextInputView } from '@components/AnimatedTextInputView';
 import { TextView } from '@components/TextView';
 import CheckMarkIcon from '@assets/svg/check-small.svg';
 import RightArrowIcon from '@assets/svg/right.svg';
 import CommonPickerView from '@components/common/pickers/CommonPickerView';
 import { moodList, relationsList } from '@utils/constants/strings';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
+import { IUserStorage } from '@reacts/hooks/useUserStorage';
+import { DefaultLoaderView } from '@components/loaders/DefaultLoaderView';
 
-export type editMoodRelationsPresenterProps = {};
+export type editMoodRelationsPresenterProps = {
+    userState: IUserStorage;
+    handleOnSave: FormadjoSubmitFn<IEditMoodRelationsForm> | FormadjoAsyncSubmitFn<IEditMoodRelationsForm>;
+    loading: boolean;
+};
 
-const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps> = ({}) => {
+const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps> = ({ userState: { user: { mood, relations } }, handleOnSave, loading }) => {
   return (
     <ScrollView>
       <ScreenLayoutView
@@ -34,16 +39,16 @@ const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps
         <FormadjoForm<IEditMoodRelationsForm>
           form={editMoodRelationsForm}
           initialProps={{
-            mood: '',
-            relationship: '',
+            mood,
+            relations,
           }}
-          onFinishSubmit={() => {}}
+          onFinishSubmit={handleOnSave}
         >
           {
           ({
             errorsList: {
               mood,
-              relationship,
+              relations,
             },
             isDisabled,
             onSubmit,
@@ -81,8 +86,8 @@ const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps
                 <View style={[Styles.MarginPadding.mb15, Styles.MarginPadding.mt20]}>
                   <CommonPickerView
                     containerStyles={[Styles.MarginPadding.g10]}
-                    activeValue={values.relationship}
-                    selectValue={(value) => updateFormState('relationship', value)}
+                    activeValue={values.relations}
+                    selectValue={(value) => updateFormState('relations', value)}
                     items={relationsList}
                     activeTextStyles={Styles.Text.smallText16White}
                     textStyles={Styles.Text.smallText13Black}
@@ -96,7 +101,7 @@ const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps
               </View>
               <View style={[Styles.MarginPadding.mt10]}>
                 <PrimaryButtonView
-                  disabled={isDisabled}
+                  disabled={loading || isDisabled}
                   styles={{
                     outline: Styles.Button.primaryButton,
                     text: Styles.Text.primaryButtonText,
@@ -106,6 +111,7 @@ const EditMoodRelationsScreenPresenter: React.FC<editMoodRelationsPresenterProps
                   onPress={onSubmit}
                 />
               </View>
+              <DefaultLoaderView show={loading} color={colors.redE9} size={30} />
             </View>
           )
           }

@@ -80,7 +80,7 @@ func (app *FindMeIoApplication) Run(port string) error {
 
 	go func() {
 		if err := httpServer.ListenAndServe(); err != nil {
-			log.Fatalf("Failed to listen and serve: %+v", err)
+			log.Println("Failed to listen and serve: %+v", err)
 		}
 	}()
 

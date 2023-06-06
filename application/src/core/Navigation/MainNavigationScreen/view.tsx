@@ -5,6 +5,7 @@ import { Navigator } from '@core/Navigator';
 import { FatalApiErrorModal } from '@components/common/modals/FatalApiErrorModal';
 import { __app__ } from '@core/MainActivity';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
+import GeolocationService from '@components/common/hoc/services/GeolocationService';
 
 export type mainNavigationPresenterProps = PropsWithChildren<{
   isAuth: boolean;
@@ -23,8 +24,11 @@ const MainNavigationPresenter: React.FC<mainNavigationPresenterProps> = ({}) => 
           </MainStack.Group>
         </MainStack.Navigator>
       )
-        :
-        <UserRouter Stack={MainStack} />}
+        : (
+          <GeolocationService>
+            <UserRouter Stack={MainStack} />
+          </GeolocationService>
+        )}
       <React.Fragment>
         <FatalApiErrorModal block={false} />
       </React.Fragment>

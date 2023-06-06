@@ -28,3 +28,81 @@ export const relationsList = [
   'Open',
   "I'd rather not say",
 ];
+
+export const InterestsList = [
+  {
+    id: 1,
+    label: '📷   Photography',
+    value: 1,
+  },
+  {
+    id: 2,
+    label: '🛍️    Shopping',
+    value: 2,
+  },
+  {
+    id: 3,
+    label: '🎙️    Karaoke',
+    value: 3,
+  },
+  {
+    id: 4,
+    label: '🧘‍♀️    Yoga',
+    value: 4,
+  },
+  {
+    id: 5,
+    label: '🍪    Cooking',
+    value: 5,
+  },
+  {
+    id: 6,
+    label: '🎾    Tennis',
+    value: 6,
+  },
+  {
+    id: 7,
+    label: '👟    Run',
+    value: 7,
+  },
+  {
+    id: 8,
+    label: '🏊    Swimming',
+    value: 8,
+  },
+  {
+    id: 9,
+    label: '🎨    Art',
+    value: 9,
+  },
+  {
+    id: 10,
+    label: '🌆    Traveling',
+    value: 10,
+  },
+  {
+    id: 11,
+    label: '🥾    Extreme',
+    value: 11,
+  },
+  {
+    id: 12,
+    label: '🎵    Music',
+    value: 12,
+  },
+  {
+    id: 13,
+    label: '🍹    Drink',
+    value: 13,
+  },
+  {
+    id: 14,
+    label: '🎮    Games',
+    value: 14,
+  },
+
+];
+
+export const firebase_base_url = (bucketId: string) => {
+  return `https://firebasestorage.googleapis.com/v0/b/findmeio.appspot.com/o/${bucketId}?alt=media`;
+};

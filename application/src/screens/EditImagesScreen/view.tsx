@@ -14,6 +14,7 @@ import {
   ImageCarouselModal,
   imageCarouselModalForward,
 } from '@components/common/modals/ImageCarouselModal';
+import { DefaultLoaderView } from '@components/loaders/DefaultLoaderView';
 
 export type editImagesScreenPresenterProps = {
   handleAddImage(): void;
@@ -21,11 +22,13 @@ export type editImagesScreenPresenterProps = {
   imagesUri: Array<string>;
   carouselModalRef: React.RefObject<imageCarouselModalForward>;
   openFullScreenCarousel(images: string): void;
+  handleOnSave(): Promise<void>;
+    loading: boolean;
 };
 
 const maxImagesLength = 10;
 
-const EditImagesScreenPresenter: React.FC<editImagesScreenPresenterProps> = ({ handleAddImage, imageList, imagesUri, carouselModalRef, openFullScreenCarousel }) => {
+const EditImagesScreenPresenter: React.FC<editImagesScreenPresenterProps> = ({ loading, handleAddImage, imageList, imagesUri, carouselModalRef, openFullScreenCarousel, handleOnSave }) => {
   return (
     <ScreenLayoutView
       useKeyboardAvoid={false}
@@ -66,15 +69,16 @@ const EditImagesScreenPresenter: React.FC<editImagesScreenPresenterProps> = ({ h
         </View>
         <View style={[Styles.MarginPadding.mt10]}>
           <PrimaryButtonView
-            disabled={false}
+            disabled={loading}
             styles={{
               outline: Styles.Button.primaryButton,
               text: Styles.Text.primaryButtonText,
               disabled: { backgroundColor: colors.redE9_50 },
             }}
             text="save"
-            onPress={() => {}}
+            onPress={handleOnSave}
           />
+          <DefaultLoaderView show={loading} color={colors.redE9} size={40} />
         </View>
       </ScrollView>
       <ImageCarouselModal

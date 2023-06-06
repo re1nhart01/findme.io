@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 	"internal/models"
 	"internal/pg_database"
 )
@@ -70,7 +71,7 @@ func (tai *TAIService) GetInterestsIds(interests []models.UserInterestsModel) []
 }
 func (tai *TAIService) RemoveAllInterests(userHash string) error {
 	model := &models.TagsModel{}
-	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_INTERESTS).Delete(&model).Where("user_hash_id = ?", userHash); res.Error != nil {
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_INTERESTS).Where("user_hash_id = ?", userHash).Delete(&model); res.Error != nil {
 		return errors.New("removeInterests ex")
 	}
 	return nil
@@ -81,8 +82,13 @@ func (tai *TAIService) AddInterests(interestsList []any, userHash string) error 
 	for _, v := range interestsList {
 		model = append(model, &models.UserInterestsModel{
 			UserHashId:  userHash,
-			InterestsId: v.(int),
+			InterestsId: int(v.(float64)),
 		})
+		fmt.Println(models.UserInterestsModel{
+			UserHashId:  userHash,
+			InterestsId: int(v.(float64)),
+		})
+
 	}
 	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_INTERESTS).Create(&model); res.RowsAffected != int64(len(model)) || res.Error != nil {
 		return errors.New("removeInterests ex")

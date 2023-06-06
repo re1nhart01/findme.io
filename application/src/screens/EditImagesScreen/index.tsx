@@ -3,6 +3,9 @@ import { EditImagesScreenPresenter, editImagesScreenPresenterProps } from '@scre
 import { Asset, launchImageLibrary } from 'react-native-image-picker';
 import { Alert } from 'react-native';
 import { imageCarouselModalForward } from '@components/common/modals/ImageCarouselModal';
+import { useSafeHTTP } from '@reacts/hooks/useSafeHTTP';
+import { RequestForge } from '@core/http/RequestForge';
+import { IRResponse } from '@core/http/Requester';
 
 export type editImagesScreenContainerProps = {};
 export type editImagesScreenContainerState = {
@@ -12,6 +15,7 @@ export type editImagesScreenContainerState = {
 const bytesInMegabyte = 1024 * 1024 * 10;
 
 const EditImagesScreenContainer: React.FC<editImagesScreenContainerProps> = ({}) => {
+  const { httpCaller, loading } = useSafeHTTP();
   const carouselModalRef = useRef<imageCarouselModalForward>(null);
   const [state, setState] = useState<editImagesScreenContainerState>({
     images: [],
@@ -84,6 +88,27 @@ const EditImagesScreenContainer: React.FC<editImagesScreenContainerProps> = ({})
     ]);
   }, [handleRemoveImage]);
 
+  const handleOnSave = useCallback(async () => {
+    const promises: Array<Promise<any>> = [];
+    if (state.images.length > 0) {
+      state.images.forEach((photo) => {
+        if (photo && photo?.uri !== '') {
+          promises.push(httpCaller(RequestForge.uploadPhotoCall, photo));
+        }
+      });
+      const response = await Promise.all(promises);
+      const ids = [];
+      for (const buckets of response) {
+        if (buckets && buckets.statusCode === 200) {
+          ids.push(buckets.data);
+        }
+      }
+      const attachResponse = await httpCaller(RequestForge.attachPhotoCall, ids);
+      if (attachResponse && attachResponse.statusCode !== 200) {
+      }
+    }
+  }, [httpCaller, state.images]);
+
   useEffect(() => {
     console.log(imagesUri);
   }, [imagesUri]);
@@ -94,6 +119,8 @@ const EditImagesScreenContainer: React.FC<editImagesScreenContainerProps> = ({})
     imagesUri,
     openFullScreenCarousel,
     carouselModalRef,
+    handleOnSave,
+    loading,
   };
 
   return (

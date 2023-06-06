@@ -58,8 +58,8 @@ const AnimatedTextInputView: React.FC<textInputViewProps> = ({
   });
   const inputRef = useRef<TextInput>(null);
   const timer = useRef<null | number>(null);
-  const translationValueX = useRef(new Animated.Value(0));
-  const translationValueY = useRef(new Animated.Value(0));
+  const translationValueX = useRef(new Animated.Value(defaultValue !== '' ? 20 : 0));
+  const translationValueY = useRef(new Animated.Value(defaultValue !== '' ? -30 : 0));
 
   const handleOnChange = useCallback((value: string) => {
     set({ ...get, searchValue: value });

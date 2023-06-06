@@ -128,7 +128,6 @@ const FormadjoForm = <T extends object>({
       }
       return !el;
     });
-
     return hasErrors || isEmpty;
   }, [state.errorNumberFields, state.formValues]);
 

@@ -45,7 +45,6 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
   if (!getState.visible) {
     return null;
   }
-  console.warn(images?.length , getState?.photos.length, getState?.photos)
   return (
     <Modal
       visible={getState.visible}

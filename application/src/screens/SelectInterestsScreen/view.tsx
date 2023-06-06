@@ -13,7 +13,7 @@ import { TextView } from '@components/TextView';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import { IInterestsFormTemplate, interestSelectTemplate } from '@utils/forms';
 import MultiplePickerView from '@components/common/pickers/MultiplePickerView';
-import { MOCK_INTERESTS } from '@utils/__remove__/mocks/tags_interests';
+import { InterestsList } from '@utils/constants/strings';
 
 export type selectInterestsScreenPresenterProps = {
   handleOnSave: FormadjoAsyncSubmitFn<IInterestsFormTemplate>;
@@ -51,7 +51,7 @@ const SelectInterestsScreenPresenter: React.FC<selectInterestsScreenPresenterPro
                   <MultiplePickerView
                     containerStyles={[Styles.MarginPadding.g10]}
                     activeValue={values.interests}
-                    items={MOCK_INTERESTS}
+                    items={InterestsList}
                     numOfColumns={2}
                     selectValue={(v) => { updateFormState('interests', v); }}
                     buttonStyles={[Styles.Container.pickerStyleContainer, Styles.Layout.w48pc]}

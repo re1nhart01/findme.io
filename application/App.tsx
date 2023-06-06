@@ -8,6 +8,7 @@ import { Styles } from '@styles/load';
 import { useTypedDispatch, useTypedSelector } from '@reacts/hooks/useRedux';
 import { globalActions } from '@redux/slices/global.slice';
 import { __app__ } from '@core/MainActivity';
+import GeolocationService from '@components/common/hoc/services/GeolocationService';
 
 function RootApplication(): JSX.Element {
   const rootDispatch = useTypedDispatch();
@@ -28,12 +29,12 @@ function RootApplication(): JSX.Element {
   }, [rootDispatch]);
 
   return (
-    <NavigationContainer ref={forceNavigator.navigation}>
-      <SafeAreaView style={Styles.Layout.flex1}>
-        <FindStatusBar />
-        <MainNavigationContainer />
-      </SafeAreaView>
-    </NavigationContainer>
+      <NavigationContainer ref={forceNavigator.navigation}>
+        <SafeAreaView style={Styles.Layout.flex1}>
+          <FindStatusBar />
+          <MainNavigationContainer />
+        </SafeAreaView>
+      </NavigationContainer>
   );
 }
 

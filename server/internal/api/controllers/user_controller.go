@@ -62,7 +62,7 @@ func (user *UserController) AttachPhotos(ctx *gin.Context) {
 	if err != nil {
 		return
 	}
-	err = user.AttachPhotoToUser(validated["bucket_id"].(string), userData["user_hash"].(string))
+	err = user.AttachPhotoToUser(validated["bucket_ids"].([]any), userData["user_hash"].(string))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Can not attach photo to user"))
 		return

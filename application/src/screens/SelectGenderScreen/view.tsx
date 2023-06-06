@@ -4,7 +4,7 @@ import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { colors } from '@utils/colors';
 import { Styles } from '@styles/load';
 import { MainHeaderView } from '@src/core/Headers/MainHeader';
-import { FormadjoAsyncSubmitFn, FormadjoForm } from '@core/Validators/FormadjoForm';
+import { FormadjoAsyncSubmitFn, FormadjoForm, FormadjoSubmitFn } from '@core/Validators/FormadjoForm';
 import CommonPickerView from '@components/common/pickers/CommonPickerView';
 import { IGenderFormTemplate, genderSelectTemplate } from '@utils/forms';
 import { gendersList } from '@utils/constants/strings';
@@ -14,12 +14,16 @@ import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import CheckMarkIcon from '@assets/svg/check-small.svg';
 import RightArrowIcon from '@assets/svg/right.svg';
 import { TextView } from '@components/TextView';
+import { IUserStorage } from '@reacts/hooks/useUserStorage';
+import { DefaultLoaderView } from '@components/loaders/DefaultLoaderView';
 
 export type selectGenderScreenPresenterProps = {
-  handleOnSave: FormadjoAsyncSubmitFn<IGenderFormTemplate>;
+  userState: IUserStorage;
+  handleOnSave: FormadjoSubmitFn<IGenderFormTemplate> | FormadjoAsyncSubmitFn<IGenderFormTemplate>;
+  loading: boolean;
 };
 
-const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = ({ handleOnSave }) => {
+const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = ({ handleOnSave, loading, userState: { user: { gender, looking_for } } }) => {
   return (
     <ScreenLayoutView
       backgroundColor={colors.whiteFF}
@@ -31,8 +35,8 @@ const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = 
       />
       <FormadjoForm<IGenderFormTemplate>
         initialProps={{
-          gender: '',
-          lookingForGender: '',
+          gender,
+          looking_for,
         }}
         removeErrorOnChange
         onFinishSubmit={handleOnSave}
@@ -70,8 +74,8 @@ const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = 
                 <View style={[Styles.MarginPadding.mb15, Styles.MarginPadding.mt20]}>
                   <CommonPickerView
                     containerStyles={[Styles.MarginPadding.g10]}
-                    activeValue={values.lookingForGender}
-                    selectValue={(value) => updateFormState('lookingForGender', value)}
+                    activeValue={values.looking_for}
+                    selectValue={(value) => updateFormState('looking_for', value)}
                     items={gendersList}
                     activeTextStyles={Styles.Text.smallText16White}
                     textStyles={Styles.Text.smallText14Black}
@@ -82,7 +86,7 @@ const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = 
                   />
                 </View>
                 <PrimaryButtonView
-                  disabled={isDisabled}
+                  disabled={loading || isDisabled}
                   onPress={onSubmit}
                   styles={{
                     outline: Styles.Button.primaryButton,
@@ -91,6 +95,7 @@ const SelectGenderScreenPresenter: React.FC<selectGenderScreenPresenterProps> = 
                   }}
                   text="continue"
                 />
+                <DefaultLoaderView show={loading} color={colors.redE9} size={30} />
               </View>
             );
           }

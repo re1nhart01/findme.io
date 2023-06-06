@@ -6,12 +6,14 @@ import (
 )
 
 var AttachPhotoDto = &dto.FieldsMapping{
-	"bucket_id": &dto.FieldDto{
-		Type:     "STRING",
-		Required: true,
-		Min:      5,
-		Max:      200,
-		Name:     "bucket_id",
+	"bucket_ids": &dto.FieldDto{
+		Type:      "ARRAY",
+		Required:  true,
+		Min:       5,
+		Max:       200,
+		MaxLength: 10,
+		MinLength: 1,
+		Name:      "bucket_id",
 	},
 }
 
@@ -39,8 +41,8 @@ var EditUserDto = &dto.FieldsMapping{
 	"birthday": &dto.FieldDto{
 		Type:         "STRING",
 		Required:     false,
-		Min:          12,
-		Max:          13,
+		Min:          1,
+		Max:          20,
 		DefaultValue: nil,
 		Name:         "birthday",
 	},

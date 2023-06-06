@@ -62,3 +62,10 @@ export function accessObjectField<T extends {[key: string]: any}>(obj: T, propPa
 
   return currentObj;
 }
+
+export function getAge(dateString: string | number): number {
+  const currentTime = new Date().getTime();
+  const birthDateTime = new Date(dateString).getTime();
+  const difference = (currentTime - birthDateTime);
+  return Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
+}
