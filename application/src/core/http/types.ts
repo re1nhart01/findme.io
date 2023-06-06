@@ -1,5 +1,6 @@
 // Register
 import { preferences, tokens, userData } from '@type/models/user';
+import {ITags} from "@type/models/tags";
 
 export type RegisterResponse = boolean;
 
@@ -62,4 +63,11 @@ export interface AttachPhotoRequest {
 
 export interface RemovePhotoRequest {
     buckets_ids: string[]
+}
+
+export type AddOrRemoveTagsResponse = {}
+
+export type AddOrRemoveTagsRequest = {
+    tag_list: ITags;
+    operation: 'add' | 'remove';
 }

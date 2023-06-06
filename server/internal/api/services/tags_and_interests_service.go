@@ -16,19 +16,15 @@ func (tai *TAIService) GetService() any {
 }
 
 func (tai *TAIService) AddTags(tagList []any, userHash string) error {
-	var tagModels []*models.TagsModel
+	var model []*models.TagsModel
 	for _, v := range tagList {
-		cast, ok := v.(string)
-		if !ok {
-			return errors.New("addTags ex")
-		}
-		model := &models.TagsModel{
-			UserHashId: userHash,
-			TagLabel:   cast,
-		}
-		tagModels = append(tagModels, model)
+		castedDict := v.(map[string]any)
+		model = append(model, &models.TagsModel{
+			UserHashId: castedDict["user_hash_id"].(string),
+			TagLabel:   castedDict["tag_label"].(string),
+		})
 	}
-	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Where("user_hash_id = ?", userHash).Create(&tagModels); res.Error != nil {
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Create(&model); res.Error != nil {
 		return res.Error
 	}
 	return nil
@@ -97,8 +93,15 @@ func (tai *TAIService) AddInterests(interestsList []any, userHash string) error 
 }
 
 func (tai *TAIService) RemoveTags(tagList []any, userHash string) error {
-	model := &models.TagsModel{}
-	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Where("user_hash_id = ? AND id IN ?", userHash, tagList).Delete(&model); res.RowsAffected != int64(len(tagList)) || res.Error != nil {
+	var model []*models.TagsModel
+	for _, v := range tagList {
+		castedDict := v.(map[string]any)
+		model = append(model, &models.TagsModel{
+			UserHashId: castedDict["user_hash_id"].(string),
+			TagLabel:   castedDict["tag_label"].(string),
+		})
+	}
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Where("user_hash_id = ?", userHash).Delete(&model); res.RowsAffected != int64(len(tagList)) || res.Error != nil {
 		return errors.New("addTags ex")
 	}
 	return nil

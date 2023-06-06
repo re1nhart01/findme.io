@@ -10,6 +10,7 @@ export const URL_PATH = {
   UPDATE_GEO: `/${USERS_ROUTE}/geolocation/update`,
   ME: `${USERS_ROUTE}/me`,
   INTERESTS_UPDATE: `/${INTERESTS_TAGS}/interests/update`,
+  TAGS_ADD_OR_REMOVE: `/${INTERESTS_TAGS}/tags/add-or-remove`,
   UPLOAD_PHOTO: `/${FILES}/add-image`,
   ATTACH_PHOTO: `/${USERS_ROUTE}/photos/attach`,
   REMOVE_PHOTO: `/${USERS_ROUTE}/photos/remove`,

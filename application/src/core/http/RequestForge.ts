@@ -1,5 +1,6 @@
 import { requester } from '@core/http/Requester';
 import {
+  AddOrRemoveTagsRequest, AddOrRemoveTagsResponse,
   AttachPhotoRequest,
   AttachPhotoResponse,
   HasPhoneOrEmailRequest,
@@ -10,7 +11,7 @@ import {
 } from '@core/http/types';
 import { URL_PATH } from '@core/http/url';
 import { Asset } from 'react-native-image-picker';
-import {editMoodRelationsForm, IEditMoodRelationsForm, IEditProfileForm, IGenderFormTemplate} from "@utils/forms";
+import { IEditMoodRelationsForm, IEditProfileForm, IGenderFormTemplate, editMoodRelationsForm } from '@utils/forms';
 
 type TupleUpdateFields = IEditProfileForm | IEditMoodRelationsForm | IGenderFormTemplate;
 
@@ -173,6 +174,21 @@ export class RequestForge {
         method: 'PATCH',
         retries: 0,
         url: URL_PATH.ME,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async addOrRemoveTags(body: AddOrRemoveTagsRequest) {
+    try {
+      return await requester<AddOrRemoveTagsRequest, AddOrRemoveTagsResponse>({
+        data: body,
+        method: 'POST',
+        retries: 0,
+        url: URL_PATH.TAGS_ADD_OR_REMOVE,
         withAccess: true,
       });
     } catch (e: unknown) {

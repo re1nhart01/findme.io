@@ -11,6 +11,7 @@ import TextPathView from '@components/TextPathView';
 import { PrimaryButtonView } from '@components/PrimaryButtonView';
 import { TextView } from '@components/TextView';
 import { ITags } from '@type/models/tags';
+import { IUserStorage } from '@reacts/hooks/useUserStorage';
 
 export type selectTagsScreenPresenterProps = {
   handleAddNewTag(v: string): void;
@@ -19,6 +20,7 @@ export type selectTagsScreenPresenterProps = {
   handleSaveTags(): void;
   storedTags: ITags;
   selectedTags: ITags;
+  userState: IUserStorage;
 };
 
 const SelectTagsScreenPresenter: React.FC<selectTagsScreenPresenterProps> = ({ handleAddNewTag, handleAddExistsTag, selectedTags, storedTags, removeFromSelected, handleSaveTags }) => {
@@ -60,7 +62,7 @@ const SelectTagsScreenPresenter: React.FC<selectTagsScreenPresenterProps> = ({ h
           loader={<View />}
           isLoading={false}
           horizontal
-          keyExtractor={(item) => `${item.value}`}
+          keyExtractor={(item) => `${item.id}`}
           items={selectedTags}
           wrapped
           scrollStyles={[Styles.MarginPadding.pt8]}
@@ -70,9 +72,9 @@ const SelectTagsScreenPresenter: React.FC<selectTagsScreenPresenterProps> = ({ h
               <TextPathView<typeof item>
                 containerStyle={Styles.Container.tagBody}
                 textStyle={Styles.Text.smallTextRedBold14}
-                text={`#${item.label}`}
+                text={`#${item.tag_label}`}
                 val={item}
-                onPress={() => removeFromSelected(item.value)}
+                onPress={() => removeFromSelected(item.tag_label)}
               />
             );
           }}

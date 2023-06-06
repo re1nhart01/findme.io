@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ITag, ITags } from '@type/models/tags';
+import {ApiTags, ITag, ITags} from '@type/models/tags';
 import { MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
 
 type IInitialState = {
@@ -15,7 +15,7 @@ type IInitialState = {
 
 const initialState: IInitialState = {
   selectedTags: [],
-  usedTags: [...MOCK_TAGS],
+  usedTags: [],
   isExists: false,
   isLoading: false,
   error: {
@@ -31,8 +31,8 @@ const tagsSlice = createSlice({
     addManyToSelected(state, action: PayloadAction<ITags>) {
       state.selectedTags = action.payload;
     },
-    addOrRemoveToSelected(state, action: PayloadAction<ITag>) {
-      const isAddedIndex = state.selectedTags.findIndex((tag) => tag.value === action.payload.value);
+    addOrRemoveToSelected(state, action: PayloadAction<ApiTags>) {
+      const isAddedIndex = state.selectedTags.findIndex((tag) => tag.tag_label === action.payload.tag_label);
       if (isAddedIndex !== -1) {
         state.selectedTags.splice(isAddedIndex, 1);
         return;
@@ -40,11 +40,11 @@ const tagsSlice = createSlice({
       state.selectedTags.push(action.payload);
     },
     removeFromSelected(state, action: PayloadAction<string | number>) {
-      const isAddedIndex = state.selectedTags.findIndex((tag) => tag.value === action.payload);
+      const isAddedIndex = state.selectedTags.findIndex((tag) => tag.tag_label === action.payload);
       if (isAddedIndex !== -1) state.selectedTags.splice(isAddedIndex, 1);
     },
     checkIsExists(state, action: PayloadAction<string | number>) {
-      state.isExists = state.selectedTags.findIndex((tag) => tag.value === action.payload) !== -1;
+      state.isExists = state.selectedTags.findIndex((tag) => tag.tag_label === action.payload) !== -1;
     },
     setExists(state, action: PayloadAction<boolean>) {
       state.isExists = action.payload;

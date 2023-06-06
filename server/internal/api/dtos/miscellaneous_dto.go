@@ -6,7 +6,7 @@ var AddOrRemoveDto = &dto.FieldsMapping{
 	"tag_list": &dto.FieldDto{
 		Type:      "ARRAY",
 		Required:  true,
-		Min:       4,
+		Min:       1,
 		Max:       500,
 		Name:      "tag_list",
 		MinLength: 1,

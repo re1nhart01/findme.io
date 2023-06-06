@@ -6,16 +6,15 @@ import {
 } from '@components/AnimatedTextInputView';
 import { Styles } from '@styles/load';
 import I18next from '@src/locale/i18next';
+import { ApiTags, ITags } from '@type/models/tags';
 
 export type typeOfOptions = {
-  label: string;
-  value: string | number;
   isService?: boolean;
-};
+} & ApiTags;
 
 type optionsInputViewProps = {
     inputProps: textInputViewProps;
-    list: Array<{label: string; value: string | number; isService?: boolean}>
+    list: ITags;
     onPressAdd(v: string): void;
     onPressExist(item: typeOfOptions): void;
 };
@@ -31,7 +30,10 @@ const OptionsInputView: React.FC<optionsInputViewProps> = ({ inputProps, list, o
     isFocused: false,
   });
   const listWithAddFunc = useMemo(() => ([
-    { label: I18next.t('❤️‍🔥 Add new Tag'), value: -1, isService: true },
+    { id: -1,
+      user_hash_id: '',
+      tag_label: 'Add new Tag',
+      isService: true },
     ...list,
   ]), [list]);
 
@@ -85,7 +87,7 @@ const OptionsInputView: React.FC<optionsInputViewProps> = ({ inputProps, list, o
             keyboardShouldPersistTaps="always"
             contentContainerStyle={Styles.Container.animatedInputContainer_cornerFull}
             data={listWithAddFunc}
-            keyExtractor={(item, index) => `INPUT_${item.label}_${index}`}
+            keyExtractor={(item, index) => `INPUT_${item.tag_label}_${index}`}
             renderItem={({ item, index }: { item: typeOfOptions; index: number }) => {
               return (
                 <TouchableOpacity
@@ -97,7 +99,7 @@ const OptionsInputView: React.FC<optionsInputViewProps> = ({ inputProps, list, o
                     Styles.Container.whiteF3Border1,
                     item?.isService ? Styles.Container.whiteF3BackgroundColor : Styles.Container.whiteFFBackgroundColor]}
                 >
-                  <Text style={[Styles.Text.textCenter, Styles.Text.smallTextBold18]}>{item.label}</Text>
+                  <Text style={[Styles.Text.textCenter, Styles.Text.smallTextBold18]}>{item.tag_label}</Text>
                 </TouchableOpacity>
               );
             }}
