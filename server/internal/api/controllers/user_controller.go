@@ -104,15 +104,42 @@ func (user *UserController) GetMe(ctx *gin.Context) {
 	}
 	userHash := userData["user_hash"].(string)
 	userModel, err := user.GetUserByUserHash(userHash)
+	userPreferences, prefErr := user.GetUserPreferences(userHash)
+	if err != nil || prefErr != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!_1"))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(map[string]any{
+		"user":        userModel,
+		"preferences": userPreferences,
+	}))
+}
+
+func (user *UserController) GetUsersList(ctx *gin.Context) {
+	err, _ := user.ManageToken(ctx)
+	if err != nil {
+		return
+	}
+	userModels, err := user.GetUsers()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!_1"))
 		return
 	}
-	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(userModel))
+	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(userModels))
 }
 
-func (user *UserController) GetUsersList(ctx *gin.Context) {
-
+func (user *UserController) GetPreferences(ctx *gin.Context) {
+	err, userData := user.ManageToken(ctx)
+	if err != nil {
+		return
+	}
+	userHash := userData["user_hash"].(string)
+	preferencesModel, err := user.GetUserPreferences(userHash)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!_1"))
+		return
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(preferencesModel))
 }
 
 func CreateUserController(basePath string) *UserController {

@@ -5,7 +5,7 @@ import "fmt"
 type UserInterestsModel struct {
 	Id          int    `json:"id"`
 	UserHashId  string `json:"user_hash_id,omitempty"`
-	InterestsId string `json:"interests_id"`
+	InterestsId int    `json:"interests_id"`
 }
 
 func (UserInterestsModel) TableName() string {

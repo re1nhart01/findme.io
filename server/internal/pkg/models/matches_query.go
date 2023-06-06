@@ -17,9 +17,16 @@ func GetMatches(matchType string) string {
 	AND NOT EXISTS (select * from matches as m2 where m.second_user_match = m2.first_user_match AND m2.operation = 'LIKE');`
 		break
 	case "dislikes":
-		mainQuery += ` AND m.operation = 'DISLIKE'
-	`
+		mainQuery += ` AND m.operation = 'DISLIKE' `
 		break
 	}
 	return mainQuery
+}
+
+func GetFavoritesList(userHash string) string {
+	return `
+	Select * from user_favorites 
+	LEFT JOIN (Select full_name, details, user_hash, lat, long, birthday from users) as user_query
+	ON user_query.user_hash = user_favorites.accessor 
+	where owner = ` + `'` + userHash + `'`
 }

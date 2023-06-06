@@ -16,6 +16,7 @@ func CreateFavoritesTable() string {
 	return fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
 id SERIAL PRIMARY KEY,
 owner VARCHAR(500) NOT NULL REFERENCES %s(user_hash) ON DELETE CASCADE,
-accessor VARCHAR(500) NOT NULL REFERENCES %s(user_hash) ON DELETE CASCADE
+accessor VARCHAR(500) NOT NULL REFERENCES %s(user_hash) ON DELETE CASCADE,
+	UNIQUE(owner, accessor)
 )`, USER_FAVORITES, USERS, USERS)
 }

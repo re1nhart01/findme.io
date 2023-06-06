@@ -33,6 +33,25 @@ func (user *UserService) UpdateFields(userHash string, fields map[string]any) er
 	return nil
 }
 
+func (user *UserService) GetUserPreferences(userHash string) (*models.UserPreferenceModel, error) {
+	var model *models.UserPreferenceModel
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_PREFERENCES).Where("user_hash_id = ?", userHash).First(&model); res.Error != nil {
+		return &models.UserPreferenceModel{}, res.Error
+	}
+	return model, nil
+}
+
+func (user *UserService) GetUsers() ([]*models.UserModel, error) {
+	var model []*models.UserModel
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Joins(`
+					LEFT JOIN (SELECT user_hash_id, storage_bucket_id from user_photos LIMIT 1) as photo_query
+					ON photo_query.user_hash_id = users.user_hash
+`).Scan(&model); res.Error != nil {
+		return []*models.UserModel{}, res.Error
+	}
+	return model, nil
+}
+
 func (user *UserService) GetUserByUserHash(userHash string) (*models.UserModelFull, error) {
 	var model models.UserModelFull
 	if getUserRes := pg_database.GetDatabaseInstance().

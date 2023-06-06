@@ -33,6 +33,26 @@ func (tai *TAIService) AddTags(tagList []any, userHash string) error {
 	return nil
 }
 
+func (tai *TAIService) GetLikeTags(query string) ([]*models.TagsModel, error) {
+	var model []*models.TagsModel
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.TAGS).Where("tag_label LIKE %?%", query).Scan(&model); res.Error != nil {
+		return []*models.TagsModel{}, res.Error
+	}
+	return model, nil
+}
+
+func (tai *TAIService) UpdateUserInterests(userHash string, interestsList []any) error {
+	removeErr := tai.RemoveAllInterests(userHash)
+	if removeErr != nil {
+		return removeErr
+	}
+	addErr := tai.AddInterests(interestsList, userHash)
+	if addErr != nil {
+		return addErr
+	}
+	return nil
+}
+
 func (tai *TAIService) GetTagsIds(tags []models.TagsModel) []int {
 	var result []int
 	for _, v := range tags {
@@ -47,6 +67,27 @@ func (tai *TAIService) GetInterestsIds(interests []models.UserInterestsModel) []
 		result = append(result, v.Id)
 	}
 	return result
+}
+func (tai *TAIService) RemoveAllInterests(userHash string) error {
+	model := &models.TagsModel{}
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_INTERESTS).Delete(&model).Where("user_hash_id = ?", userHash); res.Error != nil {
+		return errors.New("removeInterests ex")
+	}
+	return nil
+}
+
+func (tai *TAIService) AddInterests(interestsList []any, userHash string) error {
+	model := []*models.UserInterestsModel{}
+	for _, v := range interestsList {
+		model = append(model, &models.UserInterestsModel{
+			UserHashId:  userHash,
+			InterestsId: v.(int),
+		})
+	}
+	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USER_INTERESTS).Create(&model); res.RowsAffected != int64(len(model)) || res.Error != nil {
+		return errors.New("removeInterests ex")
+	}
+	return nil
 }
 
 func (tai *TAIService) RemoveTags(tagList []any, userHash string) error {

@@ -18,20 +18,13 @@ type CoordResponse struct {
 	State     string  `json:"state"`
 }
 
-func GetCoordsByCityAndCountry(city, country string) *CoordResponse {
+func GetCoordsByCityAndCountry(emptyModel *CoordResponse, city, country string) *CoordResponse {
 	apiKey := env.ReadEnv("GEOCODE_API_KEY")
 	apiURL := env.ReadEnv("GEOCODE_COORDS_LINK")
-	emptyModel := &CoordResponse{
-		Name:      city,
-		Latitude:  48.6223732,
-		Longitude: 22.3022569,
-		Country:   country,
-		State:     "Unknown",
-	}
 	if apiKey == "" || apiURL == "" {
 		return emptyModel
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 	client := &http.Client{}
 	req, err := http.NewRequestWithContext(ctx, "GET", fmt.Sprintf(apiURL, city, country), nil)

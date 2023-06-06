@@ -1,6 +1,6 @@
 import { ISliceBaseModel } from '@type/models/index';
-import { ITags } from '@type/models/tags';
-import { IInterests } from '@type/models/interests';
+import { ApiTags, ITags } from '@type/models/tags';
+import { ApiInterests, IInterests } from '@type/models/interests';
 
 export type IUserDiscoverType = 'mutually' | 'incoming';
 export interface IUserRegisterSlice extends ISliceBaseModel {
@@ -43,4 +43,43 @@ export interface IUserDiscoverModelFull extends IUserDiscoverModelShort {
   city: string;
   phone: string;
   country: string;
+}
+
+// currentUser
+export type userData = Required<{
+  id: number;
+  user_hash: string;
+  full_name: string;
+  birthday: string;
+  details: string;
+  gender: string;
+  looking_for: string;
+  email: string;
+  mood: string;
+  relations: string;
+  active: boolean;
+  city: string;
+  country: string;
+  phone: string;
+  lat: number;
+  long: number;
+  interests: ApiTags[] | null;
+  tags: ApiInterests[] | null;
+  photos: string[] | null;
+}>;
+
+export interface preferences {
+  id: number;
+  user_hash_id: string;
+  theme: boolean;
+  lang: string;
+  muted: boolean;
+  emergency_alert: boolean;
+  notification_token: string;
+}
+
+export type tokens = {
+  access_token: string;
+  refresh_token: string;
+  expiration_time: number;
 }

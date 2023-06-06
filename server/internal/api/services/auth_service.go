@@ -47,7 +47,14 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 	serverHash := env.ReadEnv("SERVER_HASH")
 	userSalt := fmt.Sprintf("%s:%s:%s:%d", email, fullName, country, birthday.UnixMicro())
 	userHash := cryptography.GetSha1(serverHash, userSalt)
-	coords := external.GetCoordsByCityAndCountry(city, country)
+	emptyModel := &external.CoordResponse{
+		Name:      city,
+		Latitude:  48.6223732,
+		Longitude: 22.3022569,
+		Country:   country,
+		State:     "Unknown",
+	}
+	coords := external.GetCoordsByCityAndCountry(emptyModel, city, country)
 	emptyUserModel := models.UserModel{
 		UserHash:  userHash,
 		FullName:  fullName,

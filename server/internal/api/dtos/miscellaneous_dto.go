@@ -20,3 +20,13 @@ var AddOrRemoveDto = &dto.FieldsMapping{
 		Name:     "operation",
 	},
 }
+
+var UpdateInterestsDto = &dto.FieldsMapping{
+	"interests_list": &dto.FieldDto{
+		Type:      "ARRAY",
+		Required:  true,
+		Name:      "interests_list",
+		MaxLength: 10,
+		MinLength: 0,
+	},
+}

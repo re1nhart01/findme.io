@@ -6,6 +6,8 @@ replace pkg/dto => ./../../../pkg/dto
 
 replace pkg/utils => ./../../../pkg/utils
 
+replace internal/models => ./../../pkg/models
+
 require pkg/dto v0.0.0-00010101000000-000000000000
 
 require (

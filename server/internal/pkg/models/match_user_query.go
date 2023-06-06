@@ -27,7 +27,7 @@ select calculate_distance(%f, %f, users.lat, users.long, 'KM'), user_hash, full_
 	NOT EXISTS (select * from matches as m2 where users.user_hash = m2.first_user_match OR users.user_hash = m2.second_user_match) AND
 	(CASE WHEN %t THEN calculate_distance(%f, %f, users.lat, users.long, 'KM') > %d ELSE true END) 
 	AND
-		(CASE WHEN %t THEN birthday = (CURRENT_DATE - interval '%d years') OR birthday = (CURRENT_DATE + interval '%d years') ELSE true END) AND
+		(CASE WHEN %t THEN birthday < (CURRENT_DATE - interval '%d years') OR birthday > (CURRENT_DATE + interval '%d years') ELSE true END) AND
 		(CASE WHEN %t THEN gender = '%s' ELSE true END)
 
 `, lat, long, flags["by_coords"], lat, long, distance, flags["by_birthday"], years, years, flags["by_gender"], gender)

@@ -1,66 +1,73 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-type userData = Required<{
-  username: string;
-  user_hash: string;
-  avatar: string;
-  fullName: string;
-  birth: string;
-  details: string;
-  gender: string;
-  email: string;
-  mood_id: string;
-  active: boolean;
-  popularity: number;
-  city: string;
-  country: string;
-}>;
-
-export type tokens = {
-  access_token: string;
-  refresh_token: string;
-  expiration_time: number;
-}
+import { preferences, tokens, userData } from '@type/models/user';
 
 export enum storageKeys {
-  UserData = 'userData',
+  UserData = 'UserData',
   Tokens = 'Tokens',
+  Preferences = 'Preferences',
 }
 
-export class CurrentUser {
-  get tokens(): tokens {
-    return this._tokens;
-  }
+const emptyUser = {
+  active: false,
+  birthday: '',
+  city: '',
+  country: '',
+  details: '',
+  email: '',
+  full_name: '',
+  gender: '',
+  id: 0,
+  interests: null,
+  lat: 0,
+  long: 0,
+  looking_for: '',
+  mood: '',
+  phone: '',
+  photos: null,
+  relations: '',
+  tags: null,
+  user_hash: '',
+};
 
+const emptyTokens = {
+  access_token: '',
+  refresh_token: '',
+  expiration_time: 0,
+};
+
+const emptyPreferences = {
+  emergency_alert: false,
+  id: 0,
+  lang: '',
+  muted: false,
+  notification_token: '',
+  theme: false,
+  user_hash_id: '',
+};
+
+export class CurrentUser {
   private _userData: userData;
+
+  private _preferences: preferences;
 
   private _tokens: tokens;
 
   constructor() {
-    this._userData = {
-      username: '',
-      user_hash: '',
-      avatar: '',
-      fullName: '',
-      birth: '',
-      details: '',
-      gender: '',
-      email: '',
-      mood_id: '',
-      active: false,
-      popularity: -1,
-      city: '',
-      country: '',
-    };
-    this._tokens = {
-      access_token: '',
-      refresh_token: '',
-      expiration_time: 0,
-    };
+    this._userData = emptyUser;
+    this._preferences = emptyPreferences;
+    this._tokens = emptyTokens;
   }
 
   public get userData(): userData {
     return this._userData;
+  }
+
+  public get preferences(): preferences {
+    return this._preferences;
+  }
+
+  public get tokens(): tokens {
+    return this._tokens;
   }
 
   public get isAuth(): boolean {
@@ -70,27 +77,19 @@ export class CurrentUser {
   public async restoreUser() {
     try {
       const data = await AsyncStorage.getItem(storageKeys.UserData);
-      if (data !== void 0 && data !== null) {
+      if (typeof data === 'string') {
         const parsedData = JSON.parse(data);
-        this._userData.user_hash = parsedData.userColor;
-        this._userData.active = parsedData.active;
-        this._userData.avatar = parsedData.avatar;
-        this._userData.city = parsedData.city;
-        this._userData.country = parsedData.country;
-        this._userData.email = parsedData.email;
-        this._userData.birth = parsedData.birth;
-        this._userData.gender = parsedData.gender;
-        this._userData.mood_id = parsedData.mood_id;
-        this._userData.popularity = parsedData.popularity;
-        this._userData.fullName = parsedData.fullName;
-        this._userData.username = parsedData.username;
+        this._userData = parsedData;
       }
       const tokens = await AsyncStorage.getItem(storageKeys.Tokens);
-      if (tokens !== void 0 && tokens !== null) {
+      if (typeof tokens === 'string') {
         const parsedTokens = JSON.parse(tokens);
-        this._tokens.expiration_time = parsedTokens.expiration_time;
-        this._tokens.access_token = parsedTokens.access_token;
-        this._tokens.refresh_token = parsedTokens.refresh_token;
+        this._tokens = parsedTokens;
+      }
+      const preferences = await AsyncStorage.getItem(storageKeys.Preferences);
+      if (typeof preferences === 'string') {
+        const parsedPreferences = JSON.parse(preferences);
+        this._preferences = parsedPreferences;
       }
     } catch (ex) {
       console.warn('restore user ex', ex);
@@ -99,26 +98,9 @@ export class CurrentUser {
 
   public async logOut() {
     try {
-      this._userData = {
-        username: '',
-        user_hash: '',
-        avatar: '',
-        fullName: '',
-        birth: '',
-        details: '',
-        gender: '',
-        email: '',
-        mood_id: '',
-        active: false,
-        popularity: -1,
-        city: '',
-        country: '',
-      };
-      this._tokens = {
-        refresh_token: '',
-        access_token: '',
-        expiration_time: 0,
-      };
+      this._userData = emptyUser;
+      this._tokens = emptyTokens;
+      this._preferences = emptyPreferences;
       await this.saveUser();
     } catch (ex) {
       console.warn('log out ex', ex);
@@ -133,6 +115,17 @@ export class CurrentUser {
       }
     } catch (e) {
       console.warn('save tokens ex', e);
+    }
+  }
+
+  public async updateUser(data: userData) {
+    try {
+      if (data.user_hash === '') {
+        return;
+      }
+      this._userData = data;
+    } catch (e) {
+      console.warn('save user ex', e);
     }
   }
 
