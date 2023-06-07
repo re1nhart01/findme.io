@@ -1,5 +1,5 @@
 // Register
-import { IUserDiscoverModelShort, preferences, tokens, userData } from '@type/models/user';
+import {IUserDiscoverModelShort, preferences, tokens, userData, UserMatchesListItem} from '@type/models/user';
 import { ITags } from '@type/models/tags';
 import { MatchesFiltering } from '@type/defaults';
 
@@ -89,3 +89,11 @@ export type SwipeRequest = {
    operation: 'LIKE' | 'DISLIKE'
 };
 export type SwipeResponse = {}
+
+// lists of matches
+
+export type MatchesListRequest = {
+    type: 'mutual' | 'incoming' | 'dislikes';
+};
+export type MatchesListResponse = Array<UserMatchesListItem>
+

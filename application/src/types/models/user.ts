@@ -2,7 +2,7 @@ import { ISliceBaseModel } from '@type/models/index';
 import { ApiTags, ITags } from '@type/models/tags';
 import { ApiInterests, IInterests } from '@type/models/interests';
 
-export type IUserDiscoverType = 'mutually' | 'incoming';
+export type IUserDiscoverType = 'mutual' | 'incoming' | 'dislikes';
 export interface IUserRegisterSlice extends ISliceBaseModel {
   email: string;
   phone: string;
@@ -21,26 +21,20 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   gender: string;
 }
 
-interface MyObject {
-  id: number;
-  user_hash: string;
-  full_name: string;
-  birthday: string;
-  details: string;
-  gender: string;
-  looking_for: string;
-  password: string;
-  email: string;
-  mood: string;
-  relations: string;
-  active: boolean;
-  city: string;
-  country: string;
-  phone: string;
-  lat: number;
-  long: number;
-  created_at: string;
-  storage_bucket_id?: string;
+export interface UserMatchesListItem {
+  'id': number;
+  'user_hash': string;
+  'first_user_match': string;
+  'second_user_match': string;
+  'operation': string;
+  'ttl': string;
+  'full_name': string;
+  'details': string;
+  'lat': number;
+  'long': number;
+  'birthday': string
+  'storage_bucket_id': string;
+  'photos': string[] | null;
 }
 
 export interface IUserDiscoverModelShort {

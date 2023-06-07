@@ -30,10 +30,11 @@ const DiscoverScreenPresenter: React.FC<discoverScreenPresenterProps> = ({}) => 
           buttonTextStyles={[Styles.Text.smallTextBold18, { width: DEVICE_WIDTH / 2 }, Styles.Text.textCenter, Styles.MarginPadding.pb4]}
           containerButtonStyles={[Styles.Layout.w100, Styles.Layout.jc_sa, Styles.MarginPadding.g32, Styles.MarginPadding.mt20]}
           defaultIndex={0}
-          labelList={['Mutually', 'Incoming']}
+          labelList={['Mutually', 'Incoming', 'Dislikes']}
           componentList={[
-            <MatchesListView type="mutually" />,
+            <MatchesListView type="mutual" />,
             <MatchesListView type="incoming" />,
+            <MatchesListView type="dislikes" />,
           ]}
         />
       </View>

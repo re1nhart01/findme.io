@@ -18,4 +18,5 @@ export const URL_PATH = {
   USERS_LIST: `/${USERS_ROUTE}/list`,
   MATCHES_SWIPES: `/${MATCHES}/get-users`,
   MATCH_SWIPE: `/${MATCHES}/match`,
+  MATCH_LISTS: `/${MATCHES}/get`,
 };

@@ -5,7 +5,7 @@ import {
   AttachPhotoResponse, GetMatchesRequest, GetMatchesResponse, GetUserRequest, GetUserResponse,
   HasPhoneOrEmailRequest,
   HasPhoneOrEmailResponse,
-  LoginRequest, LoginResponse, MeRequest, MeResponse,
+  LoginRequest, LoginResponse, MatchesListRequest, MatchesListResponse, MeRequest, MeResponse,
   RegisterRequest,
   RegisterResponse, RemovePhotoRequest, SwipeRequest, SwipeResponse, UpInterestsRequest, UpInterestsResponse,
 } from '@core/http/types';
@@ -248,6 +248,58 @@ export class RequestForge {
       return await requester<SwipeRequest, SwipeResponse>({
         data: body,
         method: 'POST',
+        retries: 0,
+        url: URL_PATH.MATCH_SWIPE,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async getLists(type: 'mutual' | 'incoming' | 'dislikes') {
+    try {
+      const body = {
+        type,
+      };
+      return await requester<MatchesListRequest, MatchesListResponse>({
+        data: body,
+        method: 'POST',
+        retries: 0,
+        url: URL_PATH.MATCH_LISTS,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async removeMatchItem(user_hash_refer: string) {
+    try {
+      const body: SwipeRequest = {
+        user_hash_refer,
+        operation: 'LIKE',
+      };
+      return await requester<SwipeRequest, SwipeResponse>({
+        data: body,
+        method: 'DELETE',
+        retries: 0,
+        url: URL_PATH.MATCH_SWIPE,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async updateMatchItem(body: SwipeRequest) {
+    try {
+      return await requester<SwipeRequest, SwipeResponse>({
+        data: body,
+        method: 'PATCH',
         retries: 0,
         url: URL_PATH.MATCH_SWIPE,
         withAccess: true,
