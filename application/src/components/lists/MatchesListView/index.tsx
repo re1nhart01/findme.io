@@ -1,7 +1,7 @@
 import { IUserDiscoverModelShort, IUserDiscoverType, UserMatchesListItem } from '@type/models/user';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { userSectionShort } from '@utils/__remove__/mocks/usermodel';
-import { RefreshControl, SectionList, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, SectionList, Text, View } from 'react-native';
 import { MatchesItemView } from '@components/list-items/MatchesItemView';
 import { renderColumnsInSection } from '@screens/DiscoverScreen/utils';
 import { Styles } from '@styles/load';
@@ -64,25 +64,27 @@ const MatchesListView: React.FC<matchesListViewProps> = ({ type }) => {
 
   if (items.length === 0) {
     return (
-      <View
-        style={[Styles.Layout.w100,
-          Styles.Layout.h150,
-          Styles.MarginPadding.mt20,
-          Styles.Layout.flexCenter,
-          Styles.Layout.borderR15,
-          Styles.Layout.flexCol,
-          Styles.MarginPadding.pl16]}
-      >
-        <TextView styles={[Styles.Text.redHeader, Styles.Text.textCenter]} text="Oops" />
-        <TextView styles={[Styles.Text.smallTextBold18, Styles.Text.textCenter]} text="Items not found" />
-      </View>
+      <ScrollView refreshControl={<RefreshControl refreshing={false} onRefresh={fetchList} />}>
+        <View
+          style={[Styles.Layout.w100,
+            Styles.Layout.h150,
+            Styles.MarginPadding.mt20,
+            Styles.Layout.flexCenter,
+            Styles.Layout.borderR15,
+            Styles.Layout.flexCol,
+            Styles.MarginPadding.pl16]}
+        >
+          <TextView styles={[Styles.Text.redHeader, Styles.Text.textCenter]} text="Oops" />
+          <TextView styles={[Styles.Text.smallTextBold18, Styles.Text.textCenter]} text="Items not found" />
+        </View>
+      </ScrollView>
     );
   }
 
   return (
     <SectionList
       refreshControl={<RefreshControl refreshing={false} onRefresh={fetchList} />}
-      contentContainerStyle={[Styles.MarginPadding.pb100, Styles.Layout.wh100_pc]}
+      contentContainerStyle={[Styles.MarginPadding.pb100, Styles.Layout.wh100_pc, Styles.Layout.h600]}
       sections={items}
       renderSectionHeader={({ section: { title } }) => (
         <View style={[Styles.Layout.w100, Styles.Layout.flexCenter, Styles.MarginPadding.mt20, Styles.MarginPadding.mb10]}>

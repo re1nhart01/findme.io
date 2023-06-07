@@ -47,7 +47,7 @@ const emptyPreferences = {
 
 export class CurrentUser {
   private _userData: userData;
-
+  private _notificationToken: string;
   private _preferences: preferences;
 
   private _tokens: tokens;
@@ -56,6 +56,7 @@ export class CurrentUser {
     this._userData = emptyUser;
     this._preferences = emptyPreferences;
     this._tokens = emptyTokens;
+    this._notificationToken = '';
   }
 
   public get userData(): userData {
@@ -94,6 +95,14 @@ export class CurrentUser {
     } catch (ex) {
       console.warn('restore user ex', ex);
     }
+  }
+
+  public get notificationToken(): string {
+    return this._notificationToken;
+  }
+
+  public set notificationToken(value: string) {
+    this._notificationToken = value;
   }
 
   public async logOut() {

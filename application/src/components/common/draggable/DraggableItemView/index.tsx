@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -14,6 +14,9 @@ import { StepDotsView } from '@components/StepDotsView';
 import { Styles } from '@src/styles/load';
 import { IUserDiscoverModelShort } from '@type/models/user';
 import { panAndSkewAnimation } from '@utils/helpers';
+import { useSafeHTTP } from '@reacts/hooks/useSafeHTTP';
+import { RequestForge } from '@core/http/RequestForge';
+import {firebase_base_url} from "@utils/constants/strings";
 
 type draggableItemViewProps = {
   index: number;
@@ -22,17 +25,38 @@ type draggableItemViewProps = {
 };
 type draggableItemViewState = {
   activeImage: number;
+  photos: string[],
 };
 
 const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model, handleSwipePress }) => {
   const [getState, setState] = useState<draggableItemViewState>({
     activeImage: 0,
+    photos: [],
   });
+  const { httpCaller } = useSafeHTTP();
   const pan = useRef(new Animated.ValueXY({ x: wDP(0), y: 0 })).current;
   const skewValue = useRef(new Animated.Value(0)).current;
   const calculatedDistance = useMemo(() => {
     return Math.round(Math.random() * 10);
   }, []);
+
+  const fetchPhotos = useCallback(async () => {
+    const response = await httpCaller(RequestForge.getPhotos, model.user_hash);
+    if (response && response?.data) {
+      setState({ ...getState, photos: response.data });
+    }
+  }, [getState, httpCaller, model.user_hash]);
+
+  useEffect(() => {
+    fetchPhotos().then();
+  }, []);
+
+  const getURI = (photo_bucket: string) => {
+    if (photo_bucket) {
+      return { uri: `${firebase_base_url(photo_bucket)}` };
+    }
+    return require('@assets/img/photo.png');
+  };
 
   const panResponder = useRef(
     PanResponder.create({
@@ -90,7 +114,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model, han
           Styles.Layout.h480,
           Styles.Layout.cover,
         ]}
-        source={require('@assets/img/girl1.png')}
+        source={getURI(item)}
       />
     );
   };
@@ -118,7 +142,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model, han
           <UserDistanceView distance={`${calculatedDistance} km`} />
         </View>
         <View style={Styles.Container.dotsLayout}>
-          <StepDotsView activeIndex={getState.activeImage} count={model.photos?.length || 0} />
+          <StepDotsView activeIndex={getState.activeImage} count={getState.photos?.length || 0} />
         </View>
         <View style={[Styles.Container.discoverCardInfo, Styles.MarginPadding.ph15]}>
           <Text numberOfLines={2} style={Styles.Text.mediumText24White}>
@@ -132,7 +156,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model, han
         <View>
           <FlatList
             onScroll={handleOnScroll}
-            data={model.photos || []}
+            data={getState.photos.length <= 0 ? [null] : getState.photos}
             renderItem={renderImageList}
             keyExtractor={(item, index) => `${item}${index}`}
             disableScrollViewPanResponder

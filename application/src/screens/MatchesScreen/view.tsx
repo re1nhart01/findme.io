@@ -21,6 +21,7 @@ export type matchesScreenPresenterProps = {
   setFilterState: React.Dispatch<React.SetStateAction<MatchesFiltering>>
   handleOnSave(): void;
   matchesList: IUserDiscoverModelShort[];
+  fetchMatches: () => Promise<void>;
 };
 
 const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({
@@ -30,6 +31,7 @@ const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({
   filterState,
   setFilterState,
   handleOnSave,
+  fetchMatches,
   matchesList }) => {
   return (
     <ScreenLayoutView
@@ -39,6 +41,7 @@ const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({
     >
       <View style={Styles.Container.screenLayout}>
         <MainHeaderView
+          onTouchCenter={() => fetchMatches}
           LeftButton={{ hide: true }}
           headerText="discover"
           subHeaderText="press_to_refresh"

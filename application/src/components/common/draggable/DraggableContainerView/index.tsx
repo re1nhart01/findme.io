@@ -21,12 +21,13 @@ const DraggableContainerView: React.FC<draggableContainerViewProps> = ({ matches
     }
     return matchesList.map((user, index) => {
       return (
-        <DraggableItemView
-          key={user.user_hash}
-          model={user}
-          index={index}
-          handleSwipePress={handleSwipePress}
-        />
+        <React.Fragment key={user.user_hash}>
+          <DraggableItemView
+            model={user}
+            index={index}
+            handleSwipePress={handleSwipePress}
+          />
+        </React.Fragment>
       );
     });
   };

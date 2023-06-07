@@ -309,4 +309,34 @@ export class RequestForge {
       return null;
     }
   }
+
+  public static async getPhotos(user_refer: string) {
+    try {
+      return await requester<void, string[]>({
+        data: undefined,
+        method: 'GET',
+        retries: 0,
+        url: `${URL_PATH.PHOTOS}?user_refer=${user_refer}`,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async updatePushToken(token: string) {
+    try {
+      return await requester<{ notification_token: string }, void>({
+        data: { notification_token: token },
+        method: 'PATCH',
+        retries: 0,
+        url: URL_PATH.SETTINGS,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
 }

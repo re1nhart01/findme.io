@@ -32,5 +32,6 @@ func UserRouter(engine *gin.Engine, controller IUserController) {
 		router.POST("/photos/attach", controller.AttachPhotos)
 		router.DELETE("/photos/remove", controller.RemovePhotos)
 		router.POST("/geolocation/update", controller.UpdateGeolocation)
+		router.GET("/photos", controller.GetUserPhoto)
 	}
 }

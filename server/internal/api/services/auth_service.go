@@ -54,7 +54,7 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 		Country:   country,
 		State:     "Unknown",
 	}
-	coords := external.GetCoordsByCityAndCountry(emptyModel, city, country)
+	//coords := external.GetCoordsByCityAndCountry(emptyModel, city, country)
 	emptyUserModel := models.UserModel{
 		UserHash:  userHash,
 		FullName:  fullName,
@@ -69,8 +69,8 @@ func (auth *AuthService) CreateInitialUser(email, phone, fullName, password, cou
 		Mood:      "Here to date",
 		Gender:    "Male",
 		CreatedAt: time.Now(),
-		Lat:       coords.Latitude,
-		Long:      coords.Longitude,
+		Lat:       emptyModel.Latitude,
+		Long:      emptyModel.Longitude,
 	}
 	result := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Create(&emptyUserModel)
 	return userHash, result.Error

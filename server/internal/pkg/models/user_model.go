@@ -20,25 +20,24 @@ type UserDiscoverModelShort struct {
 }
 
 type UserModel struct {
-	Id              int       `json:"id"`
-	UserHash        string    `json:"user_hash"`
-	FullName        string    `json:"full_name"`
-	Birthday        time.Time `json:"birthday"`
-	Details         string    `json:"details"`
-	Gender          string    `json:"gender"`
-	LookingFor      string    `json:"looking_for"`
-	Password        string    `json:"password,omitempty"`
-	Email           string    `json:"email"`
-	Mood            string    `json:"mood"`
-	Relations       string    `json:"relations"`
-	Active          bool      `json:"active"`
-	City            string    `json:"city"`
-	Country         string    `json:"country"`
-	Phone           string    `json:"phone"`
-	Lat             float64   `json:"lat"`
-	Long            float64   `json:"long"`
-	CreatedAt       time.Time `json:"created_at"`
-	StorageBucketId string    `json:"storage_bucket_id,omitempty"`
+	Id         int       `json:"id"`
+	UserHash   string    `json:"user_hash"`
+	FullName   string    `json:"full_name"`
+	Birthday   time.Time `json:"birthday"`
+	Details    string    `json:"details"`
+	Gender     string    `json:"gender"`
+	LookingFor string    `json:"looking_for"`
+	Password   string    `json:"password,omitempty"`
+	Email      string    `json:"email"`
+	Mood       string    `json:"mood"`
+	Relations  string    `json:"relations"`
+	Active     bool      `json:"active"`
+	City       string    `json:"city"`
+	Country    string    `json:"country"`
+	Phone      string    `json:"phone"`
+	Lat        float64   `json:"lat"`
+	Long       float64   `json:"long"`
+	CreatedAt  time.Time `json:"created_at"`
 }
 
 type UserModelFull struct {

@@ -58,7 +58,7 @@ const FilterMatchModal = forwardRef<calendarModalForward, filterMatchModalProps>
       transparent
     >
       <TouchableOpacity onPress={onClose} style={{ position: 'absolute', width: DEVICE_WIDTH, height: DEVICE_HEIGHT, backgroundColor: colors.black00_40 }}>
-        <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ width: DEVICE_WIDTH, height: 600, backgroundColor: colors.whiteFF, borderWidth: 1, borderColor: colors.grayE8, position: 'absolute', bottom: 0 }}>
+        <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ width: DEVICE_WIDTH, height: 450, backgroundColor: colors.whiteFF, borderWidth: 1, borderColor: colors.grayE8, position: 'absolute', bottom: 0 }}>
           <View>
             <MainHeaderView
               headerText="Filtering"
@@ -138,29 +138,29 @@ const FilterMatchModal = forwardRef<calendarModalForward, filterMatchModalProps>
               }}
               text="Check by relations"
             />
-            <TextView text="Check by distance" styles={[Styles.Text.smallText13Black, Styles.MarginPadding.mb10, Styles.MarginPadding.mt10]} />
-            <Slider
-              startFromZero
-              value={distance}
-              animateTransitions
-              maximumTrackTintColor="#d3d3d3"
-              maximumValue={10000}
-              minimumTrackTintColor="#1fb28a"
-              minimumValue={10}
-              step={2}
-              thumbTintColor="#1a9274"
-            />
-            <Text>{distance}</Text>
-            <TextView text="Check by years" styles={[Styles.Text.smallText13Black, Styles.MarginPadding.mb10, Styles.MarginPadding.mt10]} />
-            <Slider
-              animateTransitions
-              maximumTrackTintColor="#d3d3d3"
-              maximumValue={20}
-              minimumTrackTintColor="#1fb28a"
-              minimumValue={4}
-              step={2}
-              thumbTintColor="#1a9274"
-            />
+            {/* <TextView text="Check by distance" styles={[Styles.Text.smallText13Black, Styles.MarginPadding.mb10, Styles.MarginPadding.mt10]} /> */}
+            {/* <Slider */}
+            {/*  startFromZero */}
+            {/*  value={distance} */}
+            {/*  animateTransitions */}
+            {/*  maximumTrackTintColor="#d3d3d3" */}
+            {/*  maximumValue={10000} */}
+            {/*  minimumTrackTintColor="#1fb28a" */}
+            {/*  minimumValue={10} */}
+            {/*  step={2} */}
+            {/*  thumbTintColor="#1a9274" */}
+            {/* /> */}
+            {/* <Text>{distance}</Text> */}
+            {/* <TextView text="Check by years" styles={[Styles.Text.smallText13Black, Styles.MarginPadding.mb10, Styles.MarginPadding.mt10]} /> */}
+            {/* <Slider */}
+            {/*  animateTransitions */}
+            {/*  maximumTrackTintColor="#d3d3d3" */}
+            {/*  maximumValue={20} */}
+            {/*  minimumTrackTintColor="#1fb28a" */}
+            {/*  minimumValue={4} */}
+            {/*  step={2} */}
+            {/*  thumbTintColor="#1a9274" */}
+            {/* /> */}
             <PrimaryButtonView
               onPress={handleOnSave}
               styles={{

@@ -31,7 +31,7 @@ select calculate_distance(%f, %f, users.lat, users.long, 'KM'), user_hash, full_
 		(CASE WHEN %t THEN birthday < (CURRENT_DATE - interval '%d years') OR birthday > (CURRENT_DATE + interval '%d years') ELSE true END) AND
 		(CASE WHEN %t THEN gender = '%s' ELSE true END)
 
-`, lat, long, userHash, flags["by_coords"], lat, long, distance, flags["by_birthday"], years, years, flags["by_gender"], gender)
+`, lat, long, userHash, flags["by_coords"].(bool), lat, long, distance, flags["by_birthday"].(bool), years, years, flags["by_gender"].(bool), gender)
 }
 
 func getRelationsClause(flag any, relation string) string {

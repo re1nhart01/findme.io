@@ -2,6 +2,7 @@ import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messag
 import notifee, { AndroidImportance } from '@notifee/react-native';
 import { Activity } from '@core/base/Activity';
 import { AppState } from 'react-native';
+import {__current_user__} from "@core/CurrentUser";
 
 type pushIndividual = 1 | 2; // 1 - background, 2 - foreground
 export class PushNotifications implements Omit<Activity, 'onUpdate' | 'onFallbackCreate'> {
@@ -36,7 +37,7 @@ export class PushNotifications implements Omit<Activity, 'onUpdate' | 'onFallbac
 
     if (enabled) {
       this.getToken.then((el) => {
-        console.log(el);
+        __current_user__.notificationToken = el;
       });
     }
   };

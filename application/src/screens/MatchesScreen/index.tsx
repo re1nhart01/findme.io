@@ -30,9 +30,27 @@ const MatchesScreenContainer: React.FC<matchesScreenContainerProps> = ({}) => {
     }
   }, []);
 
-  const handleOnSave = useCallback(() => {
+  const fetchMatches = useCallback(async () => {
+    setFilterState((prev) => {
+      httpCaller(RequestForge.getSwipeableUsers, prev).then((response) => {
+        if (response && response?.data === null) {
+          setMatches([]);
+        }
+        if (response && response?.data) {
+          setMatches(response?.data);
+        } else if (response && response.statusCode > 204) {
+          Alert.alert('Warning', 'Something went wrong on updating user');
+        }
+      });
+      return prev;
+    });
+  }, [filterState, httpCaller]);
 
-  }, []);
+  const handleOnSave = useCallback(async () => {
+    await fetchMatches();
+    console.log(filterState);
+  }, [fetchMatches]);
+  console.log(filterState);
 
   const handleSwipePress = useCallback(async (user_hash: string, op: 'LIKE' | 'DISLIKE', quick: boolean = false): Promise<boolean> => {
     const response = await httpCaller(RequestForge.swipeAction, { user_hash_refer: user_hash, operation: op });
@@ -53,15 +71,6 @@ const MatchesScreenContainer: React.FC<matchesScreenContainerProps> = ({}) => {
     )));
   }, []);
 
-  const fetchMatches = useCallback(async () => {
-    const response = await httpCaller(RequestForge.getSwipeableUsers, filterState);
-    if (response && response?.data) {
-      setMatches(response.data);
-    } else if (response && response.statusCode > 204) {
-      Alert.alert('Warning', 'Something went wrong on updating user');
-    }
-  }, [filterState, httpCaller]);
-
   useFocus(fetchMatches, []);
 
   const ViewProps: matchesScreenPresenterProps = {
@@ -72,6 +81,7 @@ const MatchesScreenContainer: React.FC<matchesScreenContainerProps> = ({}) => {
     handleOnSave,
     setFilterState,
     matchesList,
+    fetchMatches,
   };
 
   return (
