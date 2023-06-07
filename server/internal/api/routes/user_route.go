@@ -16,6 +16,7 @@ type IUserController interface {
 	SetupFields(context *gin.Context)
 	UpdateGeolocation(context *gin.Context)
 	GetUsersList(context *gin.Context)
+	GetUserPhoto(context *gin.Context)
 }
 
 func UserRouter(engine *gin.Engine, controller IUserController) {

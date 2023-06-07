@@ -18,6 +18,7 @@ type FullUserMatchModel struct {
 	Long            float64   `json:"long"`
 	Birthday        time.Time `json:"birthday"`
 	StorageBucketId string    `json:"storage_bucket_id"`
+	Photos          []string  `json:"photos"`
 }
 
 type MatchesModel struct {

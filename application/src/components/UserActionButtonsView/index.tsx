@@ -31,13 +31,14 @@ const UserActionButtonsView: React.FC<userActionButtonsViewProps> = ({ handleFav
         height={51}
         Icon={HeartIcon}
       />
-      <ImageButtonView
-        onPress={handleFavoritePress}
-        styles={[Styles.Button.smallRoundedCenterButton, Styles.Layout.flexCenter, Styles.Container.whiteFFBackgroundColor, Styles.Container.grayBorder1]}
-        width={30}
-        height={30}
-        Icon={StarIcon}
-      />
+      <View style={Styles.Button.smallRoundedCenterButton} />
+      {/* <ImageButtonView */}
+      {/*  onPress={handleFavoritePress} */}
+      {/*  styles={[Styles.Button.smallRoundedCenterButton, Styles.Layout.flexCenter, Styles.Container.whiteFFBackgroundColor, Styles.Container.grayBorder1]} */}
+      {/*  width={30} */}
+      {/*  height={30} */}
+      {/*  Icon={StarIcon} */}
+      {/* /> */}
     </View>
   );
 };

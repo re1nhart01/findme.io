@@ -116,11 +116,12 @@ func (user *UserController) GetMe(ctx *gin.Context) {
 }
 
 func (user *UserController) GetUsersList(ctx *gin.Context) {
-	err, _ := user.ManageToken(ctx)
+	err, userData := user.ManageToken(ctx)
 	if err != nil {
 		return
 	}
-	userModels, err := user.GetUsers()
+	userHash := userData["user_hash"].(string)
+	userModels, err := user.GetUsers(userHash)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!_1"))
 		return
@@ -140,6 +141,20 @@ func (user *UserController) GetPreferences(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(preferencesModel))
+}
+
+func (user *UserController) GetUserPhoto(ctx *gin.Context) {
+	err, _ := user.ManageToken(ctx)
+	query := ctx.Query("user_refer")
+	if err != nil {
+		return
+	}
+	var result []string
+	if err := user.GetPhotosByUserHash(&result, query); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.GiveResponse(http.StatusBadRequest, "Bad Request!_1"))
+
+	}
+	ctx.JSON(http.StatusOK, utils.GiveOKResponseWithData(result))
 }
 
 func CreateUserController(basePath string) *UserController {

@@ -10,14 +10,16 @@ import { colors } from '@utils/colors';
 import { user_short } from '@utils/__remove__/mocks/usermodel';
 import { DEVICE_WIDTH } from '@utils/scaling';
 import NearbyItemView from '@components/list-items/NearbyItemView';
+import { IUserDiscoverModelShort } from '@type/models/user';
 
 export type allUsersScreenPresenterProps = {
-  handleSettingsPress(): void;
   isRefreshing: boolean;
   onRefresh(): void;
+  isLoading: boolean;
+  all_users: Array<IUserDiscoverModelShort>;
 };
 
-const AllUsersScreenPresenter: React.FC<allUsersScreenPresenterProps> = ({ handleSettingsPress, isRefreshing, onRefresh }) => {
+const AllUsersScreenPresenter: React.FC<allUsersScreenPresenterProps> = ({ isRefreshing, onRefresh, all_users, isLoading }) => {
   return (
     <ScreenLayoutView
       useKeyboardAvoid={false}
@@ -29,15 +31,6 @@ const AllUsersScreenPresenter: React.FC<allUsersScreenPresenterProps> = ({ handl
           LeftButton={{ hide: true }}
           headerText="nearby"
           subHeaderText="press_to_refresh"
-          rightButton={(
-            <ImageButtonView
-              onPress={handleSettingsPress}
-              styles={[Styles.Button.smallImageButton, Styles.Layout.flexCenter]}
-              width={18}
-              height={18}
-              Icon={SettingsIcon}
-            />
-            )}
         />
       </View>
       <View style={[Styles.MarginPadding.pt20]}>
@@ -46,7 +39,7 @@ const AllUsersScreenPresenter: React.FC<allUsersScreenPresenterProps> = ({ handl
           refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />}
           contentContainerStyle={[Styles.MarginPadding.g20]}
           keyExtractor={(item) => item.user_hash}
-          data={user_short}
+          data={all_users}
           numColumns={3}
           renderItem={({ item, index }) => {
             return (

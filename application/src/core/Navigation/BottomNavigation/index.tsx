@@ -34,9 +34,9 @@ const BottomNavigation: React.FC<bottomNavigationProps> = () => {
           case 'DiscoverScreen':
             setSelectedRoute(2);
             break;
-          case 'ChatsScreen':
-            setSelectedRoute(3);
-            break;
+          // case 'ChatsScreen':
+          //   setSelectedRoute(3);
+          //   break;
           case 'MyProfileScreen':
             setSelectedRoute(4);
             break;
@@ -69,9 +69,9 @@ const BottomNavigation: React.FC<bottomNavigationProps> = () => {
         <DiscoverIcon color={getColorByIndex(2)} />
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(3)]} onPress={onPressSelectRoute('ChatsScreen', 3)}>
-        <ChatsIcon color={getColorByIndex(3)} />
-      </TouchableOpacity>
+      {/* <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(3)]} onPress={onPressSelectRoute('ChatsScreen', 3)}> */}
+      {/*  <ChatsIcon color={getColorByIndex(3)} /> */}
+      {/* </TouchableOpacity> */}
 
       <TouchableOpacity style={[styles.buttonStyles, getBorderByIndex(4)]} onPress={onPressSelectRoute('MyProfileScreen', 4)}>
         <ProfileIcon color={getColorByIndex(4)} />

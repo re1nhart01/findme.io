@@ -46,8 +46,9 @@ export const useSafeHTTP = () => {
         dispatch(actionList.loadError(response.data.customStatusMessage));
         return;
       }
-      dispatch(successMethod(response.data.data));
-      await callback(response.data.data);
+      console.log(response.data, 'abab')
+      dispatch(successMethod(response.data));
+      await callback(response.data);
     } catch (e) {
       dispatch(actionList.loadError('reduxCaller ex.'));
       console.log('userRegisterThunk.ex', e);

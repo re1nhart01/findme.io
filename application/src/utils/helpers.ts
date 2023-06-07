@@ -25,13 +25,13 @@ export const queueMicrotask = (cb: () => void) => Promise.resolve()
 
 export const sleep = (ms: number) => new Promise((r: any) => setTimeout(r, ms));
 
-export const panAndSkewAnimation = (pan: Animated.ValueXY, skewValue: Animated.Value) => {
+export const panAndSkewAnimation = (pan: Animated.ValueXY, skewValue: Animated.Value, toVal1: number = 0, toVal2 = 0) => {
   Animated.parallel(
     [
       Animated.spring(
         pan,
         { toValue: {
-          x: wDP(0),
+          x: wDP(toVal1),
           y: 0,
         },
         useNativeDriver: false,
@@ -39,7 +39,7 @@ export const panAndSkewAnimation = (pan: Animated.ValueXY, skewValue: Animated.V
       ),
       Animated.spring(
         skewValue,
-        { toValue: 0,
+        { toValue: toVal2,
           useNativeDriver: false,
         },
       ),
@@ -64,8 +64,8 @@ export function accessObjectField<T extends {[key: string]: any}>(obj: T, propPa
 }
 
 export function getAge(dateString: string | number): number {
-    const currentTime = new Date().getTime();
-    const birthDateTime = new Date(dateString).getTime();
-    const difference = (currentTime - birthDateTime);
-    return Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
+  const currentTime = new Date().getTime();
+  const birthDateTime = new Date(dateString).getTime();
+  const difference = (currentTime - birthDateTime);
+  return Math.floor(difference / (1000 * 60 * 60 * 24 * 365));
 }

@@ -1,6 +1,7 @@
 // Register
-import { preferences, tokens, userData } from '@type/models/user';
-import {ITags} from "@type/models/tags";
+import { IUserDiscoverModelShort, preferences, tokens, userData } from '@type/models/user';
+import { ITags } from '@type/models/tags';
+import { MatchesFiltering } from '@type/defaults';
 
 export type RegisterResponse = boolean;
 
@@ -65,9 +66,26 @@ export interface RemovePhotoRequest {
     buckets_ids: string[]
 }
 
-export type AddOrRemoveTagsResponse = {}
+export type AddOrRemoveTagsResponse = Array<IUserDiscoverModelShort>;
 
 export type AddOrRemoveTagsRequest = {
     tag_list: ITags;
     operation: 'add' | 'remove';
 }
+
+// user
+
+export type GetUserRequest = undefined;
+
+export type GetUserResponse = userData;
+// matches swiping
+
+export type GetMatchesRequest = MatchesFiltering;
+export type GetMatchesResponse = Array<IUserDiscoverModelShort>
+
+// match swipe
+export type SwipeRequest = {
+   user_hash_refer: string;
+   operation: 'LIKE' | 'DISLIKE'
+};
+export type SwipeResponse = {}

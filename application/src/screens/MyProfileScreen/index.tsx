@@ -1,9 +1,9 @@
 import React, { useCallback, useRef } from 'react';
 import { MyProfileScreenPresenter, myProfileScreenPresenterProps } from '@screens/MyProfileScreen/view';
-import { CONSTANTS, firebase_base_url } from '@utils/constants/strings';
+import { CONSTANTS } from '@utils/constants/strings';
 import { Alert, Animated, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { imageCarouselModalForward } from '@components/common/modals/ImageCarouselModal';
-import {IUserStorage, useUserStorage} from '@reacts/hooks/useUserStorage';
+import { useUserStorage } from '@reacts/hooks/useUserStorage';
 import { useFocus } from '@reacts/hooks/useNavigations';
 import { useSafeHTTP } from '@reacts/hooks/useSafeHTTP';
 import { RequestForge } from '@core/http/RequestForge';
@@ -40,13 +40,11 @@ const MyProfileScreenContainer: React.FC<myProfileScreenContainerProps> = ({}) =
     ]);
   }, [httpCaller, updateUserField, userData]);
 
-  console.log(userState.user.photos);
-
   const openFullScreenCarousel = useCallback(() => {
     if (carouselModalRef && carouselModalRef.current) {
       carouselModalRef.current.onOpen(userState.user.photos || []);
     }
-  }, []);
+  }, [userState.user.photos]);
 
   const handleOnScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const { contentOffset: { y } } = event.nativeEvent;

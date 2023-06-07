@@ -18,14 +18,13 @@ import { panAndSkewAnimation } from '@utils/helpers';
 type draggableItemViewProps = {
   index: number;
   model: IUserDiscoverModelShort;
-  handleLikePress(): void;
-  handleSkipPress(): void;
+  handleSwipePress: (user_hash: string, op: ('LIKE' | 'DISLIKE')) => Promise<boolean>
 };
 type draggableItemViewState = {
   activeImage: number;
 };
 
-const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) => {
+const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model, handleSwipePress }) => {
   const [getState, setState] = useState<draggableItemViewState>({
     activeImage: 0,
   });
@@ -50,7 +49,20 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) =
         console.log(event.nativeEvent);
         const { pageX } = event.nativeEvent;
         if (pageX <= 30 || pageX >= DEVICE_WIDTH - 30) {
-
+          if (pageX <= 30) {
+            handleSwipePress(model.user_hash, 'DISLIKE').then((res) => {
+              if (res) {
+                panAndSkewAnimation(pan, skewValue, -999, -999);
+              }
+            });
+          }
+          if (pageX >= DEVICE_WIDTH - 30) {
+            handleSwipePress(model.user_hash, 'LIKE').then((res) => {
+              if (res) {
+                panAndSkewAnimation(pan, skewValue, 999, 999);
+              }
+            });
+          }
         } else {
           pan.flattenOffset();
           skewValue.flattenOffset();
@@ -88,6 +100,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) =
       renderToHardwareTextureAndroid
       style={[Styles.Layout.absolute,
         Styles.Layout.w100,
+        { backgroundColor: 'white' },
         Styles.Layout.borderR15, {
           transform: [
             { translateX: pan.x },
@@ -105,7 +118,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) =
           <UserDistanceView distance={`${calculatedDistance} km`} />
         </View>
         <View style={Styles.Container.dotsLayout}>
-          <StepDotsView activeIndex={getState.activeImage} count={model.images.length} />
+          <StepDotsView activeIndex={getState.activeImage} count={model.photos?.length || 0} />
         </View>
         <View style={[Styles.Container.discoverCardInfo, Styles.MarginPadding.ph15]}>
           <Text numberOfLines={2} style={Styles.Text.mediumText24White}>
@@ -119,7 +132,7 @@ const DraggableItemView: React.FC<draggableItemViewProps> = ({ index, model }) =
         <View>
           <FlatList
             onScroll={handleOnScroll}
-            data={model.images || []}
+            data={model.photos || []}
             renderItem={renderImageList}
             keyExtractor={(item, index) => `${item}${index}`}
             disableScrollViewPanResponder

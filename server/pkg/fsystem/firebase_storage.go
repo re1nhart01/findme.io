@@ -18,7 +18,7 @@ var ctx = context.Background()
 
 func CreateStorageApplication() *storage.BucketHandle {
 	bucketName := env.ReadEnv("FIREBASE_BUCKET")
-	pathToFile := env.ReadEnv("FIREBASE_ADMINSDK_PATH")
+	pathToFile := env.ReadEnv("FIREBASE_ADMINSDK_STORAGE")
 	wd, _ := os.Getwd()
 	config := &firebase.Config{
 		StorageBucket: fmt.Sprintf("%s.appspot.com", bucketName),

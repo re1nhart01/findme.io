@@ -1,5 +1,5 @@
-import React, {memo, useCallback, useMemo} from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import React, { memo, useCallback, useMemo } from 'react';
+import {Image, ListRenderItem, TouchableOpacity, View} from 'react-native';
 import { Styles } from '@styles/load';
 import { FlexibleListView } from '@components/FlexibleListView';
 import { useLoader } from '@reacts/hooks/useLoader';
@@ -16,7 +16,7 @@ type imageGalleryViewProps = {
 };
 
 const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
-  photoList = [],
+  photoList,
   bigImagesCount = 2,
   contentContainerStyles,
   onPressBigImage = () => {},
@@ -24,7 +24,7 @@ const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
   isFirebase,
 }) => {
   const isLoadedGallery = useLoader(500);
-  const renderPhoto = useCallback(<T extends object = any>(item: string, index: number) => {
+  const renderPhoto: ListRenderItem<string> = useCallback((item: string, index: number) => {
     if (index < bigImagesCount) {
       const bigWidthPercent = bigImagesCount >= 2 ? '48%' : bigImagesCount === 1 ? '100%' : '66%';
       return (
@@ -38,7 +38,7 @@ const ImageGalleryView: React.FC<imageGalleryViewProps> = ({
         <Image style={[Styles.Layout.w100, Styles.Layout.h100, { resizeMode: 'cover' }, Styles.Layout.borderR5]} source={{ uri: isFirebase ? `${firebase_base_url(item)}&d=${new Date().toString()}` : item }} />
       </TouchableOpacity>
     );
-  }, []);
+  }, [bigImagesCount, isFirebase, onPressBigImage, onPressSmallImage]);
 
   const renderEmptyView = useCallback(() => {
     return (

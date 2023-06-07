@@ -12,6 +12,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: hDP(18),
   },
+  primaryButtonSmall: {
+    paddingVertical: hDP(8),
+  },
   secondaryButton: {
     backgroundColor: colors.whiteFF,
     borderRadius: 15,

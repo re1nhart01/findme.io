@@ -111,7 +111,7 @@ const EditProfileScreenPresenter: React.FC<editProfileScreenPresenterProps> = ({
                 {details.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mt5]}>{details.errorMessage}</Text>}
                 <View style={Styles.MarginPadding.mt10}>
                   <SelectBirthdayView
-                    value={values.birthday}
+                    value={values.birthday as number}
                     setSelectedDate={(v) => updateFormState('birthday', v)}
                   />
                 </View>

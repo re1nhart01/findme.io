@@ -118,7 +118,7 @@ export type IInterestsFormTemplate = {
 export const interestSelectTemplate = new FormadjoFormer<IInterestsFormTemplate>({
   interests: new FormadjoField('Interest', 'object')
     .setMinLength(0)
-    .setMaxLength(10)
+    .setMaxLength(14)
     .setArrayValueType('number')
     .setIsRequired(true)
     .setType('object'),

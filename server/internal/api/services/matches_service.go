@@ -34,7 +34,7 @@ func (matches *MatchesService) RequestForMatchesList(userHash string, flags map[
 		GetDatabaseInstance().
 		Instance.
 		Table(models.USERS).
-		Raw(models.GetMatchList(flags, currentUserModel, distance, years, tagsIds, interestsIds)).Scan(&userMatchList); res.Error != nil {
+		Raw(models.GetMatchList(userHash, flags, currentUserModel, distance, years, tagsIds, interestsIds)).Scan(&userMatchList); res.Error != nil {
 		return []*models.UserModel{}, res.Error
 	}
 	return userMatchList, nil

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import {Text, View} from 'react-native';
 
 import { ScreenLayoutView } from '@components/common/hoc/ScreenLayout';
 import { MainHeaderView } from '@core/Headers/MainHeader';
@@ -43,7 +43,7 @@ const SelectInterestsScreenPresenter: React.FC<selectInterestsScreenPresenterPro
             errorsList,
           }) => {
             return (
-              <View style={[Styles.MarginPadding.mt32]}>
+              <View style={[Styles.MarginPadding.mt10]}>
                 <View style={Styles.MarginPadding.pl16}>
                   <TextView styles={Styles.Text.bigBoldBlack34} numberOfLines={1} text="your_interests" />
                 </View>
@@ -60,6 +60,7 @@ const SelectInterestsScreenPresenter: React.FC<selectInterestsScreenPresenterPro
                     activeButtonStyles={Styles.Container.pickerActiveContainer}
                   />
                 </View>
+                {errorsList.interests.isError && <Text style={[Styles.Text.smallTextRedBold14, Styles.MarginPadding.ml5, Styles.MarginPadding.mb10]}>{errorsList.interests.errorMessage}</Text>}
                 <PrimaryButtonView
                   disabled={isDisabled}
                   onPress={onSubmit}

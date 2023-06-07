@@ -5,27 +5,27 @@ import { hDP, wDP } from '@utils/scaling';
 import { UserActionButtonsView } from '@components/UserActionButtonsView';
 import { Styles } from '@styles/load';
 import { user_short } from '@utils/__remove__/mocks/usermodel';
+import { IUserDiscoverModelShort } from '@type/models/user';
+import { TextView } from '@components/TextView';
 import { DraggableItemView } from '../DraggableItemView';
 
 type draggableContainerViewProps = {
-  handleLikePress(): void;
-  handleSkipPress(): void;
-  handleFavoritePress(): void;
+  matchesList: IUserDiscoverModelShort[];
+  handleSwipePress: (user_hash: string, op: ('LIKE' | 'DISLIKE'), quick?: boolean) => Promise<boolean>
 };
 
-const DraggableContainerView: React.FC<draggableContainerViewProps> = ({ handleFavoritePress, handleLikePress, handleSkipPress }) => {
+const DraggableContainerView: React.FC<draggableContainerViewProps> = ({ matchesList, handleSwipePress }) => {
   const renderMatchingCards = (): Array<JSX.Element> | null => {
-    if (!user_short || user_short.length <= 0) {
+    if (!matchesList || matchesList.length <= 0) {
       return null;
     }
-    return user_short.map((user, index) => {
+    return matchesList.map((user, index) => {
       return (
         <DraggableItemView
-          handleSkipPress={handleSkipPress}
-          handleLikePress={handleLikePress}
           key={user.user_hash}
           model={user}
           index={index}
+          handleSwipePress={handleSwipePress}
         />
       );
     });
@@ -44,13 +44,16 @@ const DraggableContainerView: React.FC<draggableContainerViewProps> = ({ handleF
         Styles.Container.grayBorder1,
         Styles.Layout.borderR15]}
       >
-        {/* TODO: EMPTY VIEW HERE */}
+        <View style={[Styles.Layout.flexCenter, Styles.Layout.flexCol, Styles.Layout.wh100_pc]}>
+          <TextView styles={[Styles.Text.redHeader, Styles.Text.textCenter]} text="Oops" />
+          <TextView styles={[Styles.Text.smallTextBold18, Styles.Text.textCenter]} text="There is no active users :(" />
+        </View>
         {renderMatchingCards()}
       </View>
       <UserActionButtonsView
-        handleFavoritePress={handleFavoritePress}
-        handleLikePress={handleLikePress}
-        handleSkipPress={handleSkipPress}
+        handleFavoritePress={() => {}}
+        handleLikePress={() => handleSwipePress(matchesList[matchesList.length - 1]?.user_hash, 'LIKE', true)}
+        handleSkipPress={() => handleSwipePress(matchesList[matchesList.length - 1]?.user_hash, 'DISLIKE', true)}
       />
     </View>
   );

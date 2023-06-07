@@ -4,9 +4,11 @@ import { Styles } from '@styles/load';
 import { MainHeaderView } from '@core/Headers/MainHeader';
 import { DEVICE_WIDTH } from '@utils/scaling';
 import { useScrollable } from '@reacts/hooks/useScrollable';
+import {firebase_base_url} from "@utils/constants/strings";
 
 type imageCarouselModalProps = {
   images: Array<string>;
+  isFirebase?: boolean;
 };
 
 export type imageCarouselModalForward = {
@@ -19,7 +21,7 @@ type imageCarouselModalState = {
   visible: boolean;
 };
 
-const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselModalProps>(({ images = [] }, ref) => {
+const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselModalProps>(({ images = [], isFirebase }, ref) => {
   const { scrollableRef, handleOnScroll, handleButtonScroll, getActiveIndex, setActiveIndex } = useScrollable<FlatList>('x', DEVICE_WIDTH, 0, 'flatlist');
   const [getState, setState] = useState<imageCarouselModalState>({
     photos: images || [],
@@ -87,7 +89,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
           renderItem={({ item, index }) => {
             return (
               <View style={[Styles.Layout.wfull_px, Styles.Layout.h100]}>
-                <Image style={[Styles.Layout.wh100_pc, { resizeMode: 'cover' }]} source={{ uri: `${item}?reloader=${uniquePointer}` }} />
+                <Image style={[Styles.Layout.wh100_pc, { resizeMode: 'cover' }]} source={{ uri: isFirebase ? `${firebase_base_url(item)}&d=${uniquePointer}` : item }} />
               </View>
             );
           }}
@@ -102,7 +104,7 @@ const ImageCarouselModal = forwardRef<imageCarouselModalForward, imageCarouselMo
           renderItem={({ item, index }) => {
             return (
               <TouchableOpacity onPress={() => handleButtonScroll(index)} style={[Styles.Layout.wh65_px, Styles.Layout.borderR10, Styles.Layout.overflowHidden]}>
-                <Image style={[Styles.Layout.wh100_pc, Styles.Layout.zIndex10]} source={{ uri: `${item}?reloader=${uniquePointer}` }} />
+                <Image style={[Styles.Layout.wh100_pc, Styles.Layout.zIndex10]} source={{ uri: isFirebase ? `${firebase_base_url(item)}&d=${uniquePointer}` : item }} />
                 {getActiveIndex !== index && <View style={[Styles.Layout.wh100_pc, Styles.Layout.zIndex10, Styles.Container.whiteFF50BackgroundColor, Styles.Layout.absolute]} />}
               </TouchableOpacity>
             );

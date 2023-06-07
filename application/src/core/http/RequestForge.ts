@@ -2,16 +2,17 @@ import { requester } from '@core/http/Requester';
 import {
   AddOrRemoveTagsRequest, AddOrRemoveTagsResponse,
   AttachPhotoRequest,
-  AttachPhotoResponse,
+  AttachPhotoResponse, GetMatchesRequest, GetMatchesResponse, GetUserRequest, GetUserResponse,
   HasPhoneOrEmailRequest,
   HasPhoneOrEmailResponse,
   LoginRequest, LoginResponse, MeRequest, MeResponse,
   RegisterRequest,
-  RegisterResponse, RemovePhotoRequest, UpInterestsRequest, UpInterestsResponse,
+  RegisterResponse, RemovePhotoRequest, SwipeRequest, SwipeResponse, UpInterestsRequest, UpInterestsResponse,
 } from '@core/http/types';
-import { URL_PATH } from '@core/http/url';
+import { URL_PATH, USERS_ROUTE } from '@core/http/url';
 import { Asset } from 'react-native-image-picker';
 import { IEditMoodRelationsForm, IEditProfileForm, IGenderFormTemplate, editMoodRelationsForm } from '@utils/forms';
+import { MatchesFiltering } from '@type/defaults';
 
 type TupleUpdateFields = IEditProfileForm | IEditMoodRelationsForm | IGenderFormTemplate;
 
@@ -189,6 +190,66 @@ export class RequestForge {
         method: 'POST',
         retries: 0,
         url: URL_PATH.TAGS_ADD_OR_REMOVE,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async getUsers() {
+    try {
+      return await requester<AddOrRemoveTagsRequest, AddOrRemoveTagsResponse>({
+        data: undefined,
+        method: 'GET',
+        retries: 0,
+        url: URL_PATH.USERS_LIST,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async getUserByUserHash(userHash: string) {
+    try {
+      return await requester<GetUserRequest, GetUserResponse>({
+        data: undefined,
+        method: 'GET',
+        retries: 0,
+        url: `/${USERS_ROUTE}/${userHash}`,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async getSwipeableUsers(filters: MatchesFiltering) {
+    try {
+      return await requester<GetMatchesRequest, GetMatchesResponse>({
+        data: filters,
+        method: 'POST',
+        retries: 0,
+        url: URL_PATH.MATCHES_SWIPES,
+        withAccess: true,
+      });
+    } catch (e: unknown) {
+      console.warn('[FindMe]: checkIsPhoneExistsCall ex', e);
+      return null;
+    }
+  }
+
+  public static async swipeAction(body: SwipeRequest) {
+    try {
+      return await requester<SwipeRequest, SwipeResponse>({
+        data: body,
+        method: 'POST',
+        retries: 0,
+        url: URL_PATH.MATCH_SWIPE,
         withAccess: true,
       });
     } catch (e: unknown) {

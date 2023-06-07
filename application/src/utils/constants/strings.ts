@@ -26,7 +26,7 @@ export const relationsList = [
   'Taken',
   "It's complicated",
   'Open',
-  "I'd rather not say",
+  'I`d rather not say',
 ];
 
 export const InterestsList = [
@@ -104,5 +104,7 @@ export const InterestsList = [
 ];
 
 export const firebase_base_url = (bucketId: string) => {
-  return `https://firebasestorage.googleapis.com/v0/b/findmeio.appspot.com/o/${bucketId}?alt=media`;
+  // https://firebasestorage.googleapis.com/v0/b/musicdesktop-15d99.appspot.com/o/6c20d90d8f63dd8a64acbfb7264b7a2c06b2632b.jpg?alt=media
+  // return `https://firebasestorage.googleapis.com/v0/b/musicdesktop-15d99.appspot.com/o/${bucketId}?alt=media`;
+  return bucketId;
 };

@@ -41,13 +41,14 @@ func (user *UserService) GetUserPreferences(userHash string) (*models.UserPrefer
 	return model, nil
 }
 
-func (user *UserService) GetUsers() ([]*models.UserModel, error) {
-	var model []*models.UserModel
+func (user *UserService) GetUsers(userHash string) ([]*models.UserDiscoverModelShort, error) {
+	var model []*models.UserDiscoverModelShort
 	if res := pg_database.GetDatabaseInstance().Instance.Table(models.USERS).Joins(`
-					LEFT JOIN (SELECT user_hash_id, storage_bucket_id from user_photos LIMIT 1) as photo_query
+					LEFT JOIN (SELECT user_hash_id, storage_bucket_id as avatar from user_photos LIMIT 1) as photo_query
 					ON photo_query.user_hash_id = users.user_hash
-`).Scan(&model); res.Error != nil {
-		return []*models.UserModel{}, res.Error
+					WHERE user_hash != ?
+`, userHash).Scan(&model); res.Error != nil {
+		return []*models.UserDiscoverModelShort{}, res.Error
 	}
 	return model, nil
 }

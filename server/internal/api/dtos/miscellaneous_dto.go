@@ -26,7 +26,7 @@ var UpdateInterestsDto = &dto.FieldsMapping{
 		Type:      "ARRAY",
 		Required:  true,
 		Name:      "interests_list",
-		MaxLength: 10,
+		MaxLength: 15,
 		MinLength: 0,
 	},
 }

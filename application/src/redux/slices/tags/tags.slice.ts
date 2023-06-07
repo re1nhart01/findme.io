@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import {ApiTags, ITag, ITags} from '@type/models/tags';
-import { MOCK_TAGS } from '@utils/__remove__/mocks/tags_interests';
+import { ApiTags, ITags } from '@type/models/tags';
 
 type IInitialState = {
     selectedTags: ITags;

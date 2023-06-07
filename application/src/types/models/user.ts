@@ -21,20 +21,42 @@ export interface IUserRegisterSlice extends ISliceBaseModel {
   gender: string;
 }
 
+interface MyObject {
+  id: number;
+  user_hash: string;
+  full_name: string;
+  birthday: string;
+  details: string;
+  gender: string;
+  looking_for: string;
+  password: string;
+  email: string;
+  mood: string;
+  relations: string;
+  active: boolean;
+  city: string;
+  country: string;
+  phone: string;
+  lat: number;
+  long: number;
+  created_at: string;
+  storage_bucket_id?: string;
+}
+
 export interface IUserDiscoverModelShort {
-  type?: IUserDiscoverType;
-  alreadyLiked?: boolean;
   full_name: string;
   details: string;
   user_hash: string;
-  images: Array<string>;
-  coords: { x: number; y: number };
+  avatar: string | null;
+  photos?: string[]
+  birthday: string;
+  lat: number;
+  long: number;
   age: number;
-  dateOfCreation?: number;
+  created_at?: number;
 }
 
 export interface IUserDiscoverModelFull extends IUserDiscoverModelShort {
-  birthday: Date;
   gender: 'male' | 'female' | 'another' | 'unknown';
   email: string;
   mood: string;

@@ -3,14 +3,22 @@ import React, { memo } from 'react';
 import { Styles } from '@styles/load';
 import { Animated, View } from 'react-native';
 import { DEVICE_WIDTH, hDP } from '@utils/scaling';
+import { firebase_base_url } from '@utils/constants/strings';
 
 type animatedAvatarViewProps = {
     animationValue: Animated.Value;
     inputValue: Array<number>;
     outputValue: Array<number>;
+    avatarUrl: string;
 };
 
-const AnimatedAvatarView: React.FC<animatedAvatarViewProps> = ({ animationValue, outputValue, inputValue }) => {
+const AnimatedAvatarView: React.FC<animatedAvatarViewProps> = ({ animationValue, outputValue, inputValue, avatarUrl }) => {
+  const getURI = () => {
+    if (avatarUrl) {
+      return { uri: `${firebase_base_url(avatarUrl)}&d=${new Date().toString()}` };
+    }
+    return require('@assets/img/photo.png');
+  };
   return (
     <View style={{ backgroundColor: '#000000' }}>
       <Animated.Image
@@ -22,7 +30,7 @@ const AnimatedAvatarView: React.FC<animatedAvatarViewProps> = ({ animationValue,
             outputRange: outputValue,
             extrapolate: 'clamp',
           }) }}
-        source={require('@assets/img/photo.png')}
+        source={getURI()}
       />
     </View>
   );

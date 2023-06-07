@@ -39,7 +39,9 @@ export type RootStackParamList = {
   MatchesScreen: {};
   DiscoverScreen: {};
   ChatsScreen: {};
-  UserProfileScreen: {};
+  UserProfileScreen: {
+    user_hash: string;
+  };
 };
 export const StackScreens: MultipleStackScreen = {
   auth: [

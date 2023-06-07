@@ -8,25 +8,37 @@ import (
 // password, email, fullName, birth, details, gender, avatar
 // userhash, active, popularity,
 
+type UserDiscoverModelShort struct {
+	FullName  string    `json:"full_name"`
+	Details   string    `json:"details"`
+	UserHash  string    `json:"user_hash"`
+	Avatar    *string   `json:"avatar"`
+	Birthday  time.Time `json:"birthday"`
+	Lat       float64   `json:"lat"`
+	Long      float64   `json:"long"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+}
+
 type UserModel struct {
-	Id         int       `json:"id"`
-	UserHash   string    `json:"user_hash"`
-	FullName   string    `json:"full_name"`
-	Birthday   time.Time `json:"birthday"`
-	Details    string    `json:"details"`
-	Gender     string    `json:"gender"`
-	LookingFor string    `json:"looking_for"`
-	Password   string    `json:"password,omitempty"`
-	Email      string    `json:"email"`
-	Mood       string    `json:"mood"`
-	Relations  string    `json:"relations"`
-	Active     bool      `json:"active"`
-	City       string    `json:"city"`
-	Country    string    `json:"country"`
-	Phone      string    `json:"phone"`
-	Lat        float64   `json:"lat"`
-	Long       float64   `json:"long"`
-	CreatedAt  time.Time `json:"created_at"`
+	Id              int       `json:"id"`
+	UserHash        string    `json:"user_hash"`
+	FullName        string    `json:"full_name"`
+	Birthday        time.Time `json:"birthday"`
+	Details         string    `json:"details"`
+	Gender          string    `json:"gender"`
+	LookingFor      string    `json:"looking_for"`
+	Password        string    `json:"password,omitempty"`
+	Email           string    `json:"email"`
+	Mood            string    `json:"mood"`
+	Relations       string    `json:"relations"`
+	Active          bool      `json:"active"`
+	City            string    `json:"city"`
+	Country         string    `json:"country"`
+	Phone           string    `json:"phone"`
+	Lat             float64   `json:"lat"`
+	Long            float64   `json:"long"`
+	CreatedAt       time.Time `json:"created_at"`
+	StorageBucketId string    `json:"storage_bucket_id,omitempty"`
 }
 
 type UserModelFull struct {

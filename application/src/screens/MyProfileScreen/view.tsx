@@ -103,6 +103,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           animationValue={headerImageAnim}
           inputValue={[0, 90]}
           outputValue={[1, 0]}
+          avatarUrl={user.photos!?.length > 0 ? user.photos![0] : ''}
         />
         <View style={Styles.Container.profileBlock}>
           <FieldRowView
@@ -259,7 +260,7 @@ const MyProfileScreenPresenter: React.FC<myProfileScreenPresenterProps> = ({
           </FieldRowView>
         </View>
       </ScrollView>
-      <ImageCarouselModal images={[]} ref={carouselModalRef} />
+      <ImageCarouselModal isFirebase images={user.photos || []} ref={carouselModalRef} />
     </ScreenLayoutView>
   );
 };

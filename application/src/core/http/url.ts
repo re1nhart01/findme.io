@@ -2,6 +2,7 @@ export const AUTH_ROUTE = 'auth';
 export const USERS_ROUTE = 'users';
 export const INTERESTS_TAGS = 'interests-tags';
 export const FILES = 'files';
+export const MATCHES = 'matches';
 export const URL_PATH = {
   REGISTER: `/${AUTH_ROUTE}/register`,
   LOGIN: `/${AUTH_ROUTE}/login`,
@@ -14,4 +15,7 @@ export const URL_PATH = {
   UPLOAD_PHOTO: `/${FILES}/add-image`,
   ATTACH_PHOTO: `/${USERS_ROUTE}/photos/attach`,
   REMOVE_PHOTO: `/${USERS_ROUTE}/photos/remove`,
+  USERS_LIST: `/${USERS_ROUTE}/list`,
+  MATCHES_SWIPES: `/${MATCHES}/get-users`,
+  MATCH_SWIPE: `/${MATCHES}/match`,
 };

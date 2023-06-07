@@ -8,15 +8,29 @@ import { MainHeaderView } from '@core/Headers/MainHeader';
 import { ImageButtonView } from '@components/ImageButtonView';
 import SettingsIcon from '@assets/svg/settings.svg';
 import { DraggableContainerView } from '@components/common/draggable/DraggableContainerView';
+import { FilterMatchModal } from '@components/common/modals/FilterMatchModal';
+import { calendarModalForward } from '@components/common/modals/CalendarModal';
+import { MatchesFiltering } from '@type/defaults';
+import { IUserDiscoverModelShort } from '@type/models/user';
 
 export type matchesScreenPresenterProps = {
   handleSettingsPress(): void;
-  handleLikePress(): void;
-  handleSkipPress(): void;
-  handleFavoritePress(): void;
+  handleSwipePress: (user_hash: string, op: ('LIKE' | 'DISLIKE'), quick?: boolean) => Promise<boolean>
+  filterModelRef: React.RefObject<calendarModalForward>;
+  filterState: MatchesFiltering;
+  setFilterState: React.Dispatch<React.SetStateAction<MatchesFiltering>>
+  handleOnSave(): void;
+  matchesList: IUserDiscoverModelShort[];
 };
 
-const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({ handleFavoritePress, handleLikePress, handleSettingsPress, handleSkipPress }) => {
+const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({
+  handleSwipePress,
+  handleSettingsPress,
+  filterModelRef,
+  filterState,
+  setFilterState,
+  handleOnSave,
+  matchesList }) => {
   return (
     <ScreenLayoutView
       useKeyboardAvoid={false}
@@ -41,11 +55,16 @@ const MatchesScreenPresenter: React.FC<matchesScreenPresenterProps> = ({ handleF
       </View>
       <View>
         <DraggableContainerView
-          handleFavoritePress={handleFavoritePress}
-          handleLikePress={handleLikePress}
-          handleSkipPress={handleSkipPress}
+          handleSwipePress={handleSwipePress}
+          matchesList={matchesList}
         />
       </View>
+      <FilterMatchModal
+        handleOnSave={handleOnSave}
+        ref={filterModelRef}
+        {...filterState}
+        setFilterState={setFilterState}
+      />
     </ScreenLayoutView>
   );
 };
