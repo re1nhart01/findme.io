@@ -121,7 +121,7 @@ func (auth *AuthService) GenerateTokens(userHash string) (map[string]any, error)
 	return map[string]any{
 		"access_token":    accessToken,
 		"refresh_token":   refreshToken,
-		"expiration_time": time.Now().UnixMilli() + Min30Expiration,
+		"expiration_time": time.Now().Add(24 * time.Hour),
 	}, nil
 }
 

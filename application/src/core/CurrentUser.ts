@@ -119,7 +119,9 @@ export class CurrentUser {
   public async saveTokens<T extends tokens>(tokenData: T | null) {
     try {
       if (tokenData) {
-        this._tokens = tokenData;
+        this._tokens.expiration_time = tokenData.expiration_time;
+        this._tokens.access_token = tokenData.access_token;
+        this._tokens.refresh_token = tokenData.refresh_token;
         await this.saveUser();
       }
     } catch (e) {

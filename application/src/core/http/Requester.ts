@@ -30,6 +30,7 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
       'Content-Type': isMultipart ? 'multipart/form-data' : 'application/json',
     };
     const { expiration_time, refresh_token } = __app__.getCurrentUser.tokens;
+    console.log(expiration_time)
     const now = Date.now();
     const bufferTimeForRefreshToken = 1000 * 60; // One minute
     if (now + bufferTimeForRefreshToken > +expiration_time && refresh_token && withAccess) {
@@ -39,7 +40,8 @@ export const requester = async <GRequest, GResponse extends BaseRequest>({ url, 
         method: 'POST',
       });
       if (responseToken?.data) {
-        await __app__.getCurrentUser.saveTokens(responseToken.data);
+        await __app__.getCurrentUser.saveTokens(responseToken.data?.data);
+        console.log('responseToken.data', responseToken.data.data);
       }
       if (responseToken?.status < 204) {
         return (await axiosImpl({
